@@ -1,5 +1,8 @@
 import React from 'react';
+import { Provider } from 'react-redux';
 import logo from './trivia.png';
+import store from './store/index';
+import Start from './pages/Start';
 import './App.css';
 
 export default function App() {
@@ -10,6 +13,9 @@ export default function App() {
         <p>
           SUA VEZ
         </p>
+        <Provider store={store}>
+          <Start />
+        </Provider>
       </header>
     </div>
   );
