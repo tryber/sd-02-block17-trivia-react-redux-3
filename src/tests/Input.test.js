@@ -11,6 +11,8 @@ describe('Test input', () => {
     expect(inputMail.value).toBe("");
     expect(labelMail).toBeInTheDocument();
     expect(labelMail.tagName).toBe('LABEL');
+    expect(labelMail.innerHTML).toBe('Email do gravatar:');
+
   });
   it('Test input and label name', () => {
     const { queryByTestId } = render(<Input />)
@@ -20,5 +22,7 @@ describe('Test input', () => {
     expect(inputName.value).toBe("");
     expect(labelName).toBeInTheDocument();
     expect(labelName.tagName).toBe('LABEL');
+    expect(labelName.innerHTML).toBe('Nome do Jogador:');
+
   });
 });
