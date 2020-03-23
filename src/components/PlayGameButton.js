@@ -10,7 +10,7 @@ const PlayGameButton = ({ getToken }) => (
     <button
       type="button"
       onClick={getToken}
-      data-testid="config-button"
+      data-testid="btn-play"
     >
       Jogar!
     </button>

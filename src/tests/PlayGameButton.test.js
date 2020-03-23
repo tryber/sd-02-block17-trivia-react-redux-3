@@ -27,13 +27,6 @@ afterEach(cleanup);
 
 describe('testing play game button', () => {
   it('testing if there is a play game button with data-testid=`btn-play`', () => {
-    const { getByTestId } = render(
-      <Provider store={store}>
-        <MemoryRouter>
-          <App />
-        </MemoryRouter>
-      </Provider>
-  it('testing if there is a play game button with data-testid=`config-button`', () => {
     const { getByTestId } = renderWithRedux(
       <MemoryRouter>
         <App />
@@ -51,7 +44,7 @@ describe('testing play game button', () => {
         <App />
       </Router>,
     );
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('btn-play'));
     expect(history.location.pathname).toBe('/game');
   });
 
@@ -61,7 +54,7 @@ describe('testing play game button', () => {
         <App />
       </MemoryRouter>,
     );
-    fireEvent.click(getByTestId('config-button'));
+    fireEvent.click(getByTestId('btn-play'));
     await wait(() => expect(getState().token).not.toBeNull());
 
   });
