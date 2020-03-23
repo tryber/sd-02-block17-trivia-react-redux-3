@@ -1,9 +1,8 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-const PlayGameButton = () => {
-  return (
-    <button type="button" data-testid="config-button" onClick={() => window.location.href = '/game'}>JOGAR!</button>
-  );
-}
+const PlayGameButton = () => (
+  <Link to="/game"><button type="button" data-testid="config-button">Jogar!</button></Link>
+);
 
 export default PlayGameButton;

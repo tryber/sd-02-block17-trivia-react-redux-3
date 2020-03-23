@@ -1,9 +1,9 @@
 import React from 'react';
-import logo from './trivia.png';
+// import logo from './trivia.png';
 import './App.css';
-import { Switch, Route, Link } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import Start from './pages/Start';
 import Game from './components/Game';
-import PlayGameButton from './components/PlayGameButton';
 
 export default function App() {
   return (
@@ -14,9 +14,9 @@ export default function App() {
       <div> */}
       {/* </div> */}
       <Switch>
+        <Route exact path="/" component={Start} />
         <Route path="/game" component={Game} />
       </Switch>
-      <PlayGameButton />
     </div>
   );
 }
