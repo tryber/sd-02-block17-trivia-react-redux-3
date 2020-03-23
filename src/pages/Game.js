@@ -1,18 +1,8 @@
-import { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
-import tokenRequest from '../services/tokenRequest';
-import SendToken from '../actions/SendToken';
+import Header from '../components/Header'
 
-class Game extends Component {
-  componentDidMount() {
-    const { dispatch } = this.props;
-    tokenRequest()
-      .then(({ token }) => dispatch(SendToken(token)));
-  }
+const Game = () => (<Header />)
 
-  render() {
-    return null;
-  }
-}
 
 export default connect()(Game);
