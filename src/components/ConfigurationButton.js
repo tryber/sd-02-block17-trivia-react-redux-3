@@ -5,7 +5,7 @@ import './ConfigurationButton.css';
 class ConfigurationButton extends Component {
   render() {
     return (
-      <Link to='/configuration' data-testid="config-button" className="config-button">
+      <Link to="/configuration" data-testid="config-button" className="config-button">
         ●
       </Link>
     );
