@@ -13,10 +13,10 @@ export default function App() {
         <p>
           SUA VEZ
         </p>
-      <Switch>
-        <Route exact path="/" component={Start} />
-        <Route path="/game" component={Game} />
-      </Switch>
+        <Switch>
+          <Route exact path="/" component={Start} />
+          <Route path="/game" component={Game} />
+        </Switch>
       </header>
     </div>
   );
