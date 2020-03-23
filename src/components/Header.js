@@ -26,5 +26,7 @@ Header.propTypes = {
 };
 
 Header.defaultProps = {
+  name: '',
+  email: '',
   scoreboard: 0,
 };

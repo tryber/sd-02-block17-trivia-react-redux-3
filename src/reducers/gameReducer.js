@@ -1,7 +1,7 @@
 export const INITIAL_STATE = {
   name: '',
   email: '',
-  placar: 0,
+  scoreboard: 0,
 };
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';

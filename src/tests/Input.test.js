@@ -1,10 +1,30 @@
 import React from 'react';
 import Input from '../components/Input';
-import { render } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { render , cleanup } from '@testing-library/react';
+import rootReducer from '../reducers/rootReducer';
+import '@testing-library/jest-dom/extend-expect';
+afterEach(cleanup);
+
+function renderWithRedux(
+  ui,
+  { initialState, store = createStore(rootReducer, initialState) } = {}
+) {
+  return {
+    ...render(<Provider store={store}>{ui}</Provider>),
+    store,
+  }
+}
 
 describe('Test input', () => {
   it('Test input and label mail', () => {
-    const { queryByTestId } = render(<Input />)
+    const { queryByTestId } = renderWithRedux(
+      <MemoryRouter>
+        <Input />
+      </MemoryRouter>,
+    );
     const inputMail = queryByTestId('input-gravatar-email');
     const labelMail = queryByTestId('label-gravatar-email');
     expect(inputMail).toBeInTheDocument();
@@ -15,7 +35,11 @@ describe('Test input', () => {
 
   });
   it('Test input and label name', () => {
-    const { queryByTestId } = render(<Input />)
+    const { queryByTestId } = renderWithRedux(
+      <MemoryRouter>
+        <Input />
+      </MemoryRouter>,
+    );
     const inputName = queryByTestId('input-player-name');
     const labelName = queryByTestId('label-player-name');
     expect(inputName).toBeInTheDocument();
