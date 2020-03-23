@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import tokenRequest from '../services/tokenRequest';
 import SendToken from '../actions/SendToken';
 
@@ -16,3 +17,7 @@ class Start extends Component {
 }
 
 export default connect()(Start);
+
+Start.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};

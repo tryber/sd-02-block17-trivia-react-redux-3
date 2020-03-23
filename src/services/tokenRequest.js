@@ -3,7 +3,6 @@ async function tokenRequest() {
   const token = await fetch(URL)
     .then((response) => response.json())
     .then((data) => data);
-  console.log(token);
   return token;
 }
 
