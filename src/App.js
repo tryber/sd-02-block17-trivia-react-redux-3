@@ -1,7 +1,7 @@
 import React from 'react';
-import { Provider } from 'react-redux';
+import { Switch, Route } from 'react-router-dom';
 import logo from './trivia.png';
-import store from './store/index';
+import Game from './components/Game';
 import Start from './pages/Start';
 import './App.css';
 
@@ -13,10 +13,11 @@ export default function App() {
         <p>
           SUA VEZ
         </p>
-        <Provider store={store}>
-          <Start />
-        </Provider>
       </header>
+      <Switch>
+        <Route exact path="/" component={Start} />
+        <Route path="/game" component={Game} />
+      </Switch>
     </div>
   );
 }

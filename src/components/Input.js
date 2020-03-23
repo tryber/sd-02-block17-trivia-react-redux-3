@@ -8,4 +8,5 @@ const InputInitial = () => (
     <input type="text" id="input-Name" data-testid="input-player-name" />
   </div>
 );
+
 export default InputInitial;
