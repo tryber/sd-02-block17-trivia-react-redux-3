@@ -3,11 +3,15 @@ import { connect } from 'react-redux';
 // import PropTypes from 'prop-types';
 import PlayGameButton from '../components/PlayGameButton';
 import InputInitial from '../components/Input';
+import ConfigurationButton from '../components/ConfigurationButton';
 
 class Start extends Component {
   render() {
     return (
       <div>
+        <div>
+          <ConfigurationButton />
+        </div>
         <div>
           <InputInitial />
         </div>
