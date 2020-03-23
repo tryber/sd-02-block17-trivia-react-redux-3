@@ -1,7 +1,8 @@
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import React from 'react';
 import sendName from '../actions/SendName';
 import sendEmail from '../actions/SendEmail';
-import { connect } from 'react-redux';
 
 const InputInitial = ({ nameToReducer, emailToReducer }) => (
   <div>
@@ -28,3 +29,8 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(null, mapDispatchToProps)(InputInitial);
+
+InputInitial.propTypes = {
+  nameToReducer: PropTypes.func,
+  emailToReducer: PropTypes.func,
+}.isRequired;
