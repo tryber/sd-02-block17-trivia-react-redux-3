@@ -1,16 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 import logo from './trivia.png';
 import Game from './components/Game';
 import Start from './pages/Start';
 import './App.css';
 
-
 export default function App() {
   return (
     <div className="App">
-    <header className="App-header">
+      <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           SUA VEZ

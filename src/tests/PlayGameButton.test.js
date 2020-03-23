@@ -3,17 +3,20 @@ import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent, cleanup, waitForDomChange } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import PlayGameButton from '../components/PlayGameButton';
+import store from '../store';
 import App from '../App';
+import { Provider } from 'react-redux';
 
 afterEach(cleanup);
 
 describe('testing play game button', () => {
   it('testing if there is a play game button with data-testid=`config-button`', () => {
     const { getByTestId } = render(
-      <MemoryRouter>
-        <App />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter>
+          <App />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(getByTestId('config-button')).toBeInTheDocument();
@@ -23,9 +26,11 @@ describe('testing play game button', () => {
   it('testing if the page is redirect to the path game when click the button', () => {
     const history = createMemoryHistory();
     const { getByTestId } = render(
-      <Router history={history}>
-        <App />
-      </Router>,
+      <Provider store={store}>
+        <Router history={history}>
+          <App />
+        </Router>,
+      </Provider>
     );
     fireEvent.click(getByTestId('config-button'));
     expect(history.location.pathname).toBe('/game')
