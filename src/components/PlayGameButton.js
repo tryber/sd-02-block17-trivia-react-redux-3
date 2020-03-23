@@ -6,7 +6,15 @@ import tokenRequest from '../services/tokenRequest';
 import SendToken from '../actions/SendToken';
 
 const PlayGameButton = ({ getToken }) => (
-  <Link to="/game"><button type="button" onClick={getToken} data-testid="config-button">Jogar!</button></Link>
+  <Link to="/game">
+    <button
+      type="button"
+      onClick={getToken}
+      data-testid="config-button"
+    >
+      Jogar!
+    </button>
+  </Link>
 );
 
 const mapDispatchToProps = (dispatch) => ({
