@@ -1,8 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Header from '../components/Header';
 
-const Game = () => (<Header />);
+const Game = () => <div>Game</div>;
 
-
-export default connect()(Game);
+export default Game;

@@ -3,6 +3,7 @@ import { Switch, Route } from 'react-router-dom';
 import logo from './trivia.png';
 import Game from './pages/Game';
 import Start from './pages/Start';
+import Configuration from './pages/Configuration';
 import './App.css';
 
 export default function App() {
