@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PlayGameButton from '../components/PlayGameButton';
-import InputInitial from '../components/Input';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import PlayGameButton from '../components/PlayGameButton';
+import InputInitial from '../components/Input';
 import tokenRequest from '../services/tokenRequest';
 import SendToken from '../actions/SendToken';
 
@@ -14,7 +14,7 @@ class Start extends Component {
   }
 
   render() {
-    return(
+    return (
       <div>
         <div>
           <InputInitial />
@@ -23,7 +23,7 @@ class Start extends Component {
           <PlayGameButton />
         </div>
       </div>
-   );
+    );
   }
 }
 
