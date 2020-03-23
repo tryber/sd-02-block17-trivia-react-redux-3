@@ -31,6 +31,5 @@ describe('Test render Game', () => {
     expect(getByTestId('header-score')).toBeInTheDocument();
     expect(getByTestId('header-player-name').innerHTML).toBe('Jogador:');
     expect(getByTestId('header-score').innerHTML).toBe('Pontos:0');
-    // expect(getByTestId('Gravatar profile')).toBe('Pontos:0');
   });
 });

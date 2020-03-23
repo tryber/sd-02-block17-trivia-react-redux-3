@@ -1,5 +1,4 @@
 import React from 'react';
-<<<<<<< HEAD
 import Input from '../components/Input';
 import { MemoryRouter } from 'react-router-dom';
 import { createStore } from 'redux';
@@ -26,14 +25,6 @@ describe('Test input', () => {
         <Input />
       </MemoryRouter>,
     );
-=======
-import { render } from '@testing-library/react';
-import Input from '../components/Input';
-
-describe('Test input', () => {
-  it('Test input and label mail', () => {
-    const { queryByTestId } = render(<Input />);
->>>>>>> master
     const inputMail = queryByTestId('input-gravatar-email');
     const labelMail = queryByTestId('label-gravatar-email');
     expect(inputMail).toBeInTheDocument();
@@ -43,15 +34,11 @@ describe('Test input', () => {
     expect(labelMail.innerHTML).toBe('Email do gravatar:');
   });
   it('Test input and label name', () => {
-<<<<<<< HEAD
     const { queryByTestId } = renderWithRedux(
       <MemoryRouter>
         <Input />
       </MemoryRouter>,
     );
-=======
-    const { queryByTestId } = render(<Input />);
->>>>>>> master
     const inputName = queryByTestId('input-player-name');
     const labelName = queryByTestId('label-player-name');
     expect(inputName).toBeInTheDocument();

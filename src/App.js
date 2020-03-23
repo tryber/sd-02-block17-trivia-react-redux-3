@@ -16,6 +16,7 @@ export default function App() {
         </p>
         <Switch>
           <Route exact path="/" component={Start} />
+          <Route path="/configuration" component={Configuration} />
           <Route path="/game" component={Game} />
         </Switch>
       </header>
