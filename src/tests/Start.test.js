@@ -15,7 +15,6 @@ function renderWithRedux(
     store,
   };
 }
-jest.useFakeTimers();
 
 describe('Token is being retrieved successfully', () => {
   it('test is component is receiving the token in its store', async () => {

@@ -1,7 +1,7 @@
 import tokenRequest from '../services/tokenRequest';
 
 describe('Token is being retrieved successfully', () => {
-  test('GET request', async () => {
+  test('fetch request is working properly and receiving token', async () => {
     const {
       response_code: responseCode,
       response_message: responseMessage,
