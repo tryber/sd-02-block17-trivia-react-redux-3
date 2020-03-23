@@ -19,6 +19,7 @@ const InputInitial = ({ NameToReducer, EmailToReducer }) => (
     />
   </div>
 );
+
 const mapDispatchToProps = (dispatch) => ({
   NameToReducer: (name) => dispatch(sendName(name)),
   EmailToReducer: (email) => dispatch(sendEmail(email)),
