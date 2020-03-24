@@ -1,15 +1,13 @@
 export const INITIAL_STATE = {
-  questions: [],
+  results: [],
 };
 
 const GET_QUESTION = 'GET_QUESTION';
 
-export default function getToken(state = INITIAL_STATE, {
-  type, questions,
-}) {
+export default function getQuestions(state = INITIAL_STATE, { type, results }) {
   switch (type) {
     case GET_QUESTION:
-      return [...questions];
+      return { results };
     default:
       return state;
   }
