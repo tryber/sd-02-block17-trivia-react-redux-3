@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getQuestionsApi from '../services/getQuestionsApi';
 import receiveQuestion from '../actions/ReceiveQuestion';
+import Questions from '../components/Questions';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -11,7 +12,7 @@ class Game extends React.Component {
       .then(({ results }) => sendQuestions(results));
   }
   render() {
-    return (<h1>Game</h1>);
+    return (<Questions />);
   }
 }
 
