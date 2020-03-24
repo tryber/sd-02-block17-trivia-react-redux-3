@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import getQuestionsApi from '../services/getQuestionsApi';
 import receiveQuestion from '../actions/ReceiveQuestion';
-
+import Answers from '../components/Answers';
 class Game extends React.Component {
   componentDidMount() {
     const { sendQuestions } = this.props;
