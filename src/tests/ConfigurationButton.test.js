@@ -7,12 +7,13 @@ import { render, fireEvent, cleanup } from '@testing-library/react';
 import rootReducer from '../reducers/rootReducer';
 import '@testing-library/jest-dom/extend-expect';
 import App from '../App';
+import gameReduce from '../reducers/gameReducer';
 
 afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { initialState, store = createStore(rootReducer, initialState) } = {}
+  { store = createStore(gameReduce,{ gameReducer: { name:'', email:'' }} ) } = {}
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
