@@ -19,6 +19,10 @@ class Questions extends Component {
     this.setState((state) => ({ questionNumber: state.questionNumber + 1 }));
   }
 
+  // counter() {
+  //   setTimeout(this.nextQuestion(), 30000);
+  // }
+
   render() {
     const { results } = this.props;
     const { questionNumber } = this.state;
@@ -30,6 +34,7 @@ class Questions extends Component {
         <div>
           <p>{currentCategory[questionNumber]}</p>
           <h3>{currentQuestion[questionNumber]}</h3>
+          {/* <p>{this.counter()}</p> */}
         </div>
         <div>
           {/* <Answers question={currentQuestion}/> */}
