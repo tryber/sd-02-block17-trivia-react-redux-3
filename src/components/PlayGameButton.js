@@ -36,4 +36,4 @@ PlayGameButton.propTypes = {
 PlayGameButton.defaultProps = {
   name: '',
   email: '',
-}
+};
