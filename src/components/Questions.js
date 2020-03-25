@@ -10,7 +10,7 @@ class Questions extends Component {
 
     this.state = {
       questionNumber: 0,
-      currentCount: 30,
+      currentCount: 5,
     };
 
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -21,16 +21,18 @@ class Questions extends Component {
   }
 
   timer() {
-    const { currentCount } = this.state;
+    const { questionNumber, currentCount } = this.state;
     this.setState({ currentCount: currentCount - 1 });
 
-    if (currentCount === 0) {
+    if (currentCount === 0 && questionNumber < 4) {
       this.nextQuestion();
+    } if (currentCount === 1 && questionNumber === 4) {
+      clearInterval(this.intervalId);
     }
   }
 
   nextQuestion() {
-    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 30 }));
+    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 5 }));
   }
 
   render() {
