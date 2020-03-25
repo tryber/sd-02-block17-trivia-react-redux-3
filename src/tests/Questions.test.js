@@ -25,3 +25,9 @@ function renderWithRedux(
 }
 
 afterEach(cleanup);
+
+describe('test', () => {
+  it('test', () => {
+    expect('test').toBe('test');
+  })
+});
