@@ -10,13 +10,38 @@ class Questions extends Component {
 
     this.state = {
       questionNumber: 0,
+      currentCount: 30,
     };
 
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
+  componentDidMount() {
+    this.intervalId = setInterval(this.timer.bind(this), 1000);
+  }
+
+  // componentDidUpdate() {
+  //   const { currentCount } = this.state;
+  //   if (currentCount === 0) {
+  //     this.nextQuestion();
+  //   }
+  // }
+
+  // componentWillUnmount() {
+  //   clearInterval(this.intervalId);
+  // }
+
+  timer() {
+    const { currentCount } = this.state;
+    this.setState({ currentCount: currentCount - 1 });
+
+    if (currentCount === 0) {
+      this.nextQuestion();
+    }
+  }
+
   nextQuestion() {
-    this.setState((state) => ({ questionNumber: state.questionNumber + 1 }));
+    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 30 }));
   }
 
   // counter() {
@@ -25,7 +50,7 @@ class Questions extends Component {
 
   render() {
     const { results } = this.props;
-    const { questionNumber } = this.state;
+    const { questionNumber, currentCount } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
     return (
@@ -34,6 +59,9 @@ class Questions extends Component {
           <p>{currentCategory[questionNumber]}</p>
           <h3>{currentQuestion[questionNumber]}</h3>
           {/* <p>{this.counter()}</p> */}
+        </div>
+        <div>
+          {`Tempo: ${currentCount}`}
         </div>
         <div>
           <Answers question={results[questionNumber]} />
