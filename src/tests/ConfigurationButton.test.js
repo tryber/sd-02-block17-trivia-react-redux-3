@@ -13,7 +13,7 @@ afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { store = createStore(gameReduce, { gameReducer: { name: '', email: '' }, categoryReducer: { category: [], selected: '' } }) } = {}
+  { store = createStore(gameReduce, { gameReducer: { name: '', email: '' }, categoryReducer: { category: [], selected:{} } }) } = {}
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
