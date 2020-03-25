@@ -36,7 +36,7 @@ class Questions extends Component {
           {/* <p>{this.counter()}</p> */}
         </div>
         <div>
-          <Answers question={results[questionNumber]}/>
+          <Answers question={results[questionNumber]} />
         </div>
         <div>
           {

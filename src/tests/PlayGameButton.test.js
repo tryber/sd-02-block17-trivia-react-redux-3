@@ -57,6 +57,5 @@ describe('testing play game button', () => {
     );
     fireEvent.click(getByTestId('btn-play'));
     await wait(() => expect(getState().token).not.toBeNull());
-
   });
 });
