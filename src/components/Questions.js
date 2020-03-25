@@ -10,7 +10,7 @@ class Questions extends Component {
 
     this.state = {
       questionNumber: 0,
-      currentCount: 5,
+      currentCount: 30,
     };
 
     this.nextQuestion = this.nextQuestion.bind(this);
@@ -32,7 +32,7 @@ class Questions extends Component {
   }
 
   nextQuestion() {
-    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 5 }));
+    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 30 }));
   }
 
   render() {
