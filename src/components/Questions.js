@@ -28,7 +28,6 @@ class Questions extends Component {
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
-    console.log(this.state, results);
     return (
       <div>
         <div>
@@ -37,7 +36,7 @@ class Questions extends Component {
           {/* <p>{this.counter()}</p> */}
         </div>
         <div>
-          <Answers question={currentQuestion} />
+          <Answers question={results[questionNumber]}/>
         </div>
         <div>
           {
