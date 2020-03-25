@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import getQuestionsApi from '../services/getQuestionsApi';
 import receiveQuestion from '../actions/ReceiveQuestion';
 import Questions from '../components/Questions';
+import Header from '../components/Header';
 
 class Game extends React.Component {
   componentDidMount() {
@@ -12,7 +13,12 @@ class Game extends React.Component {
       .then(({ results }) => sendQuestions(results));
   }
   render() {
-    return (<Questions />);
+    return (
+      <div>
+        <Header />
+        <Questions />
+      </div>
+    );
   }
 }
 
