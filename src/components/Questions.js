@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-// import Answers from './Answers';
+import Answers from './Answers';
 
 class Questions extends Component {
   constructor(props) {
@@ -10,7 +10,7 @@ class Questions extends Component {
 
     this.state = {
       questionNumber: 0,
-    }
+    };
 
     this.nextQuestion = this.nextQuestion.bind(this);
   }
@@ -28,7 +28,6 @@ class Questions extends Component {
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
-    console.log(this.state, results)
     return (
       <div>
         <div>
@@ -37,13 +36,13 @@ class Questions extends Component {
           {/* <p>{this.counter()}</p> */}
         </div>
         <div>
-          {/* <Answers question={currentQuestion}/> */}
+          <Answers question={results[questionNumber]}/>
         </div>
         <div>
           {
             questionNumber < 4
               ? <button type="button" onClick={this.nextQuestion}>PRÓXIMA</button>
-              : <Link to='/feedback'><button type="button">FINALIZAR</button></Link>
+              : <Link to="/feedback"><button type="button">FINALIZAR</button></Link>
           }
         </div>
       </div>
@@ -53,7 +52,7 @@ class Questions extends Component {
 
 Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
-}
+};
 
 const mapStateToProps = ({ getQuestions: { results } }) => ({ results });
 
