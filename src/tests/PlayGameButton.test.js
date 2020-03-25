@@ -12,11 +12,10 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import App from '../App';
 import getToken, { INITIAL_STATE } from '../reducers/getToken';
-
-const obj = { getToken: { INITIAL_STATE } };
+const reducer = { getToken: INITIAL_STATE, gameReducer: { namea: '', email: '', scoreboard: 0 } }
 function renderWithRedux(
   ui,
-  { store = createStore(getToken, obj) } = {},
+  { store = createStore(getToken, reducer) } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
