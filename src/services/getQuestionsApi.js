@@ -1,5 +1,3 @@
-import { connect } from 'react-redux';
-
 export async function getQuestionsApi(props) {
   const { token } = props !== undefined ? props : '';
   const URL = `https://opentdb.com/api.php?amount=5&token=${token}`;
@@ -9,9 +7,4 @@ export async function getQuestionsApi(props) {
   return results;
 }
 
-const mapStateToProps = ({ getToken }) => {
-  const { token } = getToken;
-  return { token };
-};
-
-export default connect(mapStateToProps)(getQuestionsApi);
+export default getQuestionsApi;
