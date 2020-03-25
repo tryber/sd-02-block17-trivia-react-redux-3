@@ -12,6 +12,7 @@ class Game extends React.Component {
     getQuestionsApi(this.props)
       .then(({ results }) => sendQuestions(results));
   }
+
   render() {
     return (
       <div>

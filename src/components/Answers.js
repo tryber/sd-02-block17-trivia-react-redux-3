@@ -23,7 +23,7 @@ class Answers extends React.Component {
     const arr2 = (arr.length > 2) ? ['', '', '', ''] : ['', ''];
     for (let i = 0; i < arr2.length; i += 1) {
       const aux = (arr.length > 1) ? Math.round((Math.random() * arr.length)) : 0;
-      arr2[i] = arr.splice(aux - 1, 1)[0];
+      arr2.splice(i, 1, arr.splice(aux - 1, 1)[0]);
     }
     this.setState({ results: arr2, array: ['', '', '', ''] });
   }
