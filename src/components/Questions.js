@@ -20,17 +20,6 @@ class Questions extends Component {
     this.intervalId = setInterval(this.timer.bind(this), 1000);
   }
 
-  // componentDidUpdate() {
-  //   const { currentCount } = this.state;
-  //   if (currentCount === 0) {
-  //     this.nextQuestion();
-  //   }
-  // }
-
-  // componentWillUnmount() {
-  //   clearInterval(this.intervalId);
-  // }
-
   timer() {
     const { currentCount } = this.state;
     this.setState({ currentCount: currentCount - 1 });
@@ -43,10 +32,6 @@ class Questions extends Component {
   nextQuestion() {
     this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 30 }));
   }
-
-  // counter() {
-  //   setTimeout(this.nextQuestion(), 30000);
-  // }
 
   render() {
     const { results } = this.props;

@@ -10,7 +10,6 @@ class Answers extends React.Component {
     this.submitAnswer = this.submitAnswer.bind(this);
   }
 
-
   componentDidUpdate(prevProps) {
     const { question } = this.props;
     if (prevProps.question !== question) {
@@ -68,7 +67,6 @@ class Answers extends React.Component {
     );
   }
 }
-
 
 export default Answers;
 
