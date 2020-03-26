@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import classifyAnswers from '../actions/GameActions';
+import formatAnswers from '../actions/GameActions';
 import { stopTimer } from '../actions/TimerActions';
 import './Answers.css';
 
@@ -21,6 +21,7 @@ class Answers extends Component {
   }
 
   getAnswers(question) {
+    const { toFormatAnswers } = this.props;
     const { correct_answer: correct, incorrect_answers: incorrect } = question;
     const allAnswers = [correct, ...incorrect];
     const filteredAnswers = (allAnswers.length > 2) ? ['', '', '', ''] : ['', ''];
@@ -29,27 +30,28 @@ class Answers extends Component {
       filteredAnswers.splice(i, 1, allAnswers.splice(aux - 1, 1)[0]);
     }
     this.setState({ results: filteredAnswers, answersArray: ['', '', '', ''] });
+    toFormatAnswers(['', '', '', '']);
   }
 
   submitAnswer() {
     const {
       question: { correct_answer: correctAnswer },
-      toClassifyAnswers,
+      toFormatAnswers,
     } = this.props;
     const { results, answersArray } = this.state;
     const index = results.indexOf(correctAnswer);
-    const classifiedAnswers = {
+    const formattedAnswers = {
       ...this.state,
       answersArray: answersArray.map((ele, i) => ((i === index) ? 'green' : 'red')),
     };
-    toClassifyAnswers(classifiedAnswers);
+    toFormatAnswers(formattedAnswers);
   }
 
   render() {
     const { results } = this.state;
     const {
       question,
-      classifiedAnswers: { answersArray },
+      formattedAnswers: { answersArray },
       question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
@@ -58,7 +60,6 @@ class Answers extends Component {
 
     return (
       <div>
-        {/* {timer === 0 && (() => this.submitAnswer())} */}
         {(Object.keys(results).length > 0)
           ? results.map((response, index) => (
             <button
@@ -86,15 +87,15 @@ class Answers extends Component {
 }
 
 const mapStateToProps = ({
-  gameReducer: { classifiedAnswers },
+  gameReducer: { formattedAnswers },
   timeReducer: { timer },
 }) => ({
   timer,
-  classifiedAnswers,
+  formattedAnswers,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toClassifyAnswers: (classifiedAnswers) => dispatch(classifyAnswers(classifiedAnswers)),
+  toFormatAnswers: (formattedAnswers) => dispatch(formatAnswers(formattedAnswers)),
   toStopTimer: () => dispatch(stopTimer()),
 });
 
@@ -102,12 +103,12 @@ export default connect(mapStateToProps, mapDispatchToProps)(Answers);
 
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
-  toClassifyAnswers: PropTypes.func.isRequired,
-  classifiedAnswers: PropTypes.arrayOf(PropTypes.string),
+  toFormatAnswers: PropTypes.func.isRequired,
+  formattedAnswers: PropTypes.arrayOf(PropTypes.string),
   toStopTimer: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {
   question: {},
-  classifiedAnswers: [],
+  formattedAnswers: [],
 };

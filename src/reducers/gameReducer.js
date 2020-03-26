@@ -1,18 +1,18 @@
-import { CLASSIFY_ANSWERS } from '../actions/GameActions';
+import { FORMAT_ANSWERS } from '../actions/GameActions';
 
 export const INITIAL_STATE = {
   name: '',
   email: '',
   scoreboard: 0,
   wrongAnswerFlag: false,
-  classifiedAnswers: [],
+  formattedAnswers: [],
 };
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';
 const WRONG_ASNWER = 'WRONG_ANSWER';
 
 export default function nameAndEmail(state = INITIAL_STATE, {
-  type, email, name, classifiedAnswers,
+  type, email, name, formattedAnswers,
 }) {
   switch (type) {
     case SENDEMAIL:
@@ -21,8 +21,8 @@ export default function nameAndEmail(state = INITIAL_STATE, {
       return { ...state, name };
     case WRONG_ASNWER:
       return { ...state, wrongAnswerFlag: true };
-    case CLASSIFY_ANSWERS:
-      return { ...state, classifiedAnswers };
+    case FORMAT_ANSWERS:
+      return { ...state, formattedAnswers };
     default:
       return state;
   }

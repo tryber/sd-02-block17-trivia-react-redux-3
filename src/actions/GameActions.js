@@ -1,5 +1,5 @@
-export const CLASSIFY_ANSWERS = 'CLASSIFY_ANSWERS';
+export const FORMAT_ANSWERS = 'FORMAT_ANSWERS';
 
-export default function classifyAnswers(classifiedAnswers) {
-  return { type: CLASSIFY_ANSWERS, classifiedAnswers };
+export default function formatAnswers(formattedAnswers) {
+  return { type: FORMAT_ANSWERS, formattedAnswers };
 }
