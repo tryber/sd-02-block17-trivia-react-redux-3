@@ -11,6 +11,8 @@ class DropdownCategory extends React.Component {
       .then(({ trivia_categories: category }) => saveCategory(category));
   }
 
+  //test gitconfig
+
   render() {
     const { category, saveChange, selected } = this.props;
     return (
