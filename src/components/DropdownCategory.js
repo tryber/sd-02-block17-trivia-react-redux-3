@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import getCatergory from '../services/getCategory';
 import requestCategory from '../actions/RequestCategory';
 import changeC from '../actions/ChangeCategory';
@@ -42,4 +42,4 @@ DropdownCategory.propTypes = {
 DropdownCategory.defaultProps = {
   category: [],
   selected: {},
-}
+};

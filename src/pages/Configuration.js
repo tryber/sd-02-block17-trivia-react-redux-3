@@ -13,4 +13,4 @@ export default Configuration;
 
 Configuration.propTypes = {
   history: PropTypes.instanceOf(Object).isRequired,
-}
+};
