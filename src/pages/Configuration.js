@@ -1,6 +1,6 @@
 import React from 'react';
-import DropdownCategory from '../components/DropdownCategory';
 import PropTypes from 'prop-types';
+import DropdownCategory from '../components/DropdownCategory';
 
 const Configuration = ({ history }) => (
   <div>
