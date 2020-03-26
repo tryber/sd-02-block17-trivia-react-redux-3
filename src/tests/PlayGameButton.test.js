@@ -17,7 +17,16 @@ const reducer = {
   getToken: INITIAL_STATE,
   gameReducer: { namea: '', email: '', scoreboard: 0 },
   categoryReducer: { category: [], selected: {} },
-  getQuestions: { results: [] }
+  getQuestions: { results: [] },
+  typeReducer: {
+    types: ['multiple', 'boolean'],
+    Tselected: '',
+  },
+  difficultyreducer: {
+    difficulty: ['easy', 'medium', 'hard'],
+    Dselected: '',
+  },
+  categoryReducer: { category: [], Cselected: {} },
 };
 
 function renderWithRedux(

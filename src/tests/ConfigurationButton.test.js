@@ -15,9 +15,15 @@ function renderWithRedux(
   { store = createStore(
     gameReduce, {
     gameReducer: { name: '', email: '' },
-    difficultyreducer: { difficulty: ['easy', 'medium', 'hard'],
-    Dselected: '', },
-    categoryReducer: { category: [], Cselected:{} }
+    difficultyreducer: {
+      difficulty: ['easy', 'medium', 'hard'],
+      Dselected: '',
+    },
+    categoryReducer: { category: [], Cselected: {} },
+    typeReducer: {
+      types: ['multiple', 'boolean'],
+      Tselected: '',
+    }
   }
   ) } = {}
 ) {

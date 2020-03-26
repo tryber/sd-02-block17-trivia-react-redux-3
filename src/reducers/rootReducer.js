@@ -4,6 +4,7 @@ import gameReducer from './gameReducer';
 import getQuestions from './getQuestions';
 import categoryReducer from './categoryReducer';
 import difficultyreducer from './difficultyreducer';
+import typeReducer from './typeReducer';
 
 const rootReducer = () => combineReducers({
   getToken,
@@ -11,6 +12,7 @@ const rootReducer = () => combineReducers({
   getQuestions,
   categoryReducer,
   difficultyreducer,
+  typeReducer,
 });
 
 export default rootReducer;

@@ -27,7 +27,8 @@ const mapStateToProps = ({
   getToken: { token },
   categoryReducer: { Cselected },
   difficultyreducer: { Dselected },
-}) => ({ token, Cselected, Dselected });
+  typeReducer: { Tselected },
+}) => ({ token, Cselected, Dselected, Tselected });
 const mapDispatchToProps = (dispatch) => ({
   sendQuestions: (results) => dispatch(receiveQuestion(results)),
 });

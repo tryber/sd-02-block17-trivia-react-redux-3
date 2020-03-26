@@ -4,8 +4,10 @@ import tokenRequest from '../services/tokenRequest';
 describe('testing getQuestions API', () => {
   it('questions are retrieved from API when theres a token', async () => {
     const { token } = await tokenRequest();
-    const selected = { id: ''}
-    const props = { token, selected };
+    const Cselected = { id: ''}
+    const Dselected= '';
+    const Tselected= '';
+    const props = { token, Cselected, Dselected,Tselected };
     const { response_code: responseCode, results } = await getQuestionsApi(props);
     const resultModel = [{
       category: expect.any(String),
@@ -23,7 +25,7 @@ describe('testing getQuestions API', () => {
     expect(results).toEqual(expect.arrayContaining(resultModel));
   });
 
-  it('response 3 and empty array is retrieved when no token is provided', async () => {
+  it('response 2 and empty array is retrieved when no token is provided', async () => {
     const { response_code: responseCode, results } = await getQuestionsApi();
     expect(responseCode).toBe(2);
     expect(results).toEqual(expect.arrayContaining([]));
