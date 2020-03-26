@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import changeD from '../actions/ChangeDifficulty';
+import ChangeDifficulty from '../actions/ChangeDifficulty';
 
-const DropdownDifficulty = ({ difficulty, Dselected, saveChange }) => (
+const DropdownDifficulty = ({ difficulty, difficultySelected, saveChange }) => (
   <div>
     <h4>Dificuldade:</h4>
     <select
       data-testid="question-difficulty-dropdown"
-      value={Dselected}
+      value={difficultySelected}
       onChange={({ target }) => saveChange(target.value)}
     >
       <option value="">Random</option>
@@ -17,11 +17,11 @@ const DropdownDifficulty = ({ difficulty, Dselected, saveChange }) => (
   </div>
 );
 
-const mapStateToProps = ({ difficultyreducer: { difficulty, Dselected } }) =>
-  ({ difficulty, Dselected });
+const mapStateToProps = ({ difficultyreducer: { difficulty, difficultySelected } }) =>
+  ({ difficulty, difficultySelected });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveChange: (change) => dispatch(changeD(change)),
+  saveChange: (change) => dispatch(ChangeDifficulty(change)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownDifficulty);

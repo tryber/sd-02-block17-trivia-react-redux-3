@@ -1,25 +1,25 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import getCatergory from '../services/getCategory';
+import getCategory from '../services/getCategory';
 import requestCategory from '../actions/RequestCategory';
-import changeC from '../actions/ChangeCategory';
+import changeCategory from '../actions/ChangeCategory';
 
 class DropdownCategory extends React.Component {
   componentDidMount() {
     const { saveCategory } = this.props;
-    getCatergory()
+    getCategory()
       .then(({ trivia_categories: category }) => saveCategory(category));
   }
 
   render() {
-    const { category, saveChange, Cselected } = this.props;
+    const { category, saveChange, categorySelected } = this.props;
     return (
       <div>
         <h4>Categoria:</h4>
         <select
           data-testid="question-category-dropdown"
-          value={Cselected.id}
+          value={categorySelected.id}
           onChange={({ target }) => saveChange(target.value)
           }
         >
@@ -31,11 +31,11 @@ class DropdownCategory extends React.Component {
   }
 }
 
-const mapStateToProps = ({ categoryReducer: { category, Cselected } }) => ({ category, Cselected });
+const mapStateToProps = ({ categoryReducer: { category, categorySelected } }) => ({ category, categorySelected });
 
 const mapDispatchToProps = (dispatch) => ({
   saveCategory: (results) => dispatch(requestCategory(results)),
-  saveChange: (change) => dispatch(changeC(change)),
+  saveChange: (change) => dispatch(changeCategory(change)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownCategory);

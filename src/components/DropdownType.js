@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import changeT from '../actions/ChangeType';
+import changeType from '../actions/ChangeType';
 
-const DropdownType = ({ types, Tselected, saveChange }) => (
+const DropdownType = ({ types, typeSelected, saveChange }) => (
   <div>
     <h4>Tipo:</h4>
     <select
       data-testid="question-type-dropdown"
-      value={Tselected}
+      value={typeSelected}
       onChange={({ target }) => saveChange(target.value)}
     >
       <option value="">Random</option>
@@ -17,11 +17,11 @@ const DropdownType = ({ types, Tselected, saveChange }) => (
   </div>
 );
 
-const mapStateToProps = ({ typeReducer: { types, Tselected } }) =>
-  ({ types, Tselected });
+const mapStateToProps = ({ typeReducer: { types, typeSelected } }) =>
+  ({ types, typeSelected });
 
 const mapDispatchToProps = (dispatch) => ({
-  saveChange: (change) => dispatch(changeT(change)),
+  saveChange: (change) => dispatch(changeType(change)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownType);

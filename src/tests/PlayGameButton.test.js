@@ -15,7 +15,7 @@ import getToken, { INITIAL_STATE } from '../reducers/getToken';
 
 const reducer = {
   getToken: INITIAL_STATE,
-  gameReducer: { namea: '', email: '', scoreboard: 0 },
+  gameReducer: { name: '', email: '', scoreboard: 0 },
   categoryReducer: { category: [], selected: {} },
   getQuestions: { results: [] },
   typeReducer: {

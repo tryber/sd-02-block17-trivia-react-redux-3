@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   types: ['multiple', 'boolean'],
-  Tselected: '',
+  typeSelected: '',
 };
 
 const CHANGE_TYPE = 'CHANGE_TYPE';
@@ -10,7 +10,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case CHANGE_TYPE:
       return {
         ...state,
-        Tselected: action.change,
+        typeSelected: action.change,
       };
     default: return state;
   }

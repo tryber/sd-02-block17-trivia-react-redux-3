@@ -17,12 +17,12 @@ function renderWithRedux(
     gameReducer: { name: '', email: '' },
     difficultyreducer: {
       difficulty: ['easy', 'medium', 'hard'],
-      Dselected: '',
+      difficultySelected: '',
     },
-    categoryReducer: { category: [], Cselected: {} },
+    categoryReducer: { category: [], categorySelected: {} },
     typeReducer: {
       types: ['multiple', 'boolean'],
-      Tselected: '',
+      typesSelected: '',
     }
   }
   ) } = {}

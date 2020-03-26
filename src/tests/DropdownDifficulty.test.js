@@ -14,7 +14,7 @@ function renderWithRedux(
   { store = createStore(difficultyreducer, {
     difficultyreducer: {
       difficulty: ['easy', 'medium', 'hard'],
-      Dselected: '',
+      difficultySelected: '',
     }
   }) } = {}
 ) {
@@ -28,7 +28,7 @@ function renderWithRedux2(
   { store = createStore(difficultyreducer, {
     difficultyreducer: {
       difficulty: ['easy', 'medium', 'hard'],
-      Dselected: 'medium',
+      difficultySelected: 'medium',
     }
   }) } = {}
 ) {
@@ -44,7 +44,6 @@ describe('test dropdown', () => {
         <DropdownDifficulty />
       </MemoryRouter>
     );
-    const option = container.querySelectorAll('option')
     expect(getByTestId('question-difficulty-dropdown')).toBeInTheDocument();
     expect(getByTestId('question-difficulty-dropdown').value).toBe('');
   })

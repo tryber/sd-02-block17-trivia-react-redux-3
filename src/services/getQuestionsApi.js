@@ -1,7 +1,8 @@
 export async function getQuestionsApi(props) {
-  const { token, Cselected, Dselected, Tselected } = props !== undefined ? props : '';
-  const { id } = Cselected !== undefined ? Cselected : '';
-  const URL = `https://opentdb.com/api.php?amount=5&token=${token}&category=${id}&difficulty=${Dselected}&type=${Tselected}`;
+  const { token, categorySelected, difficultySelected, typeSelected } = props !== undefined ? props : '';
+  const { id } = categorySelected !== undefined ? categorySelected : '';
+  const URL = (token)? `https://opentdb.com/api.php?amount=5&token=${token}&category=${id}&difficulty=${difficultySelected}&type=${typeSelected}`:
+  `https://opentdb.com/api.php?amount=5&token=${token}`;
   const results = await fetch(URL)
     .then((response) => response.json())
     .then((data) => data);

@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   difficulty: ['easy', 'medium', 'hard'],
-  Dselected: '',
+  difficultySelected: '',
 };
 
 const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
@@ -10,7 +10,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case CHANGE_DIFFICULTY:
       return {
         ...state,
-        Dselected: action.change,
+        difficultySelected: action.change,
       };
     default: return state;
   }

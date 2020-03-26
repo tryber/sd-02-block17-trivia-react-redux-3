@@ -14,7 +14,7 @@ function renderWithRedux(
   { store = createStore(typeReducer, {
     typeReducer: {
       types: ['multiple', 'boolean'],
-      Tselected: '',
+      typeSelected: '',
     }
   }) } = {}
 ) {
@@ -28,7 +28,7 @@ function renderWithRedux2(
   { store = createStore(typeReducer, {
     typeReducer: {
       types: ['multiple', 'boolean'],
-      Tselected: 'boolean',
+      typeSelected: 'boolean',
     }
   }) } = {}
 ) {
@@ -44,7 +44,6 @@ describe('test dropdown', () => {
         <DropdownType />
       </MemoryRouter>
     );
-    const option = container.querySelectorAll('option')
     expect(getByTestId('question-type-dropdown')).toBeInTheDocument();
     expect(getByTestId('question-type-dropdown').value).toBe('');
   })

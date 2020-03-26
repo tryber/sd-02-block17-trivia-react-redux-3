@@ -14,7 +14,7 @@ function renderWithRedux(
   { store = createStore(categoryReducer, {
     categoryReducer: {
       category: [],
-      Cselected: { id: '', name: '' },
+      categorySelected: { id: '', name: '' },
     }
   }) } = {}
 ) {
@@ -28,7 +28,7 @@ function renderWithRedux2(
   { store = createStore(categoryReducer, {
     categoryReducer: {
       category: [{ id: 9,name: 'blabla' }],
-      Cselected: { id: 9, name: 'aaaa' },
+      categorySelected: { id: 9, name: 'aaaa' },
     }
   }) } = {}
 ) {
