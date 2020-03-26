@@ -2,7 +2,7 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { render, fireEvent, cleanup } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import DropdownCategory from '../components/DropdownCategory';
 import categoryReducer from '../reducers/categoryReducer';
@@ -14,7 +14,7 @@ function renderWithRedux(
   { store = createStore(categoryReducer, {
     categoryReducer: {
       category: [],
-      selected: { id: '', name: '' },
+      Cselected: { id: '', name: '' },
     }
   }) } = {}
 ) {
@@ -28,7 +28,7 @@ function renderWithRedux2(
   { store = createStore(categoryReducer, {
     categoryReducer: {
       category: [{ id: 9,name: 'blabla' }],
-      selected: { id: 9, name: '' },
+      Cselected: { id: 9, name: 'aaaa' },
     }
   }) } = {}
 ) {
