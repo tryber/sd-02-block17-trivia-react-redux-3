@@ -1,5 +1,6 @@
 import React from 'react';
 import DropdownCategory from '../components/DropdownCategory';
+import PropTypes from 'prop-types';
 
 const Configuration = ({ history }) => (
   <div>
@@ -9,3 +10,7 @@ const Configuration = ({ history }) => (
 );
 
 export default Configuration;
+
+Configuration.propTypes = {
+  history: PropTypes.instanceOf(Object).isRequired,
+}

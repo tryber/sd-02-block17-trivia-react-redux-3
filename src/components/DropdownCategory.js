@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import getCatergory from '../services/getCategory';
 import requestCategory from '../actions/RequestCategory';
 import changeC from '../actions/ChangeCategory';
@@ -11,18 +12,14 @@ class DropdownCategory extends React.Component {
       .then(({ trivia_categories: category }) => saveCategory(category));
   }
 
-  //test gitconfig
-
   render() {
     const { category, saveChange, selected } = this.props;
     return (
       <select value={selected.id} onChange={({ target }) => saveChange(target.value)}>
         <option value="">Random</option>
-        {category.map(({ name, id }) => (
-          <option value={id} key={name}>{name}</option>)
-        )}
+        {category.map(({ name, id }) => (<option value={id} key={name}>{name}</option>))}
       </select>
-    )
+    );
   }
 }
 
@@ -34,3 +31,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownCategory);
+
+DropdownCategory.propTypes = {
+  saveCategory: PropTypes.func.isRequired,
+  category: PropTypes.instanceOf(Array),
+  saveChange: PropTypes.func.isRequired,
+  selected: PropTypes.instanceOf(Object),
+};
+
+DropdownCategory.defaultProps = {
+  category: [],
+  selected: {},
+}

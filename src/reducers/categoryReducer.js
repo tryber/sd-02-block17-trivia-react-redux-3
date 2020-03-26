@@ -1,7 +1,7 @@
 const INITIAL_STATE = {
   category: [],
-  selected: { id: "" },
-}
+  selected: { id: '' },
+};
 
 const GET_CATEGORY = 'GET_CATEGORY';
 const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
