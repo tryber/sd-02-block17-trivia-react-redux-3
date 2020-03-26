@@ -5,14 +5,14 @@ export const INITIAL_STATE = {
   email: '',
   scoreboard: 0,
   wrongAnswerFlag: false,
-  formattedAnswers: [],
+  answersClasses: [],
 };
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';
 const WRONG_ASNWER = 'WRONG_ANSWER';
 
 export default function nameAndEmail(state = INITIAL_STATE, {
-  type, email, name, formattedAnswers,
+  type, email, name, answersClasses,
 }) {
   switch (type) {
     case SENDEMAIL:
@@ -22,7 +22,7 @@ export default function nameAndEmail(state = INITIAL_STATE, {
     case WRONG_ASNWER:
       return { ...state, wrongAnswerFlag: true };
     case FORMAT_ANSWERS:
-      return { ...state, formattedAnswers };
+      return { ...state, answersClasses };
     default:
       return state;
   }

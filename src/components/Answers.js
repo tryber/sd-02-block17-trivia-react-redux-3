@@ -51,7 +51,7 @@ class Answers extends Component {
     const { results } = this.state;
     const {
       question,
-      formattedAnswers: { answersArray },
+      answersClasses: { answersArray },
       question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
@@ -87,15 +87,15 @@ class Answers extends Component {
 }
 
 const mapStateToProps = ({
-  gameReducer: { formattedAnswers },
+  gameReducer: { answersClasses },
   timeReducer: { timer },
 }) => ({
   timer,
-  formattedAnswers,
+  answersClasses,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  toFormatAnswers: (formattedAnswers) => dispatch(formatAnswers(formattedAnswers)),
+  toFormatAnswers: (answersClasses) => dispatch(formatAnswers(answersClasses)),
   toStopTimer: () => dispatch(stopTimer()),
 });
 
@@ -104,11 +104,11 @@ export default connect(mapStateToProps, mapDispatchToProps)(Answers);
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
   toFormatAnswers: PropTypes.func.isRequired,
-  formattedAnswers: PropTypes.arrayOf(PropTypes.string),
+  answersClasses: PropTypes.arrayOf(PropTypes.string),
   toStopTimer: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {
   question: {},
-  formattedAnswers: [],
+  answersClasses: [],
 };
