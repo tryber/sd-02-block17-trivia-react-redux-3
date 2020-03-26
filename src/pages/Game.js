@@ -26,7 +26,7 @@ class Game extends React.Component {
 const mapStateToProps = ({
   getToken: { token },
   categoryReducer: { Cselected },
-  difficultyreducer: { Dselected }
+  difficultyreducer: { Dselected },
 }) => ({ token, Cselected, Dselected });
 const mapDispatchToProps = (dispatch) => ({
   sendQuestions: (results) => dispatch(receiveQuestion(results)),

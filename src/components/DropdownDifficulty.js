@@ -17,7 +17,8 @@ const DropdownDifficulty = ({ difficulty, Dselected, saveChange }) => (
   </div>
 );
 
-const mapStateToProps = ({ difficultyreducer: { difficulty, Dselected } }) => ({ difficulty, Dselected });
+const mapStateToProps = ({ difficultyreducer: { difficulty, Dselected } }) =>
+  ({ difficulty, Dselected });
 
 const mapDispatchToProps = (dispatch) => ({
   saveChange: (change) => dispatch(changeD(change)),
@@ -28,7 +29,7 @@ export default connect(mapStateToProps, mapDispatchToProps)(DropdownDifficulty);
 DropdownDifficulty.propTypes = {
   saveChange: PropTypes.func.isRequired,
   Dselected: PropTypes.string,
-  difficulty: PropTypes.instanceOf(Array).isRequired
+  difficulty: PropTypes.instanceOf(Array).isRequired,
 };
 
 DropdownDifficulty.defaultProps = {
