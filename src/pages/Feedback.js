@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import PropTypes from 'prop-types'
-  ; import Header from '../components/Header';
+import PropTypes from 'prop-types';
+import Header from '../components/Header';
 import ConfigurationButton from '../components/ConfigurationButton';
 
 class Feedback extends Component {
@@ -22,8 +22,8 @@ class Feedback extends Component {
                 : 'Mandou bem!'
             }
           </h2>
-          <h3>{`Você acertou ${scoreboard.length} questões!`}</h3>
-          <h3>{`Um total de ${scoreboard.reduce((acc, cur) => acc + cur, 0)} pontos`}</h3>
+          <h3 data-testid="feedback-total-question">{`Você acertou ${scoreboard.length} questões!`}</h3>
+          <h3 data-testid="feedback-total-score">{`Um total de ${scoreboard.reduce((acc, cur) => acc + cur, 0)} pontos`}</h3>
         </section>
         <section>
           <div>
