@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import classifyAnswers from '../actions/GameActions';
+import { stopTimer } from '../actions/TimerActions';
 import './Answers.css';
 
 class Answers extends Component {
@@ -48,9 +49,9 @@ class Answers extends Component {
     const { results } = this.state;
     const {
       question,
-      timer,
       classifiedAnswers: { answersArray },
       question: { correct_answer: theCorrectAnswer },
+      toStopTimer,
     } = this.props;
 
     const correctAnswer = question ? theCorrectAnswer : '';
@@ -65,9 +66,14 @@ class Answers extends Component {
               value={response}
               key={response}
               data-testid={(response !== correctAnswer) ? `wrong-answer-${index}` : 'correct-awnser'}
-              className={answersArray ? answersArray[index] : ''}
+              className={answersArray && answersArray[index]}
               ref={this.response}
-              onClick={this.submitAnswer}
+              onClick={
+                () => {
+                  this.submitAnswer();
+                  toStopTimer();
+                }
+              }
               disabled={answersArray && true}
             >
               <h3>{response}</h3>
@@ -89,15 +95,16 @@ const mapStateToProps = ({
 
 const mapDispatchToProps = (dispatch) => ({
   toClassifyAnswers: (classifiedAnswers) => dispatch(classifyAnswers(classifiedAnswers)),
+  toStopTimer: () => dispatch(stopTimer()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answers);
 
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
-  timer: PropTypes.number.isRequired,
   toClassifyAnswers: PropTypes.func.isRequired,
   classifiedAnswers: PropTypes.arrayOf(PropTypes.string),
+  toStopTimer: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {

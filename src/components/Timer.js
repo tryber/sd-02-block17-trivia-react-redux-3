@@ -6,16 +6,21 @@ import { decreaseTimer } from '../actions/TimerActions';
 class Timer extends Component {
   constructor(props) {
     super(props);
-    const { toDecreaseTimer } = this.props;
     this.state = {
-      timeInterval: setInterval(() => toDecreaseTimer(), 1000),
+      timeInterval: '',
     };
   }
 
+  componentDidMount() {
+    const { stopTimer, toDecreaseTimer } = this.props;
+    return stopTimer === false
+      && this.setState({ timeInterval: setInterval(() => toDecreaseTimer(), 1000) })
+  }
+
   componentDidUpdate() {
-    const { timer } = this.props;
+    const { timer, stopTimer } = this.props;
     const { timeInterval } = this.state;
-    if (timer === 0) clearInterval(timeInterval);
+    return (timer === 0 || stopTimer === true) && clearInterval(timeInterval);
   }
 
   render() {
@@ -33,14 +38,15 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 const mapStateToProps = ({
-  timeReducer: { timer },
+  timeReducer: { timer, stopTimer },
 }) => ({
-  timer,
+  timer, stopTimer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
 
 Timer.propTypes = {
+  stopTimer: PropTypes.bool.isRequired,
   timer: PropTypes.number.isRequired,
   toDecreaseTimer: PropTypes.func.isRequired,
 };
