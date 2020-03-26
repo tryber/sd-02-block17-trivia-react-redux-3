@@ -13,22 +13,25 @@ class DropdownCategory extends React.Component {
   }
 
   render() {
-    const { category, saveChange, selected } = this.props;
+    const { category, saveChange, Cselected } = this.props;
     return (
-      <select
-        data-testid="question-category-dropdown"
-        value={selected.id}
-        onChange={({ target }) => saveChange(target.value)
-        }
-      >
-        <option value="">Random</option>
-        {category.map(({ name, id }) => (<option value={id} key={name}>{name}</option>))}
-      </select >
+      <div>
+        <h4>Categoria:</h4>
+        <select
+          data-testid="question-category-dropdown"
+          value={Cselected.id}
+          onChange={({ target }) => saveChange(target.value)
+          }
+        >
+          <option value="">Random</option>
+          {category.map(({ name, id }) => (<option value={id} key={name}>{name}</option>))}
+        </select >
+      </div>
     );
   }
 }
 
-const mapStateToProps = ({ categoryReducer: { category, selected } }) => ({ category, selected });
+const mapStateToProps = ({ categoryReducer: { category, Cselected } }) => ({ category, Cselected });
 
 const mapDispatchToProps = (dispatch) => ({
   saveCategory: (results) => dispatch(requestCategory(results)),
@@ -41,10 +44,10 @@ DropdownCategory.propTypes = {
   saveCategory: PropTypes.func.isRequired,
   category: PropTypes.instanceOf(Array),
   saveChange: PropTypes.func.isRequired,
-  selected: PropTypes.instanceOf(Object),
+  Cselected: PropTypes.instanceOf(Object),
 };
 
 DropdownCategory.defaultProps = {
   category: [],
-  selected: {},
+  Cselected: {},
 };

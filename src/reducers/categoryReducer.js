@@ -1,6 +1,6 @@
 const INITIAL_STATE = {
   category: [],
-  selected: { id: '' },
+  Cselected: { id: '' },
 };
 
 const GET_CATEGORY = 'GET_CATEGORY';
@@ -13,7 +13,7 @@ export default function reducer(state = INITIAL_STATE, action) {
     case CHANGE_CATEGORY:
       return {
         ...state,
-        selected: state.category.find(({ id }) => Number(id) === Number(action.change)),
+        Cselected: state.category.find(({ id }) => Number(id) === Number(action.change)),
       };
     default: return state;
   }
