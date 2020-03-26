@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Answers.css';
+import { connect } from 'react-redux';
+import { registerAnswer } from '../actions/changeScore';
 
 class Answers extends React.Component {
   constructor(props) {
@@ -28,14 +30,20 @@ class Answers extends React.Component {
     this.setState({ results: arr2, array: ['', '', '', ''] });
   }
 
-  submitAnswer() {
-    const { question: { correct_answer: correct } } = this.props;
+  submitAnswer(event) {
+    const { value } = event.target;
+    const { question: { correct_answer: correct }, registerTheAnswer } = this.props;
     const { results } = this.state;
     const index = results.indexOf(correct);
     this.setState((state) => ({
       ...state,
       array: state.array.map((ele, i) => ((i === index) ? 'green' : 'red')),
     }));
+    if (value === correct) {
+      registerTheAnswer(true);
+    } else {
+      registerTheAnswer(false);
+    }
   }
 
   render() {
@@ -59,7 +67,7 @@ class Answers extends React.Component {
               onClick={this.submitAnswer}
               disabled={(array[index]) ? true : !true}
             >
-              <h3>{response}</h3>
+              {response}
             </button>
           ))
           : ''}
@@ -68,10 +76,15 @@ class Answers extends React.Component {
   }
 }
 
-export default Answers;
+const mapDispatchToProps = (dispatch) => ({
+  registerTheAnswer: (bool) => dispatch(registerAnswer(bool)),
+});
+
+export default connect(null, mapDispatchToProps)(Answers);
 
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
+  registerTheAnswer: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {
