@@ -31,7 +31,8 @@ class DropdownCategory extends React.Component {
   }
 }
 
-const mapStateToProps = ({ categoryReducer: { category, categorySelected } }) => ({ category, categorySelected });
+const mapStateToProps = ({ categoryReducer: { category, categorySelected } }) =>
+  ({ category, categorySelected });
 
 const mapDispatchToProps = (dispatch) => ({
   saveCategory: (results) => dispatch(requestCategory(results)),
@@ -44,10 +45,10 @@ DropdownCategory.propTypes = {
   saveCategory: PropTypes.func.isRequired,
   category: PropTypes.instanceOf(Array),
   saveChange: PropTypes.func.isRequired,
-  Cselected: PropTypes.instanceOf(Object),
+  categorySelected: PropTypes.instanceOf(Object),
 };
 
 DropdownCategory.defaultProps = {
   category: [],
-  Cselected: {},
+  categorySelected: {},
 };

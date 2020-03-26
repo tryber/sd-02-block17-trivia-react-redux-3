@@ -28,10 +28,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(DropdownDifficulty);
 
 DropdownDifficulty.propTypes = {
   saveChange: PropTypes.func.isRequired,
-  Dselected: PropTypes.string,
+  difficultySelected: PropTypes.string,
   difficulty: PropTypes.instanceOf(Array).isRequired,
 };
 
 DropdownDifficulty.defaultProps = {
-  Dselected: '',
+  difficultySelected: '',
 };

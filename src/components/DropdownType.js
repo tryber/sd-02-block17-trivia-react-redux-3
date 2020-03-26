@@ -28,10 +28,10 @@ export default connect(mapStateToProps, mapDispatchToProps)(DropdownType);
 
 DropdownType.propTypes = {
   saveChange: PropTypes.func.isRequired,
-  Tselected: PropTypes.string,
+  typeSelected: PropTypes.string,
   types: PropTypes.instanceOf(Array).isRequired,
 };
 
 DropdownType.defaultProps = {
-  Tselected: '',
+  typeSelected: '',
 };
