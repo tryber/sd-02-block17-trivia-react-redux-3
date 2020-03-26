@@ -1,57 +1,46 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { minusOneSecond } from '../actions/TimerActions';
+import { decreaseTimer } from '../actions/TimerActions';
 
 class Timer extends Component {
   constructor(props) {
     super(props);
-
+    const { toDecreaseTimer } = this.props;
     this.state = {
-      setTimer: {},
+      timeInterval: setInterval(() => toDecreaseTimer(), 1000),
     };
-
-    this.setTimerOn = this.setTimerOn.bind(this);
   }
-
-  componentDidMount() {
-    this.setTimerOn();
-  }
-
 
   componentDidUpdate() {
     const { timer } = this.props;
-    const { setTimer } = this.state;
-    if (timer === 0) clearInterval(setTimer);
-  }
-
-  setTimerOn() {
-    const { startTimerCountdown } = this.props;
-    const setTimer = setInterval(startTimerCountdown, 1000);
-    this.setState({ setTimer });
+    const { timeInterval } = this.state;
+    if (timer === 0) clearInterval(timeInterval);
   }
 
   render() {
     const { timer } = this.props;
     return (
-      <div>
-        {timer}
+      <div data-testid="timer">
+        {`Tempo: ${timer}`}
       </div>
     );
   }
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  startTimerCountdown: () => dispatch(minusOneSecond()),
+  toDecreaseTimer: () => dispatch(decreaseTimer()),
 });
 
-const mapStateToProps = ({ gameReducer: { timer } }) => ({
+const mapStateToProps = ({
+  timeReducer: { timer },
+}) => ({
   timer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
 
 Timer.propTypes = {
-  startTimerCountdown: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
+  toDecreaseTimer: PropTypes.func.isRequired,
 };

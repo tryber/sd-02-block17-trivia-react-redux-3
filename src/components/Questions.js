@@ -67,7 +67,7 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = ({
   getQuestions: { results },
-  gameReducer: { timer },
+  timeReducer: { timer },
 }) => ({ results, timer });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);

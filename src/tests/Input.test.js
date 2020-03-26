@@ -1,21 +1,22 @@
 import React from 'react';
-import Input from '../components/Input';
 import { MemoryRouter } from 'react-router-dom';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { render , cleanup } from '@testing-library/react';
+import { render, cleanup } from '@testing-library/react';
 import rootReducer from '../reducers/rootReducer';
 import '@testing-library/jest-dom/extend-expect';
+import Input from '../components/Input';
+
 afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { initialState, store = createStore(rootReducer, initialState) } = {}
+  { initialState, store = createStore(rootReducer, initialState) } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
     store,
-  }
+  };
 }
 
 describe('Test input', () => {
