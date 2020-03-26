@@ -15,10 +15,15 @@ class DropdownCategory extends React.Component {
   render() {
     const { category, saveChange, selected } = this.props;
     return (
-      <select value={selected.id} onChange={({ target }) => saveChange(target.value)}>
+      <select
+        data-testid="question-category-dropdown"
+        value={selected.id}
+        onChange={({ target }) => saveChange(target.value)
+        }
+      >
         <option value="">Random</option>
         {category.map(({ name, id }) => (<option value={id} key={name}>{name}</option>))}
-      </select>
+      </select >
     );
   }
 }
