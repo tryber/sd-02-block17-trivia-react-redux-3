@@ -21,11 +21,13 @@ const mapStateToProps = ({ gameReducer: { name, email, scoreboard } }) => (
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  email: PropTypes.string,
   scoreboard: PropTypes.number,
 };
 
 Header.defaultProps = {
   scoreboard: 0,
+  name: '',
+  email: '',
 };

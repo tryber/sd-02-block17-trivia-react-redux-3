@@ -13,7 +13,24 @@ import { Provider } from 'react-redux';
 import App from '../App';
 import getToken, { INITIAL_STATE } from '../reducers/getToken';
 
-const reducer = { getToken: INITIAL_STATE, gameReducer: { name: '', email: '', scoreboard: 0 } };
+const reducer = {
+  getToken: INITIAL_STATE,
+  gameReducer: {
+    name: '', email: '', scoreboard: 0, answersClasses: ['', '', '', ''],
+  },
+  categoryReducer: {},
+  getQuestions: { results: [] },
+  timeReducer: { timer: 2 },
+  typeReducer: {
+    types: ['multiple', 'boolean'],
+    Tselected: '',
+  },
+  difficultyreducer: {
+    difficulty: ['easy', 'medium', 'hard'],
+    Dselected: '',
+  },
+};
+
 function renderWithRedux(
   ui,
   { store = createStore(getToken, reducer) } = {},
@@ -23,9 +40,7 @@ function renderWithRedux(
     store,
   };
 }
-
 afterEach(cleanup);
-
 describe('testing play game button', () => {
   it('testing if there is a play game button with data-testid=`btn-play`', () => {
     const { getByTestId } = renderWithRedux(
@@ -33,11 +48,9 @@ describe('testing play game button', () => {
         <App />
       </MemoryRouter>,
     );
-
     expect(getByTestId('btn-play')).toBeInTheDocument();
     expect(getByTestId('btn-play').type).toEqual('button');
   });
-
   it('testing if the page is redirect to the path game when click the button', () => {
     const history = createMemoryHistory();
     const { getByTestId } = renderWithRedux(
@@ -48,7 +61,6 @@ describe('testing play game button', () => {
     fireEvent.click(getByTestId('btn-play'));
     expect(history.location.pathname).toBe('/game');
   });
-
   it('test if the button activates getToken function and populates state', async () => {
     const { getByTestId, store: { getState } } = renderWithRedux(
       <MemoryRouter>

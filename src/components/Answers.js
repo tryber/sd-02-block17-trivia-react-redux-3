@@ -1,58 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import formatAnswers from '../actions/GameActions';
+import { stopTimer } from '../actions/TimerActions';
 import './Answers.css';
-// import { registerAnswer } from '../actions/changeScore';
 
-class Answers extends React.Component {
+class Answers extends Component {
   constructor(props) {
     super(props);
-    this.state = { results: {}, array: ['', '', '', ''] };
-    this.answers = this.answers.bind(this);
+    this.state = { results: {}, answersArray: ['', '', '', ''] };
+    this.getAnswers = this.getAnswers.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
   }
 
   componentDidUpdate(prevProps) {
-    const { question } = this.props;
+    const {
+      question,
+      timer,
+      wrongAnswerFlag,
+      answersClasses,
+      toStopTimer,
+    } = this.props;
+
+    const {
+      answersClasses: prevAnswersClasses,
+    } = prevProps;
+
     if (prevProps.question !== question) {
-      this.answers(question);
+      this.getAnswers(question);
+    }
+
+    if (wrongAnswerFlag === true && timer === 0 && answersClasses === prevAnswersClasses) {
+      this.submitAnswer();
+      toStopTimer();
     }
   }
 
-  answers(element) {
-    const { correct_answer: correct, incorrect_answers: incorrect } = element;
-    const arr = [correct, ...incorrect];
-    const arr2 = (arr.length > 2) ? ['', '', '', ''] : ['', ''];
-    for (let i = 0; i < arr2.length; i += 1) {
-      const aux = (arr.length > 1) ? Math.round((Math.random() * arr.length)) : 0;
-      arr2[i] = arr.splice(aux - 1, 1)[0];
+  getAnswers(question) {
+    const { toFormatAnswers } = this.props;
+    const { correct_answer: correct, incorrect_answers: incorrect } = question;
+    const allAnswers = [correct, ...incorrect];
+    const filteredAnswers = (allAnswers.length > 2) ? ['', '', '', ''] : ['', ''];
+    for (let i = 0; i < filteredAnswers.length; i += 1) {
+      const aux = (allAnswers.length > 1) ? Math.round((Math.random() * allAnswers.length)) : 0;
+      filteredAnswers.splice(i, 1, allAnswers.splice(aux - 1, 1)[0]);
     }
-    this.setState({ results: arr2, array: ['', '', '', ''] });
+    this.setState({ results: filteredAnswers, answersArray: ['', '', '', ''] });
+    toFormatAnswers(['', '', '', '']);
   }
 
   submitAnswer() {
-    // const { value } = event.target;
-    const { question: { correct_answer: correct } } = this.props;
-    const { results } = this.state;
-    const index = results.indexOf(correct);
-    this.setState((state) => ({
-      ...state,
-      array: state.array.map((ele, i) => ((i === index) ? 'green' : 'red')),
-    }));
-    // if (value === correct) {
-    //   registerTheAnswer(true);
-    // } else {
-    //   registerTheAnswer(false);
-    // }
+    const {
+      question: { correct_answer: correctAnswer },
+      toFormatAnswers,
+    } = this.props;
+    const { results, answersArray } = this.state;
+    const index = results.indexOf(correctAnswer);
+    const formattedAnswers = {
+      ...this.state,
+      answersArray: answersArray.map((ele, i) => ((i === index) ? 'green' : 'red')),
+    };
+    toFormatAnswers(formattedAnswers.answersArray);
   }
 
   render() {
-    const { results, array } = this.state;
-    const { question } = this.props;
-    let correct = '';
-    if (question) {
-      correct = question.correct_answer;
-    }
+    const { results } = this.state;
+    const {
+      question, answersClasses, question: { correct_answer: theCorrectAnswer },
+      toStopTimer,
+    } = this.props;
+    const correctAnswer = question ? theCorrectAnswer : '';
+
     return (
       <div>
         {(Object.keys(results).length > 0)
@@ -61,32 +79,52 @@ class Answers extends React.Component {
               type="button"
               value={response}
               key={response}
-              data-testid={(response !== correct) ? `wrong-answer-${index}` : 'correct-answer'}
-              className={array[index]}
+              data-testid={(response !== correctAnswer) ? `wrong-answer-${index}` : 'correct-anwser'}
+              className={answersClasses && answersClasses[index]}
               ref={this.response}
-              onClick={this.submitAnswer}
-              disabled={(array[index]) ? true : !true}
+              onClick={
+                () => {
+                  this.submitAnswer();
+                  toStopTimer();
+                }
+              }
+              disabled={answersClasses[0] === 0 && true}
             >
               {response}
             </button>
-          ))
-          : ''}
+          )) : ''}
       </div>
     );
   }
 }
 
-// const mapDispatchToProps = (dispatch) => ({
-//   registerTheAnswer: (bool) => dispatch(registerAnswer(bool)),
-// });
+const mapStateToProps = ({
+  gameReducer: { answersClasses, wrongAnswerFlag },
+  timeReducer: { timer },
+}) => ({
+  timer,
+  answersClasses,
+  wrongAnswerFlag,
+});
 
-export default connect()(Answers);
+const mapDispatchToProps = (dispatch) => ({
+  toFormatAnswers: (answersClasses) => dispatch(formatAnswers(answersClasses)),
+  toStopTimer: () => dispatch(stopTimer()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Answers);
 
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
-  // registerTheAnswer: PropTypes.func.isRequired,
+  toFormatAnswers: PropTypes.func.isRequired,
+  answersClasses: PropTypes.arrayOf(PropTypes.string),
+  toStopTimer: PropTypes.func.isRequired,
+  timer: PropTypes.number.isRequired,
+  wrongAnswerFlag: PropTypes.bool,
 };
 
 Answers.defaultProps = {
   question: {},
+  answersClasses: {},
+  wrongAnswerFlag: false,
 };
