@@ -9,24 +9,25 @@ const Header = ({ name, email, scoreboard }) => (
       src={`https://www.gravatar.com/avatar/${MD5(email).toString()}`}
       alt="Gravatar profile"
     />
-    <h1 data-testid="header-player-name">Jogador:{name}</h1>
-    <h2 data-testid="header-score">Pontos:{scoreboard}</h2>
+    <h1 data-testid="header-player-name">{`Jogador: ${name}`}</h1>
+    <h2 data-testid="header-score">{`Pontos: ${scoreboard}`}</h2>
   </div>
 );
 
-const mapStateToProps = ({ gameReducer: { name, email, scoreboard } }) =>
-  ({ name, email, scoreboard });
+const mapStateToProps = ({ gameReducer: { name, email, scoreboard } }) => (
+  { name, email, scoreboard }
+);
 
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
-  name: PropTypes.string.isRequired,
-  email: PropTypes.string.isRequired,
+  name: PropTypes.string,
+  email: PropTypes.string,
   scoreboard: PropTypes.number,
 };
 
 Header.defaultProps = {
+  scoreboard: 0,
   name: '',
   email: '',
-  scoreboard: 0,
 };

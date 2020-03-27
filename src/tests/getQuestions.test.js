@@ -1,11 +1,15 @@
-import { getQuestionsApi } from '../services/getQuestionsApi';
+import getQuestionsApi from '../services/getQuestionsApi';
 import tokenRequest from '../services/tokenRequest';
-
 
 describe('testing getQuestions API', () => {
   it('questions are retrieved from API when theres a token', async () => {
     const { token } = await tokenRequest();
-    const props = { token };
+    const categorySelected = { id: '' };
+    const difficultySelected = '';
+    const typeSelected = '';
+    const props = {
+      token, categorySelected, difficultySelected, typeSelected,
+    };
     const { response_code: responseCode, results } = await getQuestionsApi(props);
     const resultModel = [{
       category: expect.any(String),

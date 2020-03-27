@@ -90,7 +90,7 @@ class Answers extends Component {
               }
               disabled={answersClasses[0] === 0 && true}
             >
-              <h3>{response}</h3>
+              {response}
             </button>
           )) : ''}
       </div>
@@ -120,10 +120,11 @@ Answers.propTypes = {
   answersClasses: PropTypes.arrayOf(PropTypes.string),
   toStopTimer: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
-  wrongAnswerFlag: PropTypes.bool.isRequired,
+  wrongAnswerFlag: PropTypes.bool,
 };
 
 Answers.defaultProps = {
   question: {},
   answersClasses: {},
+  wrongAnswerFlag: false,
 };

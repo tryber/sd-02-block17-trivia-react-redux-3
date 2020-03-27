@@ -6,7 +6,7 @@ import {
 } from '../actions/TimerActions';
 
 const INITIAL_STATE = {
-  timer: 5,
+  timer: 30,
   stopTimer: false,
 };
 

@@ -58,7 +58,11 @@ const mapStateToProps = ({
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
 
 Timer.propTypes = {
-  stopTimer: PropTypes.bool.isRequired,
+  stopTimer: PropTypes.bool,
   timer: PropTypes.number.isRequired,
   startTimer: PropTypes.func.isRequired,
+};
+
+Timer.defaultProps = {
+  stopTimer: false,
 };

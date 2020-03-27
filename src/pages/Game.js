@@ -9,6 +9,7 @@ import Header from '../components/Header';
 class Game extends React.Component {
   componentDidMount() {
     const { sendQuestions } = this.props;
+
     getQuestionsApi(this.props)
       .then(({ results }) => sendQuestions(results));
   }
@@ -23,7 +24,14 @@ class Game extends React.Component {
   }
 }
 
-const mapStateToProps = ({ getToken: { token } }) => ({ token });
+const mapStateToProps = ({
+  getToken: { token },
+  categoryReducer: { categorySelected },
+  difficultyreducer: { difficultySelected },
+  typeReducer: { typeSelected },
+}) => ({
+  token, categorySelected, difficultySelected, typeSelected,
+});
 const mapDispatchToProps = (dispatch) => ({
   sendQuestions: (results) => dispatch(receiveQuestion(results)),
 });

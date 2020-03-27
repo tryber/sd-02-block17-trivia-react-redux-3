@@ -7,6 +7,7 @@ export const INITIAL_STATE = {
   wrongAnswerFlag: false,
   answersClasses: [],
 };
+
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';
 const WRONG_ASNWER = 'WRONG_ANSWER';
