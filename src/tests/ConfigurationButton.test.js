@@ -12,21 +12,22 @@ afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { store = createStore(
-    gameReduce,
-    {
-      gameReducer: { name: '', email: '' },
-      difficultyreducer: {
-        difficulty: ['easy', 'medium', 'hard'],
-        difficultySelected: '',
+  {
+    store = createStore(
+      gameReduce,
+      {
+        gameReducer: { name: '', email: '' },
+        difficultyreducer: {
+          difficulty: ['easy', 'medium', 'hard'],
+          difficultySelected: '',
+        },
+        categoryReducer: { category: [], categorySelected: {} },
+        typeReducer: {
+          types: ['multiple', 'boolean'],
+          typesSelected: '',
+        },
       },
-      categoryReducer: { category: [], categorySelected: {} },
-      typeReducer: {
-        types: ['multiple', 'boolean'],
-        typesSelected: '',
-      },
-    },
-  ),
+    ),
   } = {},
 ) {
   return {

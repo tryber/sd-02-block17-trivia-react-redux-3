@@ -11,49 +11,53 @@ afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { store = createStore(categoryReducer, {
-    categoryReducer: {
-      category: [],
-      categorySelected: { id: '', name: '' },
-    }
-  }) } = {}
+  {
+    store = createStore(categoryReducer, {
+      categoryReducer: {
+        category: [],
+        categorySelected: { id: '', name: '' },
+      },
+    }),
+  } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
     store,
-  }
+  };
 }
 function renderWithRedux2(
   ui,
-  { store = createStore(categoryReducer, {
-    categoryReducer: {
-      category: [{ id: 9,name: 'blabla' }],
-      categorySelected: { id: 9, name: 'aaaa' },
-    }
-  }) } = {}
+  {
+    store = createStore(categoryReducer, {
+      categoryReducer: {
+        category: [{ id: 9, name: 'blabla' }],
+        categorySelected: { id: 9, name: 'aaaa' },
+      },
+    }),
+  } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
     store,
-  }
+  };
 }
 describe('test dropdown', () => {
   it('test render dropdown', () => {
     const { getByTestId } = renderWithRedux(
       <MemoryRouter>
         <DropdownCategory />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(getByTestId('question-category-dropdown')).toBeInTheDocument();
     expect(getByTestId('question-category-dropdown').value).toBe('');
-  })
+  });
   it('test value', () => {
     const { getByTestId } = renderWithRedux2(
       <MemoryRouter>
         <DropdownCategory />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
     expect(getByTestId('question-category-dropdown')).toBeInTheDocument();
-    expect(getByTestId('question-category-dropdown').value).toBe("9");
+    expect(getByTestId('question-category-dropdown').value).toBe('9');
   });
 });
