@@ -6,14 +6,14 @@ import sendEmail from '../actions/SendEmail';
 
 const InputInitial = ({ nameToReducer, emailToReducer }) => (
   <div>
-    <label htmlFor="input-email" data-testid="label-gravatar-email" >Email do gravatar:</label>
+    <label htmlFor="input-email" data-testid="label-gravatar-email">Email do gravatar:</label>
     <input
       type="email"
       id="input-email"
       data-testid="input-gravatar-email"
       onChange={({ target }) => emailToReducer(target.value)}
     />
-    <label htmlFor="input-name" data-testid="label-player-name" >Nome do Jogador:</label>
+    <label htmlFor="input-name" data-testid="label-player-name">Nome do Jogador:</label>
     <input
       type="text"
       id="input-Name"
