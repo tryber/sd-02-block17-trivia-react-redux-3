@@ -61,7 +61,7 @@ class Answers extends React.Component {
               type="button"
               value={response}
               key={response}
-              data-testid={(response !== correct) ? `wrong-answer-${index}` : 'correct-awnser'}
+              data-testid={(response !== correct) ? `wrong-answer-${index}` : 'correct-answer'}
               className={array[index]}
               ref={this.response}
               onClick={this.submitAnswer}
