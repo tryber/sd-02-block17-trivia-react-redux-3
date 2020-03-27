@@ -14,9 +14,25 @@ class Answers extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { question } = this.props;
+    const {
+      question,
+      timer,
+      wrongAnswerFlag,
+      answersClasses,
+      toStopTimer,
+    } = this.props;
+
+    const {
+      answersClasses: prevAnswersClasses,
+    } = prevProps;
+
     if (prevProps.question !== question) {
       this.getAnswers(question);
+    }
+
+    if (wrongAnswerFlag === true && timer === 0 && answersClasses === prevAnswersClasses) {
+      this.submitAnswer();
+      toStopTimer();
     }
   }
 
@@ -44,14 +60,14 @@ class Answers extends Component {
       ...this.state,
       answersArray: answersArray.map((ele, i) => ((i === index) ? 'green' : 'red')),
     };
-    toFormatAnswers(formattedAnswers);
+    toFormatAnswers(formattedAnswers.answersArray);
   }
 
   render() {
     const { results } = this.state;
     const {
       question,
-      answersClasses: { answersArray },
+      answersClasses,
       question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
@@ -67,7 +83,7 @@ class Answers extends Component {
               value={response}
               key={response}
               data-testid={(response !== correctAnswer) ? `wrong-answer-${index}` : 'correct-awnser'}
-              className={answersArray && answersArray[index]}
+              className={answersClasses && answersClasses[index]}
               ref={this.response}
               onClick={
                 () => {
@@ -75,7 +91,7 @@ class Answers extends Component {
                   toStopTimer();
                 }
               }
-              disabled={answersArray && true}
+              disabled={answersClasses[0] === 0 && true}
             >
               <h3>{response}</h3>
             </button>
@@ -87,11 +103,12 @@ class Answers extends Component {
 }
 
 const mapStateToProps = ({
-  gameReducer: { answersClasses },
+  gameReducer: { answersClasses, wrongAnswerFlag },
   timeReducer: { timer },
 }) => ({
   timer,
   answersClasses,
+  wrongAnswerFlag,
 });
 
 const mapDispatchToProps = (dispatch) => ({
@@ -106,9 +123,11 @@ Answers.propTypes = {
   toFormatAnswers: PropTypes.func.isRequired,
   answersClasses: PropTypes.arrayOf(PropTypes.string),
   toStopTimer: PropTypes.func.isRequired,
+  timer: PropTypes.number.isRequired,
+  wrongAnswerFlag: PropTypes.bool.isRequired,
 };
 
 Answers.defaultProps = {
   question: {},
-  answersClasses: [],
+  answersClasses: {},
 };
