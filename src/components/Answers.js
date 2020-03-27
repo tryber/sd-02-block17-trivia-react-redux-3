@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Answers.css';
-import { connect } from 'react-redux';
-import { registerAnswer } from '../actions/changeScore';
 
 class Answers extends React.Component {
   constructor(props) {
@@ -30,20 +28,14 @@ class Answers extends React.Component {
     this.setState({ results: arr2, array: ['', '', '', ''] });
   }
 
-  submitAnswer(event) {
-    const { value } = event.target;
-    const { question: { correct_answer: correct }, registerTheAnswer } = this.props;
+  submitAnswer() {
+    const { question: { correct_answer: correct } } = this.props;
     const { results } = this.state;
     const index = results.indexOf(correct);
     this.setState((state) => ({
       ...state,
       array: state.array.map((ele, i) => ((i === index) ? 'green' : 'red')),
     }));
-    if (value === correct) {
-      registerTheAnswer(true);
-    } else {
-      registerTheAnswer(false);
-    }
   }
 
   render() {
@@ -76,15 +68,10 @@ class Answers extends React.Component {
   }
 }
 
-const mapDispatchToProps = (dispatch) => ({
-  registerTheAnswer: (bool) => dispatch(registerAnswer(bool)),
-});
-
-export default connect(null, mapDispatchToProps)(Answers);
+export default Answers;
 
 Answers.propTypes = {
   question: PropTypes.instanceOf(Object),
-  registerTheAnswer: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {

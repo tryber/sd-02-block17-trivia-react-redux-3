@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Answers from './Answers';
-import { changeScore } from '../actions/changeScore';
 
 class Questions extends Component {
   constructor(props) {
@@ -19,16 +18,6 @@ class Questions extends Component {
 
   componentDidMount() {
     this.intervalId = setInterval(this.timer.bind(this), 1000);
-  }
-
-  componentDidUpdate(prevState) {
-    const { questionNumber, currentCount } = this.state;
-    const { changeUserScore, answer } = this.props;
-    let score = [];
-    if ((prevState.questionNumber !== questionNumber) && currentCount !== 0 && answer) {
-      score = [...score, currentCount];
-      changeUserScore(score);
-    }
   }
 
   timer() {
@@ -78,12 +67,6 @@ class Questions extends Component {
 
 Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
-  changeUserScore: PropTypes.func.isRequired,
-  answer: PropTypes.bool,
-};
-
-Questions.defaultProps = {
-  answer: false,
 };
 
 const mapStateToProps = (
@@ -92,8 +75,4 @@ const mapStateToProps = (
   { results, answer }
 );
 
-const mapDispatchToProps = (dispatch) => ({
-  changeUserScore: (score) => dispatch(changeScore(score)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+export default connect(mapStateToProps)(Questions);
