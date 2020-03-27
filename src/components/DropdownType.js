@@ -13,12 +13,13 @@ const DropdownType = ({ types, typeSelected, saveChange }) => (
     >
       <option value="">Random</option>
       {types.map((type) => (<option value={type} key={type}>{type}</option>))}
-    </select >
+    </select>
   </div>
 );
 
-const mapStateToProps = ({ typeReducer: { types, typeSelected } }) =>
-  ({ types, typeSelected });
+const mapStateToProps = ({ typeReducer: { types, typeSelected } }) => (
+  { types, typeSelected }
+);
 
 const mapDispatchToProps = (dispatch) => ({
   saveChange: (change) => dispatch(changeType(change)),

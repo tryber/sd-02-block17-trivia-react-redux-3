@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { wrongAnswer } from '../actions/ChangeScoreboard';
+import { resetTimer } from '../actions/TimerActions';
 import Answers from './Answers';
+import Timer from './Timer';
+
 
 class Questions extends Component {
   constructor(props) {
@@ -10,45 +14,36 @@ class Questions extends Component {
 
     this.state = {
       questionNumber: 0,
-      currentCount: 30,
     };
 
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
-  componentDidMount() {
-    this.intervalId = setInterval(this.timer.bind(this), 1000);
-  }
-
-  timer() {
-    const { questionNumber, currentCount } = this.state;
-    this.setState({ currentCount: currentCount - 1 });
-
-    if (currentCount === 0 && questionNumber < 4) {
-      this.nextQuestion();
-    } if (currentCount === 1 && questionNumber === 4) {
-      clearInterval(this.intervalId);
-    }
+  componentDidUpdate() {
+    const { timer, wrongAnswerSelected } = this.props;
+    return timer === 0 && wrongAnswerSelected();
   }
 
   nextQuestion() {
-    this.setState((state) => ({ questionNumber: state.questionNumber + 1, currentCount: 30 }));
+    const { resetTimerNow } = this.props;
+    this.setState((state) => ({ questionNumber: state.questionNumber + 1 }));
+    resetTimerNow();
   }
 
   render() {
-    const { results } = this.props;
-    const { questionNumber, currentCount } = this.state;
+    const { results, timer } = this.props;
+    const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
     return (
       <div>
+        {timer === 0 && <div>RESPOSTA ERRADA</div>}
         <div>
           <p>{currentCategory[questionNumber]}</p>
           <h3>{currentQuestion[questionNumber]}</h3>
-          {/* <p>{this.counter()}</p> */}
         </div>
         <div>
-          {`Tempo: ${currentCount}`}
+          <Timer />
         </div>
         <div>
           <Answers question={results[questionNumber]} />
@@ -65,14 +60,21 @@ class Questions extends Component {
   }
 }
 
+const mapDispatchToProps = (dispatch) => ({
+  wrongAnswerSelected: () => dispatch(wrongAnswer()),
+  resetTimerNow: () => dispatch(resetTimer()),
+});
+
+const mapStateToProps = ({
+  getQuestions: { results },
+  timeReducer: { timer },
+}) => ({ results, timer });
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);
+
 Questions.propTypes = {
+  resetTimerNow: PropTypes.func.isRequired,
   results: PropTypes.instanceOf(Array).isRequired,
+  timer: PropTypes.number.isRequired,
+  wrongAnswerSelected: PropTypes.func.isRequired,
 };
-
-const mapStateToProps = (
-  { getQuestions: { results } },
-) => (
-  { results }
-);
-
-export default connect(mapStateToProps)(Questions);

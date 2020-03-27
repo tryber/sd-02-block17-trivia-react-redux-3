@@ -12,14 +12,21 @@ const DropdownDifficulty = ({ difficulty, difficultySelected, saveChange }) => (
       onChange={({ target }) => saveChange(target.value)}
     >
       <option value="">Random</option>
-      {difficulty.map((difficult) =>
-        (<option value={difficult} key={difficult}>{difficult}</option>))}
-    </select >
+      {difficulty.map((difficult) => (
+        <option
+          value={difficult}
+          key={difficult}
+        >
+          {difficult}
+        </option>
+      ))}
+    </select>
   </div>
 );
 
-const mapStateToProps = ({ difficultyreducer: { difficulty, difficultySelected } }) =>
-  ({ difficulty, difficultySelected });
+const mapStateToProps = ({ difficultyreducer: { difficulty, difficultySelected } }) => (
+  { difficulty, difficultySelected }
+);
 
 const mapDispatchToProps = (dispatch) => ({
   saveChange: (change) => dispatch(ChangeDifficulty(change)),

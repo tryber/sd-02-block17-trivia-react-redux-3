@@ -13,6 +13,7 @@ class Game extends React.Component {
     getQuestionsApi(this.props)
       .then(({ results }) => sendQuestions(results));
   }
+
   render() {
     return (
       <div>
@@ -28,7 +29,9 @@ const mapStateToProps = ({
   categoryReducer: { categorySelected },
   difficultyreducer: { difficultySelected },
   typeReducer: { typeSelected },
-}) => ({ token, categorySelected, difficultySelected, typeSelected });
+}) => ({
+  token, categorySelected, difficultySelected, typeSelected,
+});
 const mapDispatchToProps = (dispatch) => ({
   sendQuestions: (results) => dispatch(receiveQuestion(results)),
 });
