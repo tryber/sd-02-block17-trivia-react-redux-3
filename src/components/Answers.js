@@ -1,7 +1,7 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Answers.css';
-import { connect } from 'react-redux';
 // import { registerAnswer } from '../actions/changeScore';
 
 class Answers extends React.Component {
