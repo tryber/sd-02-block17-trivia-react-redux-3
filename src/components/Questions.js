@@ -70,9 +70,9 @@ Questions.propTypes = {
 };
 
 const mapStateToProps = (
-  { getQuestions: { results }, gameReducer: { answer } },
+  { getQuestions: { results } },
 ) => (
-  { results, answer }
+  { results }
 );
 
 export default connect(mapStateToProps)(Questions);

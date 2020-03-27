@@ -1,6 +1,7 @@
 export const INITIAL_STATE = {
   name: '',
   email: '',
+  scoreboard: 0,
 };
 
 const SENDEMAIL = 'SEND_EMAIL';
