@@ -3,6 +3,7 @@ export const INITIAL_STATE = {
   email: '',
   scoreboard: 0,
 };
+
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';
 

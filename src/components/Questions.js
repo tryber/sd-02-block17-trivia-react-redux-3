@@ -69,6 +69,10 @@ Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
 };
 
-const mapStateToProps = ({ getQuestions: { results } }) => ({ results });
+const mapStateToProps = (
+  { getQuestions: { results } },
+) => (
+  { results }
+);
 
 export default connect(mapStateToProps)(Questions);
