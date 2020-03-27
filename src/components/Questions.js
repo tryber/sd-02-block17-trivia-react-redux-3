@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Answers from './Answers';
+import { sendAnswer } from '../actions/sendAnswer';
 
 class Questions extends Component {
   constructor(props) {
@@ -17,6 +18,9 @@ class Questions extends Component {
   }
 
   componentDidMount() {
+    const { results, sendAnswers } = this.props;
+    const { questionNumber, currentCount } = this.state;
+    sendAnswers(results[currentCount])
     this.intervalId = setInterval(this.timer.bind(this), 1000);
   }
 
@@ -36,7 +40,7 @@ class Questions extends Component {
   }
 
   render() {
-    const { results } = this.props;
+    const { results, sendAnswers } = this.props;
     const { questionNumber, currentCount } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
@@ -45,13 +49,12 @@ class Questions extends Component {
         <div>
           <p>{currentCategory[questionNumber]}</p>
           <h3>{currentQuestion[questionNumber]}</h3>
-          {/* <p>{this.counter()}</p> */}
         </div>
         <div>
           {`Tempo: ${currentCount}`}
         </div>
         <div>
-          <Answers question={results[questionNumber]} />
+          <Answers />
         </div>
         <div>
           {
@@ -69,10 +72,10 @@ Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
 };
 
-const mapStateToProps = (
-  { getQuestions: { results } },
-) => (
-  { results }
-);
+const mapStateToProps = ({ getQuestions: { results } }) => ({ results });
 
-export default connect(mapStateToProps)(Questions);
+const mapDispatchToProps = (dispatch) => ({
+  sendAnswers: (answers) => dispatch(sendAnswer(answers)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Questions);

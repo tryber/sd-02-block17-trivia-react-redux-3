@@ -13,24 +13,26 @@ afterEach(cleanup);
 function renderWithRedux(
   ui,
   { store = createStore(
-    gameReduce, {
-    gameReducer: { name: '', email: '' },
-    difficultyreducer: {
-      difficulty: ['easy', 'medium', 'hard'],
-      difficultySelected: '',
+    gameReduce,
+    {
+      gameReducer: { name: '', email: '' },
+      difficultyreducer: {
+        difficulty: ['easy', 'medium', 'hard'],
+        difficultySelected: '',
+      },
+      categoryReducer: { category: [], categorySelected: {} },
+      typeReducer: {
+        types: ['multiple', 'boolean'],
+        typesSelected: '',
+      },
     },
-    categoryReducer: { category: [], categorySelected: {} },
-    typeReducer: {
-      types: ['multiple', 'boolean'],
-      typesSelected: '',
-    }
-  }
-  ) } = {}
+  ),
+  } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
     store,
-  }
+  };
 }
 
 describe('testing Configuration page', () => {
@@ -38,7 +40,7 @@ describe('testing Configuration page', () => {
     const { getByTestId } = renderWithRedux(
       <MemoryRouter>
         <App />
-      </MemoryRouter>
+      </MemoryRouter>,
     );
 
     expect(getByTestId('config-button')).toBeInTheDocument();
@@ -52,6 +54,6 @@ describe('testing Configuration page', () => {
       </Router>,
     );
     fireEvent.click(getByTestId('config-button'));
-    expect(history.location.pathname).toBe('/configuration')
+    expect(history.location.pathname).toBe('/configuration');
   });
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import './Answers.css';
 
@@ -11,9 +12,9 @@ class Answers extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { question } = this.props;
-    if (prevProps.question !== question) {
-      this.answers(question);
+    const { answer } = this.props;
+    if (prevProps.answer !== answer) {
+      this.answers(answer);
     }
   }
 
@@ -29,7 +30,7 @@ class Answers extends React.Component {
   }
 
   submitAnswer() {
-    const { question: { correct_answer: correct } } = this.props;
+    const { answer: { correct_answer: correct } } = this.props;
     const { results } = this.state;
     const index = results.indexOf(correct);
     this.setState((state) => ({
@@ -40,10 +41,10 @@ class Answers extends React.Component {
 
   render() {
     const { results, array } = this.state;
-    const { question } = this.props;
+    const { answer } = this.props;
     let correct = '';
-    if (question) {
-      correct = question.correct_answer;
+    if (answer) {
+      correct = answer.correct_answer;
     }
     return (
       <div>
@@ -68,12 +69,14 @@ class Answers extends React.Component {
   }
 }
 
-export default Answers;
+const mapStateToProps = ({ getAnswers: answer }) => ({ answer });
+
+export default connect(mapStateToProps)(Answers);
 
 Answers.propTypes = {
-  question: PropTypes.instanceOf(Object),
+  answer: PropTypes.instanceOf(Object),
 };
 
 Answers.defaultProps = {
-  question: {},
+  answer: {},
 };
