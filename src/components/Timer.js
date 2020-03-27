@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { decreaseTimer } from '../actions/TimerActions';
+import { decreaseTimer, storeTimeID } from '../actions/TimerActions';
 
 class Timer extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      timeInterval: '',
+      setTimer: '',
     };
   }
 
   componentDidMount() {
-    const { stopTimer, toDecreaseTimer } = this.props;
-    return stopTimer === false
-      && this.setState({ timeInterval: setInterval(() => toDecreaseTimer(), 1000) })
+    const { startTimer } = this.props;
+    this.setState({ setTimer: setInterval(() => startTimer(), 1000) });
   }
 
-  componentDidUpdate() {
-    const { timer, stopTimer } = this.props;
-    const { timeInterval } = this.state;
-    return (timer === 0 || stopTimer === true) && clearInterval(timeInterval);
+  shouldComponentUpdate(prevState) {
+    if (prevState !== this.state) return true;
+    return false;
+  }
+
+  componentDidUpdate(prevState) {
+    const { timer, stopTimer, timerIsRunning } = this.props;
+    const { setTimer } = this.state;
+    if (timer !== 0 && stopTimer === true && timerIsRunning === true) {
+      console.log("clear Interval");
+
+      clearInterval(setTimer);
+    }
   }
 
   render() {
@@ -34,19 +42,20 @@ class Timer extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  toDecreaseTimer: () => dispatch(decreaseTimer()),
+  startTimer: () => dispatch(decreaseTimer()),
 });
 
 const mapStateToProps = ({
-  timeReducer: { timer, stopTimer },
+  timeReducer: { timer, stopTimer, timerIsRunning, timeID },
 }) => ({
-  timer, stopTimer,
+  timer, stopTimer, timerIsRunning, timeID,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Timer);
 
 Timer.propTypes = {
+  timerIsRunning: PropTypes.bool.isRequired,
   stopTimer: PropTypes.bool.isRequired,
   timer: PropTypes.number.isRequired,
-  toDecreaseTimer: PropTypes.func.isRequired,
+  startTimer: PropTypes.func.isRequired,
 };
