@@ -59,7 +59,7 @@ class Answers extends React.Component {
               onClick={this.submitAnswer}
               disabled={(array[index]) ? true : !true}
             >
-              <h3>{response}</h3>
+              {response}
             </button>
           ))
           : ''}
