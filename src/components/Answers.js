@@ -66,12 +66,9 @@ class Answers extends Component {
   render() {
     const { results } = this.state;
     const {
-      question,
-      answersClasses,
-      question: { correct_answer: theCorrectAnswer },
+      question, answersClasses, question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
-
     const correctAnswer = question ? theCorrectAnswer : '';
 
     return (
@@ -95,8 +92,7 @@ class Answers extends Component {
             >
               <h3>{response}</h3>
             </button>
-          ))
-          : ''}
+          )) : ''}
       </div>
     );
   }
