@@ -4,7 +4,6 @@ import { Provider } from 'react-redux';
 import { MemoryRouter, Router } from 'react-router-dom';
 import { createMemoryHistory } from 'history';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import rootReducer from '../reducers/rootReducer';
 import '@testing-library/jest-dom/extend-expect';
 import App from '../App';
 import gameReduce from '../reducers/gameReducer';
@@ -13,7 +12,20 @@ afterEach(cleanup);
 
 function renderWithRedux(
   ui,
-  { store = createStore(gameReduce,{ gameReducer: { name:'', email:'' }} ) } = {}
+  { store = createStore(
+    gameReduce, {
+    gameReducer: { name: '', email: '' },
+    difficultyreducer: {
+      difficulty: ['easy', 'medium', 'hard'],
+      difficultySelected: '',
+    },
+    categoryReducer: { category: [], categorySelected: {} },
+    typeReducer: {
+      types: ['multiple', 'boolean'],
+      typesSelected: '',
+    }
+  }
+  ) } = {}
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
