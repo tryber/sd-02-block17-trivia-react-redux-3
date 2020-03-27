@@ -20,19 +20,18 @@ class DropdownCategory extends React.Component {
         <select
           data-testid="question-category-dropdown"
           value={categorySelected.id}
-          onChange={({ target }) => saveChange(target.value)
-          }
+          onChange={({ target }) => saveChange(target.value)}
         >
           <option value="">Random</option>
           {category.map(({ name, id }) => (<option value={id} key={name}>{name}</option>))}
-        </select >
+        </select>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ categoryReducer: { category, categorySelected } }) =>
-  ({ category, categorySelected });
+const mapStateToProps = ({ categoryReducer: { category, categorySelected } }) => (
+  { category, categorySelected });
 
 const mapDispatchToProps = (dispatch) => ({
   saveCategory: (results) => dispatch(requestCategory(results)),

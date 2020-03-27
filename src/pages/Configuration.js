@@ -6,7 +6,7 @@ import DropdownType from '../components/DropdownType';
 
 const Configuration = ({ history }) => (
   <div>
-    <button onClick={() => history.push('/')}>Voltar</button>
+    <button type="button" onClick={() => history.push('/')}>Voltar</button>
     <DropdownCategory />
     <DropdownDifficulty />
     <DropdownType />
