@@ -12,7 +12,7 @@ const DropdownDifficulty = ({ difficulty, difficultySelected, saveChange }) => (
       onChange={({ target }) => saveChange(target.value)}
     >
       <option value="">Random</option>
-      {difficulty.map((diffi) => (<option value={diffi} key={diffi}>{diffi}</option>))}
+      {difficulty.map((difficult) => (<option value={difficult} key={difficult}>{difficult}</option>))}
     </select >
   </div>
 );
