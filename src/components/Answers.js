@@ -14,8 +14,10 @@ class Answers extends Component {
   }
 
   componentDidUpdate(prevProps) {
+    const { results, questionNumber } = this.props;
+    const { question } = results[questionNumber];
+    // console.log(question)
     const {
-      question,
       timer,
       wrongAnswerFlag,
       answersClasses,
@@ -27,7 +29,7 @@ class Answers extends Component {
     } = prevProps;
 
     if (prevProps.question !== question) {
-      this.getAnswers(question);
+      this.getAnswers(results[questionNumber]);
     }
 
     if (wrongAnswerFlag === true && timer === 0 && answersClasses === prevAnswersClasses) {
@@ -37,6 +39,7 @@ class Answers extends Component {
   }
 
   getAnswers(question) {
+    // console.log(question)
     const { toFormatAnswers } = this.props;
     const { correct_answer: correct, incorrect_answers: incorrect } = question;
     const allAnswers = [correct, ...incorrect];
@@ -99,9 +102,13 @@ class Answers extends Component {
 }
 
 const mapStateToProps = ({
+  getQuestions: { results },
+  getQuestionsNumber: { questionNumber },
   gameReducer: { answersClasses, wrongAnswerFlag },
   timeReducer: { timer },
 }) => ({
+  results,
+  questionNumber,
   timer,
   answersClasses,
   wrongAnswerFlag,

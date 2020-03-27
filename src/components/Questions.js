@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { wrongAnswer } from '../actions/ChangeScoreboard';
 import { resetTimer } from '../actions/TimerActions';
+import { getQuestionNumber } from '../actions/getQuestionNumber';
 import Answers from './Answers';
 import Timer from './Timer';
 
@@ -18,8 +19,20 @@ class Questions extends Component {
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
-  componentDidUpdate() {
-    const { timer, wrongAnswerSelected } = this.props;
+  componentDidMount() {
+    const { sendQuestionNumber } = this.props;
+    const { questionNumber } = this.state;
+    sendQuestionNumber(questionNumber);
+
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { timer, wrongAnswerSelected, sendQuestionNumber } = this.props;
+    const { questionNumber } = this.state;
+    if (prevState.questionNumber !== questionNumber) {
+      console.log(prevState.questionNumber, questionNumber)
+      sendQuestionNumber(questionNumber);
+    }
     return timer === 0 && wrongAnswerSelected();
   }
 
@@ -62,6 +75,7 @@ class Questions extends Component {
 const mapDispatchToProps = (dispatch) => ({
   wrongAnswerSelected: () => dispatch(wrongAnswer()),
   resetTimerNow: () => dispatch(resetTimer()),
+  sendQuestionNumber: (number) => dispatch(getQuestionNumber(number)),
 });
 
 const mapStateToProps = ({

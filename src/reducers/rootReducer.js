@@ -6,6 +6,7 @@ import timeReducer from './timeReducer';
 import categoryReducer from './categoryReducer';
 import difficultyreducer from './difficultyreducer';
 import typeReducer from './typeReducer';
+import getQuestionsNumber from './getQuestionsNumber';
 
 const rootReducer = () => combineReducers({
   getToken,
@@ -15,6 +16,7 @@ const rootReducer = () => combineReducers({
   categoryReducer,
   difficultyreducer,
   typeReducer,
+  getQuestionsNumber,
 });
 
 export default rootReducer;
