@@ -51,7 +51,8 @@ class Answers extends Component {
   getAnswers(question) {
     const { toFormatAnswers } = this.props;
     const { correct_answer: correct, incorrect_answers: incorrect } = question;
-    const allAnswers = [correct, ...incorrect];
+    const auxIncorrect = incorrect.map((inc) => decodeURIComponent(inc));
+    const allAnswers = [decodeURIComponent(correct), ...auxIncorrect];
     const filteredAnswers = (allAnswers.length > 2) ? ['', '', '', ''] : ['', ''];
     for (let i = 0; i < filteredAnswers.length; i += 1) {
       const aux = (allAnswers.length > 1) ? Math.round((Math.random() * allAnswers.length)) : 0;
@@ -66,10 +67,10 @@ class Answers extends Component {
       question: { correct_answer: correctAnswer, difficulty },
       toFormatAnswers, timer, points,
     } = this.props;
-    const difficultyPoints = switchDifficulty(difficulty);
-    if (value === correctAnswer) points(10 + (difficultyPoints * timer));
+    const difficultyPoints = switchDifficulty(decodeURIComponent(difficulty));
+    if (value === decodeURIComponent(correctAnswer)) points(10 + (difficultyPoints * timer));
     const { results, answersArray } = this.state;
-    const index = results.indexOf(correctAnswer);
+    const index = results.indexOf(decodeURIComponent(correctAnswer));
     const formattedAnswers = {
       ...this.state,
       answersArray: answersArray.map((ele, i) => ((i === index) ? 'green' : 'red')),
@@ -83,7 +84,7 @@ class Answers extends Component {
       question, answersClasses, question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
-    const correctAnswer = question ? theCorrectAnswer : '';
+    const correctAnswer = question ? decodeURIComponent(theCorrectAnswer) : '';
 
     return (
       <div>
@@ -95,7 +96,6 @@ class Answers extends Component {
               key={response}
               data-testid={(response !== correctAnswer) ? `wrong-answer-${index}` : 'correct-awnser'}
               className={answersClasses && answersClasses[index]}
-              ref={this.response}
               onClick={
                 ({ target }) => {
                   this.submitAnswer(target.value);
@@ -104,7 +104,7 @@ class Answers extends Component {
               }
               disabled={answersClasses[0] === 0 && true}
             >
-              {response}
+              {decodeURIComponent(response)}
             </button>
           )) : ''}
       </div>

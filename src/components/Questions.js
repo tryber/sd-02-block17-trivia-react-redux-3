@@ -34,8 +34,8 @@ class Questions extends Component {
   render() {
     const { results, timer } = this.props;
     const { questionNumber } = this.state;
-    const currentQuestion = results.map(({ question }) => question);
-    const currentCategory = results.map(({ category }) => category);
+    const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
+    const currentCategory = results.map(({ category }) => decodeURIComponent(category));
     return (
       <div>
         {timer === 0 && <div>RESPOSTA ERRADA</div>}
