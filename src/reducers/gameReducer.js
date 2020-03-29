@@ -17,7 +17,7 @@ const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
 export default function nameAndEmail(state = INITIAL_STATE, {
-  type, email, name, answersClasses, points, error
+  type, email, name, answersClasses, points, error,
 }) {
   switch (type) {
     case SENDEMAIL:
