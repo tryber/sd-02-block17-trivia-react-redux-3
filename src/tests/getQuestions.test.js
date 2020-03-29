@@ -1,5 +1,8 @@
+import { cleanup } from '@testing-library/react';
 import getQuestionsApi from '../services/getQuestionsApi';
 import tokenRequest from '../services/tokenRequest';
+
+afterEach(cleanup);
 
 describe('testing getQuestions API', () => {
   it('questions are retrieved from API when theres a token', async () => {
@@ -28,7 +31,14 @@ describe('testing getQuestions API', () => {
   });
 
   it('response 3 and empty array is retrieved when no token is provided', async () => {
-    const { response_code: responseCode, results } = await getQuestionsApi();
+    const categorySelected = { id: '' };
+    const difficultySelected = '';
+    const typeSelected = '';
+    const token = 'asdqadqw';
+    const props = {
+      token, categorySelected, difficultySelected, typeSelected,
+    };
+    const { response_code: responseCode, results } = await getQuestionsApi(props);
     expect(responseCode).toBe(3);
     expect(results).toEqual(expect.arrayContaining([]));
   });

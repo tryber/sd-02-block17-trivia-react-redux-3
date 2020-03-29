@@ -24,9 +24,6 @@ const initialState = {
   },
 };
 
-console.log(initialState);
-
-
 function renderWithRedux(
   ui,
   { store = createStore(gameReducer, initialState) } = {},

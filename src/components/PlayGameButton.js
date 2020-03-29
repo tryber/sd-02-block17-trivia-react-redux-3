@@ -3,32 +3,35 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tokenRequest from '../services/tokenRequest';
-import SendToken from '../actions/SendToken';
 
-const PlayGameButton = ({ getToken, name, email }) => (
-  <Link to="/game">
-    <button
-      type="button"
-      onClick={getToken}
-      data-testid="btn-play"
-      disabled={(name !== '' && email !== '') ? false : !false}
-    >
-      Jogar!
-    </button>
-  </Link>
+class PlayGameButton extends React.Component {
+  static onPlay() {
+    tokenRequest()
+      .then((results) => console.log(results));
+  }
 
-);
-
-const mapDispatchToProps = (dispatch) => ({
-  getToken: () => tokenRequest().then(({ token }) => dispatch(SendToken(token))),
-});
+  render() {
+    const { name, email } = this.props;
+    return (
+      <Link to="/game">
+        <button
+          type="button"
+          onClick={PlayGameButton.onPlay}
+          data-testid="btn-play"
+          disabled={(name !== '' && email !== '') ? false : !false}
+        >
+          Jogar!
+        </button>
+      </Link>
+    );
+  }
+}
 
 const mapStateToProps = ({ gameReducer: { name, email } }) => ({ name, email });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayGameButton);
+export default connect(mapStateToProps)(PlayGameButton);
 
 PlayGameButton.propTypes = {
-  getToken: PropTypes.func.isRequired,
   name: PropTypes.string,
   email: PropTypes.string,
 };
