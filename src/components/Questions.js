@@ -33,10 +33,10 @@ class Questions extends Component {
     const { questionNumber } = this.state;
     if (questionNumber < 4) {
       return (
-        <button type="button" onClick={this.nextQuestion}>PRÓXIMA</button>
+        <button type="button" onClick={this.nextQuestion} data-testid="btn-next">PRÓXIMA</button>
       );
     }
-    return <Link to="/feedback"><button type="button">FINALIZAR</button></Link>;
+    return <Link to="/feedback"><button data-testid="btn-next" type="button">FINALIZAR</button></Link>;
   }
 
   render() {

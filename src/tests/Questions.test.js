@@ -5,11 +5,15 @@ import {
   render,
   cleanup,
   wait,
+  fireEvent,
+  waitForElement,
+  waitForDomChange,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import Questions from '../components/Questions';
 import gameReducer from '../reducers/gameReducer';
+import Game from '../pages/Game';
 
 const initialState = {
   getQuestions: {
@@ -18,14 +22,16 @@ const initialState = {
   gameReducer: {
     name: 'name',
     email: 'email',
-    timer: 6,
+    timer: 30,
     scoreboard: 0,
     lastQuestionStatus: 'correct',
   },
+  timeReducer: { timer: 30, stopTimer: 0 },
+  getToken: { token: '' },
+  categoryReducer: { categorySelected: '' },
+  difficultyreducer: { difficultySelected: '' },
+  typeReducer: { typeSelected: '' },
 };
-
-console.log(initialState);
-
 
 function renderWithRedux(
   ui,
@@ -36,16 +42,25 @@ function renderWithRedux(
     store,
   };
 }
+
 afterEach(cleanup);
 
-describe.skip('Testing for Questions page', () => {
+describe('Testing for Questions page', () => {
   it('Time should show and when time gets to 0, wrong message should appear', async () => {
-    const { store, getByText } = renderWithRedux(
+    const { store: { getState } } = renderWithRedux(
       <MemoryRouter>
         <Questions />
       </MemoryRouter>,
     );
-    await wait(() => expect(store.getState().gameReducer.timer).toBe(2));
-    expect(getByText('RESPOSTA ERRADA')).toBeInTheDocument();
+    await wait(() => expect(getState().timeReducer.timer).toBe(30));
+  });
+  it('', async () => {
+    const { getByTestId } = renderWithRedux(
+      <MemoryRouter>
+        <Game />
+      </MemoryRouter>,
+    );
+    await waitForDomChange(() => getByTestId('correct-answer'));
+    expect(getByTestId('btn-next')).toBeInTheDocument();
   });
 });
