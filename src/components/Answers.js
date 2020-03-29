@@ -3,7 +3,19 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import formatAnswers from '../actions/GameActions';
 import { stopTimer } from '../actions/TimerActions';
+import setPoints from '../actions/SetPoints';
 import './Answers.css';
+
+function switchDifficulty(difficulty) {
+  switch (difficulty) {
+    case 'hard':
+      return 3;
+    case 'medium':
+      return 2;
+    default:
+      return 1;
+  }
+}
 
 class Answers extends Component {
   constructor(props) {
@@ -49,11 +61,13 @@ class Answers extends Component {
     toFormatAnswers(['', '', '', '']);
   }
 
-  submitAnswer() {
+  submitAnswer(value) {
     const {
-      question: { correct_answer: correctAnswer },
-      toFormatAnswers,
+      question: { correct_answer: correctAnswer, difficulty },
+      toFormatAnswers, timer, points
     } = this.props;
+    const difficultyPoints = switchDifficulty(difficulty);
+    if (value === correctAnswer) points(10 + (difficultyPoints * timer));
     const { results, answersArray } = this.state;
     const index = results.indexOf(correctAnswer);
     const formattedAnswers = {
@@ -83,8 +97,8 @@ class Answers extends Component {
               className={answersClasses && answersClasses[index]}
               ref={this.response}
               onClick={
-                () => {
-                  this.submitAnswer();
+                ({ target }) => {
+                  this.submitAnswer(target.value);
                   toStopTimer();
                 }
               }
@@ -110,6 +124,7 @@ const mapStateToProps = ({
 const mapDispatchToProps = (dispatch) => ({
   toFormatAnswers: (answersClasses) => dispatch(formatAnswers(answersClasses)),
   toStopTimer: () => dispatch(stopTimer()),
+  points: (param) => dispatch(setPoints(param)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Answers);
@@ -121,6 +136,7 @@ Answers.propTypes = {
   toStopTimer: PropTypes.func.isRequired,
   timer: PropTypes.number.isRequired,
   wrongAnswerFlag: PropTypes.bool,
+  points: PropTypes.func.isRequired,
 };
 
 Answers.defaultProps = {
