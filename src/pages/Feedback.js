@@ -7,7 +7,7 @@ import ConfigurationButton from '../components/ConfigurationButton';
 
 class Feedback extends Component {
   render() {
-    const { scoreboard } = this.props;
+    const { scoreboard, rightQuestions } = this.props;
     return (
       <div>
         <header>
@@ -17,13 +17,13 @@ class Feedback extends Component {
         <section>
           <h2 data-testid="feedback-text">
             {
-              scoreboard.length < 3
+              rightQuestions < 3
                 ? 'Podia ser melhor...'
                 : 'Mandou bem!'
             }
           </h2>
-          <h3 data-testid="feedback-total-question">{`Você acertou ${scoreboard.length} questões!`}</h3>
-          <h3 data-testid="feedback-total-score">{`Um total de ${scoreboard.reduce((acc, cur) => acc + cur, 0)} pontos`}</h3>
+          <h3 data-testid="feedback-total-question">{`Você acertou ${rightQuestions} questões!`}</h3>
+          <h3 data-testid="feedback-total-score">{`Um total de ${scoreboard} pontos`}</h3>
         </section>
         <section>
           <div>
@@ -39,9 +39,17 @@ class Feedback extends Component {
 }
 
 Feedback.propTypes = {
-  scoreboard: PropTypes.instanceOf(Array).isRequired,
+  scoreboard: PropTypes.number,
+  rightQuestions: PropTypes.number,
 };
 
-const mapStateToProps = ({ gameReducer: { scoreboard } }) => ({ scoreboard });
+Feedback.defaultProps = {
+  scoreboard: 0,
+  rightQuestions: 0,
+};
+
+const mapStateToProps = (
+  { gameReducer: { scoreboard, rightQuestions } },
+) => ({ scoreboard, rightQuestions });
 
 export default connect(mapStateToProps)(Feedback);
