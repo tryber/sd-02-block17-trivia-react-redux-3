@@ -6,12 +6,14 @@ afterEach(cleanup);
 
 describe('testing getQuestions API', () => {
   it('questions are retrieved from API when theres a token', async () => {
-    const { token } = await tokenRequest();
+    const data = await tokenRequest();
+    const token = (typeof data === 'object') ? data.token : data;
+    localStorage.setItem('token', token);
     const categorySelected = { id: '' };
     const difficultySelected = '';
     const typeSelected = '';
     const props = {
-      token, categorySelected, difficultySelected, typeSelected,
+      categorySelected, difficultySelected, typeSelected,
     };
     const { response_code: responseCode, results } = await getQuestionsApi(props);
     const resultModel = [{
@@ -35,8 +37,9 @@ describe('testing getQuestions API', () => {
     const difficultySelected = '';
     const typeSelected = '';
     const token = 'asdqadqw';
+    localStorage.setItem('token', token);
     const props = {
-      token, categorySelected, difficultySelected, typeSelected,
+      categorySelected, difficultySelected, typeSelected,
     };
     const { response_code: responseCode, results } = await getQuestionsApi(props);
     expect(responseCode).toBe(3);

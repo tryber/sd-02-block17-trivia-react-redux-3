@@ -30,6 +30,7 @@ class Questions extends Component {
     resetTimerNow();
   }
 
+
   render() {
     const { results, timer } = this.props;
     const { questionNumber } = this.state;

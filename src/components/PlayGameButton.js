@@ -1,28 +1,37 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tokenRequest from '../services/tokenRequest';
 
 class PlayGameButton extends React.Component {
-  static onPlay() {
+  constructor(props) {
+    super(props);
+    this.state = { redirect: false };
+    this.onPlayClick = this.onPlayClck.bind(this);
+  }
+
+  onPlayClck() {
     tokenRequest()
-      .then((results) => console.log(results));
+      .then(async (param) => {
+        const aux = (typeof token === 'object') ? param.token : param;
+        localStorage.setItem('token', (aux));
+        await this.setState({ redirect: true });
+      });
   }
 
   render() {
     const { name, email } = this.props;
-    return (
-      <Link to="/game">
-        <button
-          type="button"
-          onClick={PlayGameButton.onPlay}
-          data-testid="btn-play"
-          disabled={(name !== '' && email !== '') ? false : !false}
-        >
-          Jogar!
-        </button>
-      </Link>
+    const { redirect } = this.state;
+    return (redirect) ? <Redirect to="/game" /> : (
+      <button
+        type="button"
+        onClick={this.onPlayClick}
+        data-testid="btn-play"
+        disabled={(name !== '' && email !== '') ? false : !false}
+      >
+        Jogar!
+      </button>
     );
   }
 }
