@@ -29,8 +29,19 @@ class Questions extends Component {
     resetTimerNow();
   }
 
+  renderButton() {
+    const { questionNumber } = this.state;
+    if (questionNumber < 4) {
+      return (
+        <button type="button" onClick={this.nextQuestion}>PRÓXIMA</button>
+      );
+    }
+    return <Link to="/feedback"><button type="button">FINALIZAR</button></Link>;
+  }
+
   render() {
-    const { results, timer } = this.props;
+    const { results, timer, stopTimer } = this.props;
+    console.log(stopTimer)
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
@@ -45,14 +56,10 @@ class Questions extends Component {
           <Timer />
         </div>
         <div>
-          <Answers />
+          <Answers question={results[questionNumber]} />
         </div>
         <div>
-          {
-            questionNumber < 4
-              ? <button type="button" onClick={this.nextQuestion}>PRÓXIMA</button>
-              : <Link to="/feedback"><button type="button">FINALIZAR</button></Link>
-          }
+          {stopTimer ? this.renderButton() : false}
         </div>
       </div>
     );
@@ -66,8 +73,8 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = ({
   getQuestions: { results },
-  timeReducer: { timer },
-}) => ({ results, timer });
+  timeReducer: { timer, stopTimer },
+}) => ({ results, timer, stopTimer });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
