@@ -41,7 +41,6 @@ class Questions extends Component {
 
   render() {
     const { results, timer, stopTimer } = this.props;
-    console.log(stopTimer)
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => question);
     const currentCategory = results.map(({ category }) => category);
@@ -83,4 +82,5 @@ Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
   timer: PropTypes.number.isRequired,
   wrongAnswerSelected: PropTypes.func.isRequired,
+  stopTimer: PropTypes.bool.isRequired,
 };
