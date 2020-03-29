@@ -1,4 +1,5 @@
 import { FORMAT_ANSWERS } from '../actions/GameActions';
+import { RESET_POINTS } from '../actions/resetPoints';
 
 export const INITIAL_STATE = {
   name: '',
@@ -7,7 +8,6 @@ export const INITIAL_STATE = {
   rightQuestions: 0,
   wrongAnswerFlag: false,
   answersClasses: [],
-
 };
 
 const SENDEMAIL = 'SEND_EMAIL';
@@ -34,6 +34,8 @@ export default function nameAndEmail(state = INITIAL_STATE, {
       };
     case ERROR:
       return { ...state, name: error, email: '' };
+    case RESET_POINTS:
+      return INITIAL_STATE;
     default:
       return state;
   }
