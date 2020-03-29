@@ -64,7 +64,7 @@ class Answers extends Component {
   submitAnswer(value) {
     const {
       question: { correct_answer: correctAnswer, difficulty },
-      toFormatAnswers, timer, points
+      toFormatAnswers, timer, points,
     } = this.props;
     const difficultyPoints = switchDifficulty(difficulty);
     if (value === correctAnswer) points(10 + (difficultyPoints * timer));

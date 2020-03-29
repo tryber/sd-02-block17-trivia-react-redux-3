@@ -19,7 +19,7 @@ class Game extends React.Component {
     getQuestionsApi(this.props)
       .then(async ({ response_code: code, results }) => {
         if (code === 3) {
-          sendError('Error');
+          sendError('Token Expirado');
           localStorage.clear();
           await history.push('/');
         }
@@ -56,4 +56,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Game);
 Game.propTypes = {
   history: PropTypes.instanceOf(Object).isRequired,
   sendQuestions: PropTypes.func.isRequired,
+  sendError: PropTypes.func.isRequired,
 };

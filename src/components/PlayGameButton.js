@@ -14,7 +14,7 @@ class PlayGameButton extends React.Component {
   onPlayClck() {
     tokenRequest()
       .then(async (param) => {
-        const aux = (typeof token === 'object') ? param.token : param;
+        const aux = (typeof param === 'object') ? param.token : param;
         localStorage.setItem('token', (aux));
         await this.setState({ redirect: true });
       });

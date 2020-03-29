@@ -5,7 +5,7 @@ import sendName from '../actions/SendName';
 import sendEmail from '../actions/SendEmail';
 
 const InputInitial = ({
-  nameToReducer, emailToReducer, error, name,
+  nameToReducer, emailToReducer, name,
 }) => (
   <div>
     <label htmlFor="input-email" data-testid="label-gravatar-email">Email do gravatar:</label>
@@ -20,13 +20,13 @@ const InputInitial = ({
       type="text"
       id="input-Name"
       data-testid="input-player-name"
-      value={(error === 'Error') ? 'Token Expirado' : name}
+      value={name}
       onChange={({ target }) => nameToReducer(target.value)}
     />
   </div>
 );
 
-const mapStateToProps = ({ getQuestions: { error }, gameReducer: { name } }) => ({ error, name });
+const mapStateToProps = ({ gameReducer: { name } }) => ({ name });
 
 const mapDispatchToProps = (dispatch) => ({
   nameToReducer: (name) => dispatch(sendName(name)),
