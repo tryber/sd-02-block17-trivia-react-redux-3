@@ -18,11 +18,7 @@ class Feedback extends Component {
         </header>
         <section>
           <h2 data-testid="feedback-text">
-            {
-              rightQuestions < 3
-                ? 'Podia ser melhor...'
-                : 'Mandou bem!'
-            }
+            {rightQuestions < 3 ? 'Podia ser melhor...' : 'Mandou bem!'}
           </h2>
           <h3 data-testid="feedback-total-question">{`Você acertou ${rightQuestions} questões!`}</h3>
           <h3 data-testid="feedback-total-score">{`Um total de ${scoreboard} pontos`}</h3>
@@ -32,13 +28,7 @@ class Feedback extends Component {
             <Link to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link
-              to="/"
-              onClick={() => {
-                resetTimerNow();
-                resetScore();
-              }}
-            >
+            <Link to="/" onClick={() => { resetTimerNow(); resetScore(); }}>
               JOGAR NOVAMENTE
             </Link>
           </div>
@@ -52,6 +42,7 @@ Feedback.propTypes = {
   scoreboard: PropTypes.number,
   rightQuestions: PropTypes.number,
   resetTimerNow: PropTypes.func.isRequired,
+  resetScore: PropTypes.func.isRequired,
 };
 
 Feedback.defaultProps = {
