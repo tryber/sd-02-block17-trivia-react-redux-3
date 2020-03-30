@@ -1,5 +1,6 @@
 import { FORMAT_ANSWERS } from '../actions/GameActions';
 import { RESET_POINTS } from '../actions/resetPoints';
+import { SEND_IMAGE_URL } from '../actions/HeaderActions';
 
 export const INITIAL_STATE = {
   name: '',
@@ -9,6 +10,7 @@ export const INITIAL_STATE = {
   wrongAnswerFlag: false,
   answersClasses: [],
   question: {},
+  imageUrl: '',
 };
 const QUESTION = 'QUESTION';
 const SENDEMAIL = 'SEND_EMAIL';
@@ -18,7 +20,7 @@ const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
 export default function nameAndEmail(state = INITIAL_STATE, {
-  type, email, name, answersClasses, points, error, question,
+  type, email, name, answersClasses, points, error, question, imageUrl,
 }) {
   switch (type) {
     case SENDEMAIL:
@@ -39,6 +41,8 @@ export default function nameAndEmail(state = INITIAL_STATE, {
       return INITIAL_STATE;
     case QUESTION:
       return { ...state, question };
+    case SEND_IMAGE_URL:
+      return { ...state, imageUrl };
     default:
       return state;
   }

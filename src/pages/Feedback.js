@@ -15,9 +15,9 @@ class Feedback extends Component {
   }
 
   componentDidMount() {
-    const { name: playerName = '', gravatarEmail = '', score = '' } = this.props;
+    const { name: playerName = '', imageUrl = '', score = '' } = this.props;
     const rankingOnLocalStorage = localStorage.getItem('ranking') ? localStorage.getItem('ranking') : null;
-    const newRankingItem = JSON.stringify({ playerName, score, gravatarEmail });
+    const newRankingItem = JSON.stringify({ playerName, score, imageUrl });
     const newLadder = rankingOnLocalStorage !== null ? [
       ...JSON.parse(rankingOnLocalStorage).filter((rankItem) => rankItem !== newRankingItem),
       JSON.parse(newRankingItem),
@@ -65,7 +65,7 @@ Feedback.propTypes = {
   resetScore: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
   name: PropTypes.string.isRequired,
-  gravatarEmail: PropTypes.string.isRequired,
+  imageUrl: PropTypes.string.isRequired,
   score: PropTypes.number.isRequired,
 };
 
@@ -75,8 +75,8 @@ const mapDispatchToProps = (dispatch) => ({
   resetFilter: () => dispatch(resetAllFilters()),
 });
 
-const mapStateToProps = ({ gameReducer: { name, gravatarEmail, score } }) => ({
-  name, gravatarEmail, score,
+const mapStateToProps = ({ gameReducer: { name, imageUrl, score } }) => ({
+  name, imageUrl, score,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
