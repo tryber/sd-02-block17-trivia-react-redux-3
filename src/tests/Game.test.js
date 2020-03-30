@@ -22,6 +22,8 @@ function renderWithRedux(
 }
 
 afterEach(cleanup);
+const obj = { player: { name: 'Josezinho' } };
+localStorage.setItem('state', JSON.stringify(obj));
 
 describe('Test render Header', () => {
   it('test render', () => {
@@ -30,10 +32,9 @@ describe('Test render Header', () => {
         <Header />
       </MemoryRouter>,
     );
-    localStorage.setItem('state', JSON.stringify({ player: '' }));
     expect(getByTestId('header-player-name')).toBeInTheDocument();
     expect(getByTestId('header-score')).toBeInTheDocument();
-    expect(getByTestId('header-player-name').innerHTML).toEqual('Jogador: ');
+    expect(getByTestId('header-player-name').innerHTML).toBe('Jogador: Josezinho');
     expect(getByTestId('header-score').innerHTML).toBe('0');
   });
 });
