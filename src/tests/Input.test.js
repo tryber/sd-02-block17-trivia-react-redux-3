@@ -8,7 +8,7 @@ import rootReducer from '../reducers/rootReducer';
 import '@testing-library/jest-dom/extend-expect';
 
 afterEach(cleanup);
-const obj = { getQuestions: { error: '' }, gameReducer: { name: '' } };
+const obj = { getQuestions: { error: '' }, gameReducer: { name: '', gravatarEmail: '' } };
 function renderWithRedux(
   ui,
   { store = createStore(rootReducer(), obj) } = {},

@@ -5,7 +5,7 @@ import sendName from '../actions/SendName';
 import sendEmail from '../actions/SendEmail';
 
 const InputInitial = ({
-  nameToReducer, emailToReducer, name,
+  nameToReducer, emailToReducer, name, gravatarEmail,
 }) => (
   <div>
     <label htmlFor="input-email" data-testid="label-gravatar-email">Email do gravatar:</label>
@@ -13,6 +13,7 @@ const InputInitial = ({
       type="email"
       id="input-email"
       data-testid="input-gravatar-email"
+      value={gravatarEmail}
       onChange={({ target }) => emailToReducer(target.value)}
     />
     <label htmlFor="input-name" data-testid="label-player-name">Nome do Jogador:</label>
@@ -26,7 +27,7 @@ const InputInitial = ({
   </div>
 );
 
-const mapStateToProps = ({ gameReducer: { name } }) => ({ name });
+const mapStateToProps = ({ gameReducer: { name, gravatarEmail } }) => ({ name, gravatarEmail });
 
 const mapDispatchToProps = (dispatch) => ({
   nameToReducer: (name) => dispatch(sendName(name)),

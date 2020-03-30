@@ -7,6 +7,9 @@ import { resetTimer } from '../actions/TimerActions';
 import Answers from './Answers';
 import Timer from './Timer';
 
+function saveScore(player) {
+  localStorage.setItem('state', JSON.stringify({ player }));
+}
 
 class Questions extends Component {
   constructor(props) {
@@ -32,7 +35,12 @@ class Questions extends Component {
 
 
   render() {
-    const { results, timer } = this.props;
+    const {
+      results, timer, name, assertions, score, gravatarEmail,
+    } = this.props;
+    const player = {
+      name, assertions, score, gravatarEmail,
+    };
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
     const currentCategory = results.map(({ category }) => decodeURIComponent(category));
@@ -52,8 +60,8 @@ class Questions extends Component {
         <div>
           {
             questionNumber < 4
-              ? <button type="button" onClick={this.nextQuestion}>PRÓXIMA</button>
-              : <Link to="/feedback"><button type="button">FINALIZAR</button></Link>
+              ? <button type="button" data-testid="btn-next" onClick={this.nextQuestion}>PRÓXIMA</button>
+              : <Link to="/feedback"><button data-testid="btn-next" onClick={() => saveScore(player)} type="button">FINALIZAR</button></Link>
           }
         </div>
       </div>
@@ -69,7 +77,12 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = ({
   getQuestions: { results },
   timeReducer: { timer },
-}) => ({ results, timer });
+  gameReducer: {
+    name, assertions, score, gravatarEmail,
+  },
+}) => ({
+  results, timer, name, assertions, score, gravatarEmail,
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 

@@ -4,6 +4,7 @@ const INITIAL_STATE = {
 };
 
 const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
+const RESET_FILTER = 'RESET_FILTER';
 
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
@@ -12,6 +13,8 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         difficultySelected: action.change,
       };
+    case RESET_FILTER:
+      return INITIAL_STATE;
     default: return state;
   }
 }

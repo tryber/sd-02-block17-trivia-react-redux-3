@@ -17,7 +17,7 @@ const initialState = {
   },
   gameReducer: {
     name: 'name',
-    email: 'email',
+    gravatarEmail: 'email',
     timer: 6,
     scoreboard: 0,
     lastQuestionStatus: 'correct',

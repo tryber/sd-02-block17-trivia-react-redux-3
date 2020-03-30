@@ -11,7 +11,7 @@ describe('Game', () => {
         cy.clock()
         cy.route(`/api.php?*`).as('api')
         cy.visit('http://localhost:3000/game')
-        cy.wait('@api')
+        // cy.wait('@api')
         cy.get('[data-testid="header-player-name"]').contains(pName)
         cy.get('[data-testid="header-profile-picture"]')
         const score = cy.get('[data-testid="header-score"]')
@@ -22,8 +22,9 @@ describe('Game', () => {
         cy.get('[data-testid="timer"]').contains('25')
         cy.get('[data-testid="correct-answer"]').click();
         cy.get('[data-testid="header-score"]').then(($span) => {
+            console.log($span.text())
             const elementScore = $span.text();
-            expect(Number(elementScore)).to.be.gt(minExpectedScoreValue)
+            expect((elementScore)).to.be.gt(minExpectedScoreValue)
         })
         cy.get('[data-testid="btn-next"]').click()
         cy.wait(100)
@@ -68,7 +69,7 @@ describe('Game', () => {
         cy.server()
         cy.route(`/api.php?*`).as('api')
         cy.visit('http://localhost:3000/game')
-        cy.wait('@api')
+        // cy.wait('@api')
         cy.get('[data-testid="input-player-name"]')
     })
 })

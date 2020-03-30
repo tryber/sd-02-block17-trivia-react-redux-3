@@ -16,7 +16,7 @@ function renderWithRedux(
     store = createStore(
       rootReducer(),
       {
-        gameReducer: { name: '', email: '' },
+        gameReducer: { name: '', gravatarEmail: '' },
         difficultyreducer: {
           difficulty: ['easy', 'medium', 'hard'],
           difficultySelected: '',

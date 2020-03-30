@@ -3,32 +3,35 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
-import ConfigurationButton from '../components/ConfigurationButton';
 import { resetTimer } from '../actions/TimerActions';
 import { resetPoints } from '../actions/resetPoints';
+import { resetAllFilters } from '../actions/noFilter';
 
 class Feedback extends Component {
+
   render() {
-    const { scoreboard, rightQuestions, resetTimerNow, resetScore } = this.props;
+    const { resetTimerNow, resetScore, resetFilter } = this.props;
+    const state = JSON.parse(localStorage.getItem('state')) || { player: { assertions: '', score: '' } };
+    const { assertions, score } = state.player;
+    const answerTitle = assertions >= 3 ? 'Mandou bem!' : 'Podia ser melhor...';
     return (
       <div>
         <header>
           <Header />
-          <ConfigurationButton />
         </header>
         <section>
           <h2 data-testid="feedback-text">
-            {rightQuestions < 3 ? 'Podia ser melhor...' : 'Mandou bem!'}
+            {answerTitle}
           </h2>
-          <h3 data-testid="feedback-total-question">{`Você acertou ${rightQuestions} questões!`}</h3>
-          <h3 data-testid="feedback-total-score">{`Um total de ${scoreboard} pontos`}</h3>
+          <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || ''} questões!`}</h3>
+          <h3 data-testid="feedback-total-score">{`Um total de ${score || ''} pontos`}</h3>
         </section>
         <section>
           <div>
             <Link to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link to="/" onClick={() => { resetTimerNow(); resetScore(); }}>
+            <Link to="/" onClick={() => { resetTimerNow(); resetScore(); resetFilter(); localStorage.removeItem('player'); }}>
               JOGAR NOVAMENTE
             </Link>
           </div>
@@ -39,24 +42,14 @@ class Feedback extends Component {
 }
 
 Feedback.propTypes = {
-  scoreboard: PropTypes.number,
-  rightQuestions: PropTypes.number,
   resetTimerNow: PropTypes.func.isRequired,
   resetScore: PropTypes.func.isRequired,
 };
 
-Feedback.defaultProps = {
-  scoreboard: 0,
-  rightQuestions: 0,
-};
-
-const mapStateToProps = (
-  { gameReducer: { scoreboard, rightQuestions } },
-) => ({ scoreboard, rightQuestions });
-
 const mapDispatchToProps = (dispatch) => ({
   resetTimerNow: () => dispatch(resetTimer()),
   resetScore: () => dispatch(resetPoints()),
+  resetFilter: () => dispatch(resetAllFilters()),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+export default connect(null, mapDispatchToProps)(Feedback);

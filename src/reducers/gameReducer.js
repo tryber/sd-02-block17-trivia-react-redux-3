@@ -3,9 +3,9 @@ import { RESET_POINTS } from '../actions/resetPoints';
 
 export const INITIAL_STATE = {
   name: '',
-  email: '',
-  scoreboard: 0,
-  rightQuestions: 0,
+  gravatarEmail: '',
+  score: 0,
+  assertions: 0,
   wrongAnswerFlag: false,
   answersClasses: [],
 };
@@ -21,7 +21,7 @@ export default function nameAndEmail(state = INITIAL_STATE, {
 }) {
   switch (type) {
     case SENDEMAIL:
-      return { ...state, email };
+      return { ...state, gravatarEmail: email };
     case SENDNAME:
       return { ...state, name };
     case WRONG_ASNWER:
@@ -30,10 +30,10 @@ export default function nameAndEmail(state = INITIAL_STATE, {
       return { ...state, answersClasses };
     case SET_POINTS:
       return {
-        ...state, scoreboard: state.scoreboard + points, rightQuestions: state.rightQuestions + 1,
+        ...state, score: state.score + points, assertions: state.assertions + 1,
       };
     case ERROR:
-      return { ...state, name: error, email: '' };
+      return { ...state, name: error, gravatarEmail: '' };
     case RESET_POINTS:
       return INITIAL_STATE;
     default:

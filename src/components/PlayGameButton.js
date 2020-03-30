@@ -21,14 +21,14 @@ class PlayGameButton extends React.Component {
   }
 
   render() {
-    const { name, email } = this.props;
+    const { name, gravatarEmail } = this.props;
     const { redirect } = this.state;
     return (redirect) ? <Redirect to="/game" /> : (
       <button
         type="button"
         onClick={this.onPlayClick}
         data-testid="btn-play"
-        disabled={(name !== '' && email !== '') ? false : !false}
+        disabled={(name !== '' && gravatarEmail !== '') ? false : !false}
       >
         Jogar!
       </button>
@@ -36,16 +36,16 @@ class PlayGameButton extends React.Component {
   }
 }
 
-const mapStateToProps = ({ gameReducer: { name, email } }) => ({ name, email });
+const mapStateToProps = ({ gameReducer: { name, gravatarEmail } }) => ({ name, gravatarEmail });
 
 export default connect(mapStateToProps)(PlayGameButton);
 
 PlayGameButton.propTypes = {
   name: PropTypes.string,
-  email: PropTypes.string,
+  gravatarEmail: PropTypes.string,
 };
 
 PlayGameButton.defaultProps = {
   name: '',
-  email: '',
+  gravatarEmail: '',
 };

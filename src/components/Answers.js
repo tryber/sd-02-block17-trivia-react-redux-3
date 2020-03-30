@@ -94,7 +94,7 @@ class Answers extends Component {
               type="button"
               value={response}
               key={response}
-              data-testid={(response !== correctAnswer) ? `wrong-answer-${index}` : 'correct-awnser'}
+              data-testid={(decodeURIComponent(response) !== correctAnswer) ? `wrong-answer-${index + 1}` : 'correct-answer'}
               className={answersClasses && answersClasses[index]}
               onClick={
                 ({ target }) => {

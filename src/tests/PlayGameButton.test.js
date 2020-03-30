@@ -15,9 +15,8 @@ import rootReducer from '../reducers/rootReducer';
 import tokenRequest from '../services/tokenRequest';
 
 const reducer = {
-  getToken: '',
   gameReducer: {
-    name: 'aaaaa', email: 'aaaaa', scoreboard: 0, answersClasses: ['', '', '', ''],
+    name: 'aaaaa', gravatarEmail: 'aaaaa', scoreboard: 0, answersClasses: ['', '', '', ''],
   },
   categoryReducer: {},
   getQuestions: { results: [] },
@@ -59,7 +58,7 @@ describe('testing play game button', () => {
         <App />
       </Router>,
     );
-    const data = await tokenRequest()
+    const data = await tokenRequest();
     const token = (typeof data === 'object') ? data.token : data;
     localStorage.setItem('token', token);
     await fireEvent.click(getByTestId('btn-play'));

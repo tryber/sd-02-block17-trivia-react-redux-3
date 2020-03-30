@@ -3,31 +3,38 @@ import { connect } from 'react-redux';
 import MD5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
-const Header = ({ name, email, scoreboard }) => (
-  <div>
-    <img
-      src={`https://www.gravatar.com/avatar/${MD5(email).toString()}`}
-      alt="Gravatar profile"
-    />
-    <h1 data-testid="header-player-name">{`Jogador: ${name}`}</h1>
-    <h2 data-testid="header-score">{`Pontos: ${scoreboard}`}</h2>
-  </div>
-);
+const Header = ({ name, gravatarEmail, score }) => {
+  const state = JSON.parse(localStorage.getItem('state'));
+  return (
+    <div>
+      <img
+        src={`https://www.gravatar.com/avatar/${MD5((state) ? state.player.gravatarEmail : gravatarEmail).toString()}`}
+        alt="Gravatar profile"
+        data-testid="header-profile-picture"
+      />
+      <h1 data-testid="header-player-name">{`Jogador: ${(state) ? state.player.name : name}`}</h1>
+      <h2>
+        Pontos:
+        <span data-testid="header-score">{(score !== '') ? score : state.player.score}</span>
+      </h2>
+    </div>
+  );
+};
 
-const mapStateToProps = ({ gameReducer: { name, email, scoreboard } }) => (
-  { name, email, scoreboard }
+const mapStateToProps = ({ gameReducer: { name, gravatarEmail, score } }) => (
+  { name, gravatarEmail, score }
 );
 
 export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   name: PropTypes.string,
-  email: PropTypes.string,
-  scoreboard: PropTypes.number,
+  gravatarEmail: PropTypes.string,
+  score: PropTypes.number,
 };
 
 Header.defaultProps = {
-  scoreboard: 0,
+  score: 0,
   name: '',
-  email: '',
+  gravatarEmail: '',
 };
