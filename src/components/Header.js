@@ -4,7 +4,7 @@ import MD5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
 export const compara = (state, score) => {
-  if (state !== null) {
+  if (window.location.href.match('feedback')) {
     if (state.player.score !== undefined) return state.player.score;
   } return score;
 };
