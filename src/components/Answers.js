@@ -115,7 +115,7 @@ class Answers extends Component {
                   toStopTimer();
                 }
               }
-              disabled={answersClasses[0] === 0 && true}
+              disabled={(answersClasses[0]) ? true : !true}
             >
               {decodeURIComponent(response)}
             </button>
