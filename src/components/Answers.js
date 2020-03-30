@@ -97,7 +97,6 @@ class Answers extends Component {
       question, answersClasses, question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
-    console.log(question.difficulty)
     const correctAnswer = question ? decodeURIComponent(theCorrectAnswer) : '';
     return (
       <div>

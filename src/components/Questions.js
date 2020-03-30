@@ -66,7 +66,6 @@ class Questions extends Component {
     const {
       results, timer, name, assertions, score, gravatarEmail, stopTimer,
     } = this.props;
-    console.log(stopTimer)
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
     const currentCategory = results.map(({ category }) => decodeURIComponent(category));
