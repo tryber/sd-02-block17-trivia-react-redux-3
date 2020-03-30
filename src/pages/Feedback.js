@@ -8,7 +8,6 @@ import { resetPoints } from '../actions/resetPoints';
 import { resetAllFilters } from '../actions/noFilter';
 
 class Feedback extends Component {
-
   render() {
     const { resetTimerNow, resetScore, resetFilter } = this.props;
     const state = JSON.parse(localStorage.getItem('state')) || { player: { assertions: '', score: '' } };
@@ -44,6 +43,7 @@ class Feedback extends Component {
 Feedback.propTypes = {
   resetTimerNow: PropTypes.func.isRequired,
   resetScore: PropTypes.func.isRequired,
+  resetFilter: PropTypes.func.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({

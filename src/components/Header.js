@@ -8,14 +8,14 @@ const Header = ({ name, gravatarEmail, score }) => {
   return (
     <div>
       <img
-        src={`https://www.gravatar.com/avatar/${MD5((state) ? state.player.gravatarEmail : gravatarEmail).toString()}`}
+        src={`https://www.gravatar.com/avatar/${MD5((state.player.gravatarEmai) ? state.player.gravatarEmai : gravatarEmail).toString()}`}
         alt="Gravatar profile"
         data-testid="header-profile-picture"
       />
-      <h1 data-testid="header-player-name">{`Jogador: ${(state) ? state.player.name : name}`}</h1>
+      <h1 data-testid="header-player-name">{`Jogador: ${(state.playername !== '') ? state.player.name : name}`}</h1>
       <h2>
         Pontos:
-        <span data-testid="header-score">{(score !== '') ? score : state.player.score}</span>
+        <span data-testid="header-score">{(state.player.score) ? state.player.score : score}</span>
       </h2>
     </div>
   );

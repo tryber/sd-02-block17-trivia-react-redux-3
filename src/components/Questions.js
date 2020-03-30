@@ -7,18 +7,35 @@ import { resetTimer } from '../actions/TimerActions';
 import Answers from './Answers';
 import Timer from './Timer';
 
-function saveScore(player) {
-  localStorage.setItem('state', JSON.stringify({ player }));
+function saveScore(name, assertions, score, gravatarEmail) {
+  const obj = {
+    player: {
+      name, assertions, score, gravatarEmail,
+    },
+  };
+  localStorage.setItem('state', JSON.stringify(obj));
 }
 
 class Questions extends Component {
+  static renderButton(name, assertions, score, gravatarEmail) {
+    return (
+      <Link to="/feedback">
+        <button
+          data-testid="btn-next"
+          onClick={() => saveScore(name, assertions, score, gravatarEmail)}
+          type="button"
+        >
+          FINALIZAR
+        </button>
+      </Link>
+    );
+  }
+
   constructor(props) {
     super(props);
-
     this.state = {
       questionNumber: 0,
     };
-
     this.nextQuestion = this.nextQuestion.bind(this);
   }
 
@@ -38,9 +55,6 @@ class Questions extends Component {
     const {
       results, timer, name, assertions, score, gravatarEmail,
     } = this.props;
-    const player = {
-      name, assertions, score, gravatarEmail,
-    };
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
     const currentCategory = results.map(({ category }) => decodeURIComponent(category));
@@ -61,7 +75,7 @@ class Questions extends Component {
           {
             questionNumber < 4
               ? <button type="button" data-testid="btn-next" onClick={this.nextQuestion}>PRÓXIMA</button>
-              : <Link to="/feedback"><button data-testid="btn-next" onClick={() => saveScore(player)} type="button">FINALIZAR</button></Link>
+              : Questions.renderButton(name, assertions, score, gravatarEmail)
           }
         </div>
       </div>
@@ -87,8 +101,19 @@ const mapStateToProps = ({
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
 
 Questions.propTypes = {
+  name: PropTypes.string,
+  assertions: PropTypes.number,
+  score: PropTypes.number,
+  gravatarEmail: PropTypes.string,
   resetTimerNow: PropTypes.func.isRequired,
   results: PropTypes.instanceOf(Array).isRequired,
   timer: PropTypes.number.isRequired,
   wrongAnswerSelected: PropTypes.func.isRequired,
+};
+
+Questions.defaultProps = {
+  name: '',
+  assertions: 0,
+  score: 0,
+  gravatarEmail: '',
 };
