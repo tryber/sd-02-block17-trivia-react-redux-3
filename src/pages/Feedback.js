@@ -36,7 +36,10 @@ class Feedback extends Component {
             <Link to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link to="/" onClick={() => { Feedback.redirectGame(resetTimerNow, resetScore, resetFilter); }}>
+            <Link
+              to="/"
+              onClick={() => { Feedback.redirectGame(resetTimerNow, resetScore, resetFilter); }}
+            >
               JOGAR NOVAMENTE
             </Link>
           </div>
