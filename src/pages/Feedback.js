@@ -30,7 +30,7 @@ class Feedback extends Component {
             <Link to="/ranking">VER RANKING</Link>
           </div>
           <div>
-            <Link to="/" onClick={() => { resetTimerNow(); resetScore(); resetFilter(); localStorage.removeItem('player'); }}>
+            <Link to="/" onClick={() => { resetTimerNow(); resetScore(); resetFilter(); localStorage.removeItem('state'); }}>
               JOGAR NOVAMENTE
             </Link>
           </div>

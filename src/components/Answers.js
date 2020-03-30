@@ -17,6 +17,17 @@ function switchDifficulty(difficulty) {
   }
 }
 
+function changeDataTest(response, correctAnswer, index, array) {
+  const correctIndex = array.indexOf(correctAnswer);
+  if (correctIndex === index) {
+    return 'correct-answer';
+  }
+  if (correctIndex === 1 && index >= 2) {
+    return `wrong-answer-${index - 1}`;
+  }
+  return `wrong-answer-${index}`;
+}
+
 class Answers extends Component {
   constructor(props) {
     super(props);
@@ -88,12 +99,12 @@ class Answers extends Component {
     return (
       <div>
         {(Object.keys(results).length > 0)
-          ? results.map((response, index) => (
+          ? results.map((response, index, array) => (
             <button
               type="button"
               value={response}
               key={response}
-              data-testid={(decodeURIComponent(response) !== correctAnswer) ? `wrong-answer-${index}` : 'correct-answer'}
+              data-testid={changeDataTest(decodeURIComponent(response), correctAnswer, index, array)}
               className={answersClasses && answersClasses[index]}
               onClick={
                 ({ target }) => {
