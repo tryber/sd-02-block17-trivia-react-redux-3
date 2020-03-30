@@ -6,6 +6,7 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import Feedback from '../pages/Feedback';
 import rootReducer from '../reducers/rootReducer';
+import { compara } from '../components/Header';
 
 afterEach(cleanup);
 const reducer = {
@@ -78,6 +79,10 @@ describe('Test feedback', () => {
     );
     expect(getByTestId('feedback-text').innerHTML).toBe('Podia ser melhor...');
     expect(getByTestId('feedback-total-question').innerHTML).toBe('Você acertou 0 questões!');
+  });
+  it('Test Header compara function', () => {
+    const state = { player: { score: 0 } };
+    expect(compara(state, 2)).toBe(0);
   });
   it('Redirect to home', () => {
     const obj = { player: { name: 'Josezinho', gravatarEmail: 'aaaa' } };

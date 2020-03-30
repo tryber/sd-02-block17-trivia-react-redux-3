@@ -22,6 +22,7 @@ function renderWithRedux(
 }
 
 afterEach(cleanup);
+localStorage.clear();
 const obj = { player: { name: 'Josezinho', gravatarEmail: '' } };
 localStorage.setItem('state', JSON.stringify(obj));
 
@@ -36,5 +37,15 @@ describe('Test render Header', () => {
     expect(getByTestId('header-score')).toBeInTheDocument();
     expect(getByTestId('header-player-name').innerHTML).toBe('Jogador: Josezinho');
     expect(getByTestId('header-score').innerHTML).toBe('0');
+  });
+  it('test token', () => {
+    const { getByTestId } = renderWithRedux(
+      <MemoryRouter>
+        <Header />
+      </MemoryRouter>,
+    );
+    const fetch = jest
+      .fn()
+      .mockResolvedValue({ response_code: 3, results: [] });
   });
 });

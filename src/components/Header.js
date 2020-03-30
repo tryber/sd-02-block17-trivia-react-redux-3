@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import MD5 from 'crypto-js/md5';
 import PropTypes from 'prop-types';
 
-function compara(state, score) {
-  if (state) {
-    if (state.player.score) return state.player.score;
+export const compara = (state, score) => {
+  if (state !== null) {
+    if (state.player.score !== undefined) return state.player.score;
   } return score;
-}
+};
 
 const Header = ({ score }) => {
   const state = JSON.parse(localStorage.getItem('state'));
