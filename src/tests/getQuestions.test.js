@@ -43,6 +43,13 @@ describe('testing getQuestions API', () => {
     };
     const { response_code: responseCode, results } = await getQuestionsApi(props);
     expect(responseCode).toBe(3);
-    expect(results).toEqual(expect.arrayContaining([]));
+    expect(results).toMatchObject([]);
+  });
+  it('response 3 and empty array is retrieved when no token is provided', async () => {
+    const token = 'asdqadqw';
+    localStorage.setItem('token', token);
+    const { response_code: responseCode, results } = await getQuestionsApi();
+    expect(responseCode).toBe(2);
+    expect(results).not.toBeNull();
   });
 });

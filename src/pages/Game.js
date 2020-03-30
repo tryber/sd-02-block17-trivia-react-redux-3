@@ -54,7 +54,11 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(mapStateToProps, mapDispatchToProps)(Game);
 
 Game.propTypes = {
-  history: PropTypes.instanceOf(Object).isRequired,
+  history: PropTypes.instanceOf(Object),
   sendQuestions: PropTypes.func.isRequired,
   sendError: PropTypes.func.isRequired,
+};
+
+Game.defaultProps = {
+  history: {},
 };

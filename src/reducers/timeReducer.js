@@ -23,7 +23,7 @@ export default function timeReducer(state = INITIAL_STATE, {
     case RESET_TIMER:
       return { ...state, stopTimer: false, timer: 30 };
     case STOP_TIMER:
-      return { ...state, stopTimer: true, times: 30 };
+      return { ...state, stopTimer: true, timer: 30 };
     case STORE_TIME_ID:
       return { ...state, timeId };
     default:

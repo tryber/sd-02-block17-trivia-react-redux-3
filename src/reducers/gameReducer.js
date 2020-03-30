@@ -8,8 +8,9 @@ export const INITIAL_STATE = {
   assertions: 0,
   wrongAnswerFlag: false,
   answersClasses: [],
+  question: {},
 };
-
+const QUESTION = 'QUESTION';
 const SENDEMAIL = 'SEND_EMAIL';
 const SENDNAME = 'SEND_NAME';
 const WRONG_ASNWER = 'WRONG_ANSWER';
@@ -17,7 +18,7 @@ const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
 export default function nameAndEmail(state = INITIAL_STATE, {
-  type, email, name, answersClasses, points, error,
+  type, email, name, answersClasses, points, error, question,
 }) {
   switch (type) {
     case SENDEMAIL:
@@ -36,6 +37,8 @@ export default function nameAndEmail(state = INITIAL_STATE, {
       return { ...state, name: error, gravatarEmail: '' };
     case RESET_POINTS:
       return INITIAL_STATE;
+    case QUESTION:
+      return { ...state, question };
     default:
       return state;
   }

@@ -22,9 +22,6 @@ function changeDataTest(correctAnswer, index, array) {
   if (correctIndex === index) {
     return 'correct-answer';
   }
-  if (correctIndex === 1 && index >= 2) {
-    return `wrong-answer-${index - 1}`;
-  }
   return `wrong-answer-${index}`;
 }
 
@@ -125,12 +122,13 @@ class Answers extends Component {
 }
 
 const mapStateToProps = ({
-  gameReducer: { answersClasses, wrongAnswerFlag },
+  gameReducer: { answersClasses, wrongAnswerFlag, question },
   timeReducer: { timer },
 }) => ({
   timer,
   answersClasses,
   wrongAnswerFlag,
+  question,
 });
 
 const mapDispatchToProps = (dispatch) => ({

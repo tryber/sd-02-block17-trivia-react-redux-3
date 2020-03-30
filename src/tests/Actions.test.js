@@ -34,6 +34,8 @@ describe('test actions', () => {
   it('ChangeScoreboard', () => {
     const aux = ChangeScoreboard();
     expect(aux).toMatchObject({ type: 'WRONG_ANSWER' });
+    store.dispatch(ChangeScoreboard());
+    expect(store.getState().gameReducer.wrongAnswerFlag).toBeTruthy();
   });
   it('ChangeType', () => {
     const aux = ChangeType('aaa');
@@ -44,6 +46,8 @@ describe('test actions', () => {
   it('GameActions', () => {
     const aux = GameActions('aaa');
     expect(aux).toMatchObject({ answersClasses: 'aaa', type: 'FORMAT_ANSWERS' });
+    store.dispatch(GameActions(['', '']));
+    expect(store.getState().gameReducer.answersClasses).toMatchObject(['', '']);
   });
   it('resetAllFilters', () => {
     const aux = resetAllFilters();
@@ -52,6 +56,8 @@ describe('test actions', () => {
   it('ReceiveError', () => {
     const aux = ReceiveError('error');
     expect(aux).toMatchObject({ type: 'ERROR', error: 'error' });
+    store.dispatch(ReceiveError('error'));
+    expect(store.getState().gameReducer.name).toBe('error');
   });
   it('ReceiveQuestion', () => {
     const aux = ReceiveQuestion([]);
@@ -83,6 +89,9 @@ describe('test actions', () => {
   it('setPoints', () => {
     const aux = setPoints(0);
     expect(aux).toMatchObject({ type: 'SET_POINTS', points: 0 });
+    store.dispatch(setPoints(1));
+    expect(store.getState().gameReducer.score).toBe(1);
+    expect(store.getState().gameReducer.assertions).toBe(1);
   });
   it('resetTimer', () => {
     const aux = resetTimer();
@@ -91,6 +100,11 @@ describe('test actions', () => {
   it('decreaseTimer', () => {
     const aux = decreaseTimer();
     expect(aux).toMatchObject({ type: 'DECREASE_TIMER' });
+    store.dispatch(decreaseTimer());
+    expect(store.getState().timeReducer.timer).toBe(29);
+    store.dispatch(stopTimer());
+    store.dispatch(decreaseTimer());
+    expect(store.getState().timeReducer.timer).toBe(30);
   });
   it('stopTimer', () => {
     const aux = stopTimer();
@@ -99,5 +113,7 @@ describe('test actions', () => {
   it('storeTimeID', () => {
     const aux = storeTimeID(552);
     expect(aux).toMatchObject({ type: 'STORE_TIME_ID', timeId: 552 });
+    store.dispatch(storeTimeID(10));
+    expect(store.getState().timeReducer.timeId).toBe(10);
   });
 });

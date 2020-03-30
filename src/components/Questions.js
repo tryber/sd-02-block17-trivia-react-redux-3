@@ -6,6 +6,7 @@ import { wrongAnswer } from '../actions/ChangeScoreboard';
 import { resetTimer } from '../actions/TimerActions';
 import Answers from './Answers';
 import Timer from './Timer';
+import answers from '../actions/answersAction';
 
 function saveScore(name, assertions, score, gravatarEmail) {
   const obj = {
@@ -64,23 +65,24 @@ class Questions extends Component {
 
   render() {
     const {
-      results, timer, name, assertions, score, gravatarEmail, stopTimer,
+      results, timer, name, assertions, score, gravatarEmail, stopTimer, objectToAnswers,
     } = this.props;
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
     const currentCategory = results.map(({ category }) => decodeURIComponent(category));
+    objectToAnswers(results[questionNumber]);
     return (
       <div>
         {timer === 0 && <div>RESPOSTA ERRADA</div>}
         <div>
-          <p>{currentCategory[questionNumber]}</p>
-          <h3>{currentQuestion[questionNumber]}</h3>
+          <p data-testid="question-category">{currentCategory[questionNumber]}</p>
+          <h3 data-testid="question-text">{currentQuestion[questionNumber]}</h3>
         </div>
         <div>
           <Timer />
         </div>
         <div>
-          <Answers question={results[questionNumber]} />
+          <Answers />
         </div>
         <div>
           {
@@ -97,6 +99,7 @@ class Questions extends Component {
 const mapDispatchToProps = (dispatch) => ({
   wrongAnswerSelected: () => dispatch(wrongAnswer()),
   resetTimerNow: () => dispatch(resetTimer()),
+  objectToAnswers: (ele) => dispatch(answers(ele)),
 });
 
 const mapStateToProps = ({
@@ -121,6 +124,7 @@ Questions.propTypes = {
   timer: PropTypes.number.isRequired,
   wrongAnswerSelected: PropTypes.func.isRequired,
   stopTimer: PropTypes.bool,
+  objectToAnswers: PropTypes.func.isRequired,
 };
 
 Questions.defaultProps = {
