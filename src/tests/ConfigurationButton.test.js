@@ -6,7 +6,7 @@ import { createMemoryHistory } from 'history';
 import { render, fireEvent, cleanup } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import App from '../App';
-import gameReduce from '../reducers/gameReducer';
+import rootReducer from '../reducers/rootReducer';
 
 afterEach(cleanup);
 
@@ -14,9 +14,9 @@ function renderWithRedux(
   ui,
   {
     store = createStore(
-      gameReduce,
+      rootReducer(),
       {
-        gameReducer: { name: '', email: '' },
+        gameReducer: { name: '', gravatarEmail: '' },
         difficultyreducer: {
           difficulty: ['easy', 'medium', 'hard'],
           difficultySelected: '',
@@ -26,6 +26,7 @@ function renderWithRedux(
           types: ['multiple', 'boolean'],
           typesSelected: '',
         },
+        getQuestions: { error: '' },
       },
     ),
   } = {},

@@ -4,10 +4,10 @@ export const INITIAL_STATE = {
 
 const GET_QUESTION = 'GET_QUESTION';
 
-export default function getQuestions(state = INITIAL_STATE, { type, results }) {
-  switch (type) {
+export default function getQuestions(state = INITIAL_STATE, action) {
+  switch (action.type) {
     case GET_QUESTION:
-      return { results };
+      return { ...state, results: action.results };
     default:
       return state;
   }

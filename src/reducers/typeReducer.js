@@ -3,6 +3,7 @@ const INITIAL_STATE = {
   typeSelected: '',
 };
 
+const RESET_FILTER = 'RESET_FILTER';
 const CHANGE_TYPE = 'CHANGE_TYPE';
 
 export default function reducer(state = INITIAL_STATE, action) {
@@ -12,6 +13,8 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         typeSelected: action.change,
       };
+    case RESET_FILTER:
+      return INITIAL_STATE;
     default: return state;
   }
 }

@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
 
 const a = {
-  gameReducer: { INITIAL_STATE },
+  gameReducer: INITIAL_STATE,
 };
 
 function renderWithRedux(
@@ -22,8 +22,11 @@ function renderWithRedux(
 }
 
 afterEach(cleanup);
+localStorage.clear();
+const obj = { player: { name: 'Josezinho', gravatarEmail: '' } };
+localStorage.setItem('state', JSON.stringify(obj));
 
-describe('Test render Game', () => {
+describe('Test render Header', () => {
   it('test render', () => {
     const { getByTestId } = renderWithRedux(
       <MemoryRouter>
@@ -32,7 +35,7 @@ describe('Test render Game', () => {
     );
     expect(getByTestId('header-player-name')).toBeInTheDocument();
     expect(getByTestId('header-score')).toBeInTheDocument();
-    expect(getByTestId('header-player-name').innerHTML).toEqual('Jogador: ');
-    expect(getByTestId('header-score').innerHTML).toBe('Pontos: 0');
+    expect(getByTestId('header-player-name').innerHTML).toBe('Jogador: Josezinho');
+    expect(getByTestId('header-score').innerHTML).toBe('0');
   });
 });

@@ -5,6 +5,10 @@ import InputInitial from '../components/Input';
 import ConfigurationButton from '../components/ConfigurationButton';
 
 class Start extends Component {
+  componentDidMount() {
+    localStorage.removeItem('state');
+  }
+
   render() {
     return (
       <div>

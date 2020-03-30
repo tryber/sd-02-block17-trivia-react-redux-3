@@ -11,12 +11,12 @@ import {
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import App from '../App';
-import getToken, { INITIAL_STATE } from '../reducers/getToken';
+import rootReducer from '../reducers/rootReducer';
+import tokenRequest from '../services/tokenRequest';
 
 const reducer = {
-  getToken: INITIAL_STATE,
   gameReducer: {
-    name: '', email: '', scoreboard: 0, answersClasses: ['', '', '', ''],
+    name: 'aaaaa', gravatarEmail: 'aaaaa', scoreboard: 0, answersClasses: ['', '', '', ''],
   },
   categoryReducer: {},
   getQuestions: { results: [] },
@@ -33,7 +33,7 @@ const reducer = {
 
 function renderWithRedux(
   ui,
-  { store = createStore(getToken, reducer) } = {},
+  { store = createStore(rootReducer(), reducer) } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
@@ -51,14 +51,17 @@ describe('testing play game button', () => {
     expect(getByTestId('btn-play')).toBeInTheDocument();
     expect(getByTestId('btn-play').type).toEqual('button');
   });
-  it('testing if the page is redirect to the path game when click the button', () => {
+  it('testing if the page is redirect to the path game when click the button', async () => {
     const history = createMemoryHistory();
     const { getByTestId } = renderWithRedux(
       <Router history={history}>
         <App />
       </Router>,
     );
-    fireEvent.click(getByTestId('btn-play'));
+    const data = await tokenRequest();
+    const token = (typeof data === 'object') ? data.token : data;
+    localStorage.setItem('token', token);
+    await fireEvent.click(getByTestId('btn-play'));
     expect(history.location.pathname).toBe('/game');
   });
   it('test if the button activates getToken function and populates state', async () => {

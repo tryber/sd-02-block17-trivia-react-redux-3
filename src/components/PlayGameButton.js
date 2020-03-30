@@ -1,39 +1,52 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import tokenRequest from '../services/tokenRequest';
-import SendToken from '../actions/SendToken';
 
-const PlayGameButton = ({ getToken, name, email }) => (
-  <Link to="/game">
-    <button
-      type="button"
-      onClick={getToken}
-      data-testid="btn-play"
-      disabled={(name !== '' && email !== '') ? false : !false}
-    >
-      Jogar!
-    </button>
-  </Link>
+class PlayGameButton extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { redirect: false };
+    this.onPlayClick = this.onPlayClck.bind(this);
+  }
 
-);
+  onPlayClck(name, gravatarEmail) {
+    localStorage.setItem('state', JSON.stringify({ player: { name, gravatarEmail } }));
+    tokenRequest()
+      .then(async (param) => {
+        const aux = (typeof param === 'object') ? param.token : param;
+        localStorage.setItem('token', (aux));
+        await this.setState({ redirect: true });
+      });
+  }
 
-const mapDispatchToProps = (dispatch) => ({
-  getToken: () => tokenRequest().then(({ token }) => dispatch(SendToken(token))),
-});
+  render() {
+    const { name, gravatarEmail } = this.props;
+    const { redirect } = this.state;
+    return (redirect) ? <Redirect to="/game" /> : (
+      <button
+        type="button"
+        onClick={() => this.onPlayClick(name, gravatarEmail)}
+        data-testid="btn-play"
+        disabled={(name !== '' && gravatarEmail !== '') ? false : !false}
+      >
+        Jogar!
+      </button>
+    );
+  }
+}
 
-const mapStateToProps = ({ gameReducer: { name, email } }) => ({ name, email });
+const mapStateToProps = ({ gameReducer: { name, gravatarEmail } }) => ({ name, gravatarEmail });
 
-export default connect(mapStateToProps, mapDispatchToProps)(PlayGameButton);
+export default connect(mapStateToProps)(PlayGameButton);
 
 PlayGameButton.propTypes = {
-  getToken: PropTypes.func.isRequired,
   name: PropTypes.string,
-  email: PropTypes.string,
+  gravatarEmail: PropTypes.string,
 };
 
 PlayGameButton.defaultProps = {
   name: '',
-  email: '',
+  gravatarEmail: '',
 };
