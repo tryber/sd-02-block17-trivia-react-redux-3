@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import formatAnswers from '../actions/GameActions';
 import { stopTimer } from '../actions/TimerActions';
-import setPoints from '../actions/SetPoints';
+import setPoints from '../actions/setPoints';
 import './Answers.css';
 
 function switchDifficulty(difficulty) {
@@ -17,7 +17,7 @@ function switchDifficulty(difficulty) {
   }
 }
 
-function changeDataTest(response, correctAnswer, index, array) {
+function changeDataTest(correctAnswer, index, array) {
   const correctIndex = array.indexOf(correctAnswer);
   if (correctIndex === index) {
     return 'correct-answer';
@@ -79,7 +79,9 @@ class Answers extends Component {
       toFormatAnswers, timer, points,
     } = this.props;
     const difficultyPoints = switchDifficulty(decodeURIComponent(difficulty));
-    if (value === decodeURIComponent(correctAnswer)) points(10 + (difficultyPoints * timer));
+    if (value === decodeURIComponent(correctAnswer)) {
+      points(10 + (difficultyPoints * timer));
+    }
     const { results, answersArray } = this.state;
     const index = results.indexOf(decodeURIComponent(correctAnswer));
     const formattedAnswers = {
@@ -95,6 +97,7 @@ class Answers extends Component {
       question, answersClasses, question: { correct_answer: theCorrectAnswer },
       toStopTimer,
     } = this.props;
+    console.log(question.difficulty)
     const correctAnswer = question ? decodeURIComponent(theCorrectAnswer) : '';
     return (
       <div>
@@ -104,7 +107,7 @@ class Answers extends Component {
               type="button"
               value={response}
               key={response}
-              data-testid={changeDataTest(decodeURIComponent(response), correctAnswer, index, array)}
+              data-testid={changeDataTest(correctAnswer, index, array)}
               className={answersClasses && answersClasses[index]}
               onClick={
                 ({ target }) => {

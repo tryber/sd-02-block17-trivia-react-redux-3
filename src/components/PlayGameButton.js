@@ -11,7 +11,8 @@ class PlayGameButton extends React.Component {
     this.onPlayClick = this.onPlayClck.bind(this);
   }
 
-  onPlayClck() {
+  onPlayClck(name, gravatarEmail) {
+    localStorage.setItem('state', JSON.stringify({ player: { name, gravatarEmail } }));
     tokenRequest()
       .then(async (param) => {
         const aux = (typeof param === 'object') ? param.token : param;
@@ -26,7 +27,7 @@ class PlayGameButton extends React.Component {
     return (redirect) ? <Redirect to="/game" /> : (
       <button
         type="button"
-        onClick={this.onPlayClick}
+        onClick={() => this.onPlayClick(name, gravatarEmail)}
         data-testid="btn-play"
         disabled={(name !== '' && gravatarEmail !== '') ? false : !false}
       >

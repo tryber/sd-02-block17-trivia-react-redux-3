@@ -23,7 +23,7 @@ describe('Game', () => {
     cy.get('[data-testid="correct-answer"]').click();
     cy.get('[data-testid="header-score"]').then(($span) => {
       const elementScore = $span.text();
-      expect(Number(elementScore)).to.be.gt(minExpectedScoreValue)
+      expect(Number(elementScore)).to.be.gte(minExpectedScoreValue)
     })
     cy.get('[data-testid="btn-next"]').click()
     cy.wait(100)
