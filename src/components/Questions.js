@@ -37,6 +37,7 @@ class Questions extends Component {
       questionNumber: 0,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
+    this.renderButtonNext = this.renderButtonNext.bind(this);
   }
 
   componentDidUpdate() {
@@ -50,6 +51,19 @@ class Questions extends Component {
     resetTimerNow();
   }
 
+  renderButtonNext() {
+    return (
+      <div>
+        <button
+          type="button"
+          data-testid="btn-next"
+          onClick={this.nextQuestion}
+        >
+          PRÓXIMA
+        </button>
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -74,15 +88,7 @@ class Questions extends Component {
         <div>
           {
             questionNumber < 4
-              ? (
-                <button
-                  type="button"
-                  data-testid="btn-next"
-                  onClick={this.nextQuestion}
-                >
-                  PRÓXIMA
-                </button>
-              )
+              ? this.renderButtonNext()
               : Questions.renderButton(name, assertions, score, gravatarEmail)
           }
         </div>

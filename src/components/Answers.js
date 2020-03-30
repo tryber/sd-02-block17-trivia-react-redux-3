@@ -85,7 +85,6 @@ class Answers extends Component {
       toStopTimer,
     } = this.props;
     const correctAnswer = question ? decodeURIComponent(theCorrectAnswer) : '';
-
     return (
       <div>
         {(Object.keys(results).length > 0)
@@ -94,7 +93,7 @@ class Answers extends Component {
               type="button"
               value={response}
               key={response}
-              data-testid={(decodeURIComponent(response) !== correctAnswer) ? `wrong-answer-${index + 1}` : 'correct-answer'}
+              data-testid={(decodeURIComponent(response) !== correctAnswer) ? `wrong-answer-${index}` : 'correct-answer'}
               className={answersClasses && answersClasses[index]}
               onClick={
                 ({ target }) => {
