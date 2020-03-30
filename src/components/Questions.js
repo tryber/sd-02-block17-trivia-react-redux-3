@@ -17,27 +17,12 @@ function saveScore(name, assertions, score, gravatarEmail) {
 }
 
 class Questions extends Component {
-  static renderButton(name, assertions, score, gravatarEmail) {
-    return (
-      <Link to="/feedback">
-        <button
-          data-testid="btn-next"
-          onClick={() => saveScore(name, assertions, score, gravatarEmail)}
-          type="button"
-        >
-          FINALIZAR
-        </button>
-      </Link>
-    );
-  }
-
   constructor(props) {
     super(props);
     this.state = {
       questionNumber: 0,
     };
     this.nextQuestion = this.nextQuestion.bind(this);
-    this.renderButtonNext = this.renderButtonNext.bind(this);
   }
 
   componentDidUpdate() {
@@ -51,9 +36,10 @@ class Questions extends Component {
     resetTimerNow();
   }
 
-  renderButtonNext() {
-    return (
-      <div>
+  renderButton(name, assertions, score, gravatarEmail) {
+    const { questionNumber } = this.state;
+    if (questionNumber < 4) {
+      return (
         <button
           type="button"
           data-testid="btn-next"
@@ -61,14 +47,26 @@ class Questions extends Component {
         >
           PRÓXIMA
         </button>
-      </div>
+      );
+    }
+    return (
+      <Link to="/feedback">
+        <button
+          data-testid="btn-next"
+          onClick={() => saveScore(name, assertions, score, gravatarEmail)}
+          type="button"
+        >
+          FINALIZAR
+        </button>
+      </Link>
     );
   }
 
   render() {
     const {
-      results, timer, name, assertions, score, gravatarEmail,
+      results, timer, name, assertions, score, gravatarEmail, stopTimer,
     } = this.props;
+    console.log(stopTimer)
     const { questionNumber } = this.state;
     const currentQuestion = results.map(({ question }) => decodeURIComponent(question));
     const currentCategory = results.map(({ category }) => decodeURIComponent(category));
@@ -87,9 +85,9 @@ class Questions extends Component {
         </div>
         <div>
           {
-            questionNumber < 4
-              ? this.renderButtonNext()
-              : Questions.renderButton(name, assertions, score, gravatarEmail)
+            stopTimer
+              ? this.renderButton(name, assertions, score, gravatarEmail)
+              : false
           }
         </div>
       </div>
@@ -104,12 +102,12 @@ const mapDispatchToProps = (dispatch) => ({
 
 const mapStateToProps = ({
   getQuestions: { results },
-  timeReducer: { timer },
+  timeReducer: { timer, stopTimer },
   gameReducer: {
     name, assertions, score, gravatarEmail,
   },
 }) => ({
-  results, timer, name, assertions, score, gravatarEmail,
+  results, timer, name, assertions, score, gravatarEmail, stopTimer,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Questions);
@@ -123,6 +121,7 @@ Questions.propTypes = {
   results: PropTypes.instanceOf(Array).isRequired,
   timer: PropTypes.number.isRequired,
   wrongAnswerSelected: PropTypes.func.isRequired,
+  stopTimer: PropTypes.bool,
 };
 
 Questions.defaultProps = {
@@ -130,4 +129,5 @@ Questions.defaultProps = {
   assertions: 0,
   score: 0,
   gravatarEmail: '',
+  stopTimer: false,
 };

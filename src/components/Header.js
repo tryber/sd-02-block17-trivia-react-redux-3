@@ -15,7 +15,7 @@ const Header = ({ name, gravatarEmail, score }) => {
       <h1 data-testid="header-player-name">{`Jogador: ${(name !== '') ? name : state.player.name}`}</h1>
       <h2>
         Pontos:
-        <span data-testid="header-score">{(score !== '') ? score : state.player.score}</span>
+        <span data-testid="header-score">{(score !== '') ? ` ${score}` : ` ${state.player.score}`}</span>
       </h2>
     </div>
   );
