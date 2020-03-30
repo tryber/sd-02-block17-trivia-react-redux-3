@@ -22,7 +22,7 @@ function renderWithRedux(
 }
 
 afterEach(cleanup);
-const obj = { player: { name: 'Josezinho' } };
+const obj = { player: { name: 'Josezinho', gravatarEmail: '' } };
 localStorage.setItem('state', JSON.stringify(obj));
 
 describe('Test render Header', () => {

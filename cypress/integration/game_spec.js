@@ -32,7 +32,7 @@ describe('Game', () => {
     cy.get('[data-testid="correct-answer"]').click();
     cy.get('[data-testid="header-score"]').then(($span) => {
       const elementScore = $span.text();
-      expect(Number(elementScore)).to.be.gt(minExpectedScoreValue + minExpectedScoreValue)
+      expect(Number(elementScore)).to.be.gte(minExpectedScoreValue + minExpectedScoreValue)
     })
     cy.get('[data-testid="btn-next"]').click()
     cy.wait(100)
@@ -41,7 +41,7 @@ describe('Game', () => {
     cy.get('[data-testid="wrong-answer-1"]').click();
     cy.get('[data-testid="header-score"]').then(($span) => {
       const elementScore = $span.text();
-      expect(Number(elementScore)).to.be.gt(minExpectedScoreValue + minExpectedScoreValue)
+      expect(Number(elementScore)).to.be.gte(minExpectedScoreValue + minExpectedScoreValue)
     })
     cy.get('[data-testid="btn-next"]').click()
     cy.wait(100)
@@ -50,7 +50,7 @@ describe('Game', () => {
     // cy.get('[data-testid="wrong-answer-0"]').click();
     cy.get('[data-testid="header-score"]').then(($span) => {
       const elementScore = $span.text();
-      expect(Number(elementScore)).to.be.gt(minExpectedScoreValue + minExpectedScoreValue)
+      expect(Number(elementScore)).to.be.gte(minExpectedScoreValue + minExpectedScoreValue)
     })
     cy.get('[data-testid="btn-next"]').click()
     cy.wait(100)
@@ -59,7 +59,7 @@ describe('Game', () => {
     cy.get('[data-testid="correct-answer"]').click();
     cy.get('[data-testid="header-score"]').then(($span) => {
       const elementScore = $span.text();
-      expect(Number(elementScore)).to.be.gt(minExpectedScoreValue * 3)
+      expect(Number(elementScore)).to.be.gte(minExpectedScoreValue * 3)
     })
     cy.get('[data-testid="btn-next"]').click()
   })
