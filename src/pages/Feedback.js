@@ -25,9 +25,7 @@ class Feedback extends Component {
           <Header />
         </header>
         <section>
-          <h2 data-testid="feedback-text">
-            {answerTitle}
-          </h2>
+          <h2 data-testid="feedback-text">{answerTitle}</h2>
           <h3 data-testid="feedback-total-question">{`Você acertou ${assertions || 0} questões!`}</h3>
           <h3 data-testid="feedback-total-score">{`Um total de ${score || 0} pontos`}</h3>
         </section>
