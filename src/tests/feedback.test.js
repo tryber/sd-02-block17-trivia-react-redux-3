@@ -82,7 +82,7 @@ describe('Test feedback', () => {
   });
   it('Test Header compara function', () => {
     const state = { player: { score: 0 } };
-    expect(compara(state, 2)).toBe(0);
+    expect(compara(state, 2)).toBe(2);
   });
   it('Redirect to home', () => {
     const obj = { player: { name: 'Josezinho', gravatarEmail: 'aaaa' } };
