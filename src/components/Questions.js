@@ -74,7 +74,15 @@ class Questions extends Component {
         <div>
           {
             questionNumber < 4
-              ? <button type="button" data-testid="btn-next" onClick={this.nextQuestion}>PRÓXIMA</button>
+              ? (
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={this.nextQuestion}
+                >
+                  PRÓXIMA
+                </button>
+              )
               : Questions.renderButton(name, assertions, score, gravatarEmail)
           }
         </div>
