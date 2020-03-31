@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 const RESET_FILTER = 'RESET_FILTER';
 const CHANGE_TYPE = 'CHANGE_TYPE';
 
-export default function reducer(state = INITIAL_STATE, action) {
+export default function typeReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CHANGE_TYPE:
       return {

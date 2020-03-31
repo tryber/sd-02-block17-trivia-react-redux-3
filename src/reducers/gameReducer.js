@@ -19,7 +19,7 @@ const WRONG_ASNWER = 'WRONG_ANSWER';
 const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
-export default function nameAndEmail(state = INITIAL_STATE, {
+export default function gameReducer(state = INITIAL_STATE, {
   type, email, name, answersClasses, points, error, question, imageUrl,
 }) {
   switch (type) {

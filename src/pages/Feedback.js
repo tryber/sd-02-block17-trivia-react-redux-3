@@ -14,19 +14,6 @@ class Feedback extends Component {
     resetFilter();
   }
 
-  componentDidMount() {
-    const { name: playerName = '', imageUrl = '', score = '' } = this.props;
-    const rankingOnLocalStorage = localStorage.getItem('ranking') ? localStorage.getItem('ranking') : null;
-    const newRankingItem = JSON.stringify({ playerName, score, imageUrl });
-    const newLadder = rankingOnLocalStorage !== null ? [
-      ...JSON.parse(rankingOnLocalStorage).filter((rankItem) => rankItem !== newRankingItem),
-      JSON.parse(newRankingItem),
-    ] : [JSON.parse(newRankingItem)];
-    const sortDesc = (a, b) => b.score - a.score;
-    newLadder.sort(sortDesc);
-    localStorage.setItem('ranking', JSON.stringify(newLadder));
-  }
-
   render() {
     const { resetTimerNow, resetScore, resetFilter } = this.props;
     const state = (localStorage.getItem('state') !== null) ? JSON.parse(localStorage.getItem('state')) : { player: { assertions: '', score: '' } };
@@ -64,9 +51,6 @@ Feedback.propTypes = {
   resetTimerNow: PropTypes.func.isRequired,
   resetScore: PropTypes.func.isRequired,
   resetFilter: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
 };
 
 const mapDispatchToProps = (dispatch) => ({
@@ -75,8 +59,5 @@ const mapDispatchToProps = (dispatch) => ({
   resetFilter: () => dispatch(resetAllFilters()),
 });
 
-const mapStateToProps = ({ gameReducer: { name, imageUrl, score } }) => ({
-  name, imageUrl, score,
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+export default connect(null, mapDispatchToProps)(Feedback);

@@ -6,7 +6,7 @@ const RESET_FILTER = 'RESET_FILTER';
 const GET_CATEGORY = 'GET_CATEGORY';
 const CHANGE_CATEGORY = 'CHANGE_CATEGORY';
 
-export default function reducer(state = INITIAL_STATE, action) {
+export default function categoryReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case GET_CATEGORY:
       return { ...state, category: action.results };

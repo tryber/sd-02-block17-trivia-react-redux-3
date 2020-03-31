@@ -6,7 +6,7 @@ const INITIAL_STATE = {
 const CHANGE_DIFFICULTY = 'CHANGE_DIFFICULTY';
 const RESET_FILTER = 'RESET_FILTER';
 
-export default function reducer(state = INITIAL_STATE, action) {
+export default function difficultyreducer(state = INITIAL_STATE, action) {
   switch (action.type) {
     case CHANGE_DIFFICULTY:
       return {
