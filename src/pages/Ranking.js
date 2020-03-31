@@ -5,7 +5,7 @@ import { setRankedLadder } from '../actions/RankingActions';
 
 class Ranking extends Component {
   componentDidMount() {
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking')) || null;
+    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
     const {
       name,
       imageUrl,
@@ -13,28 +13,30 @@ class Ranking extends Component {
       toSetRankedLadder,
     } = this.props;
 
-    const newRankingItem = (name !== '' && imageUrl !== '')
-      ? JSON.stringify({ name, score, imageUrl })
-      : null;
+    if (((name === '' && imageUrl === '') && score === 0)) {
+      return rankingFromLocalStorage ? toSetRankedLadder(rankingFromLocalStorage) : toSetRankedLadder(null);
+    }
 
-    if (rankingFromLocalStorage === null && newRankingItem === null) return toSetRankedLadder(null);
+    const newRankingItem = JSON.stringify({ name, score, imageUrl });
 
-
-    const newLadder = () => {
-      if (rankingFromLocalStorage !== null && newRankingItem !== null) {
+    const fetchLadder = () => {
+      if (rankingFromLocalStorage === null
+        || rankingFromLocalStorage === []) return [JSON.parse(newRankingItem)];
+      if (rankingFromLocalStorage.length > 1) {
         return [
-          ...rankingFromLocalStorage || rankingFromLocalStorage,
+          ...rankingFromLocalStorage.filter((rank) => rank === null),
           JSON.parse(newRankingItem)];
       }
-      if (rankingFromLocalStorage === null) return [JSON.parse(newRankingItem)];
-      if (newRankingItem === null) return [...rankingFromLocalStorage || rankingFromLocalStorage];
-      return null;
+      return [
+        rankingFromLocalStorage,
+        JSON.parse(newRankingItem)];
     };
 
-    console.log(newLadder());
+    const newLadder = fetchLadder();
 
+    console.log(newLadder);
     const sortDesc = (a, b) => b.score - a.score;
-    const sortedLadder = newLadder().sort(sortDesc);
+    const sortedLadder = newLadder.sort(sortDesc);
     localStorage.setItem('ranking', JSON.stringify(sortedLadder));
     return toSetRankedLadder(sortedLadder);
   }
