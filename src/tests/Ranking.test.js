@@ -9,27 +9,38 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
-import { LocalStorageMock } from '@react-mock/localstorage';
 import Ranking from '../pages/Ranking';
-import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
+import App from '../App';
+import gameReducer from '../reducers/gameReducer';
 
-function renderWithRouter(
-  ui,
-  { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
-) {
-  return {
-    ...render(<Router history={history}>{ui}</Router>),
-    history,
-  };
-}
+// function renderWithRouter(
+//   ui,
+//   { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
+// ) {
+//   return {
+//     ...render(<Router history={history}>{ui}</Router>),
+//     history,
+//   };
+// }
+
+const testState = {
+  gameReducer: {
+    name: 'Mateus',
+    score: 120,
+    imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3',
+  },
+};
 
 function renderWithRedux(
   ui,
-  { store = createStore(gameReducer, { gameReducer: { INITIAL_STATE } }) } = {},
+  {
+    route = '/', history = createMemoryHistory({ initialEntries: [route] }), initialState, store = createStore(gameReducer, initialState),
+  } = {},
 ) {
   return {
-    ...render(<Provider store={store}>{ui}</Provider>),
+    ...render(<Provider store={store}><Router history={history}>{ui}</Router></Provider>),
     store,
+    history,
   };
 }
 
@@ -39,39 +50,61 @@ describe('Ranking page tests', () => {
   it('Page is on localhost/ranking url', () => {
     const { history, getByText } = renderWithRedux(
       <MemoryRouter initialEntries={['/ranking']}>
-        <Ranking />
-      </MemoryRouter>,
+        <App />
+      </MemoryRouter>, {
+        initialState: {
+          gameReducer: {
+            ...testState.gameReducer,
+            rankLadder: [],
+          },
+        },
+      },
     );
     const rankingHeader = getByText(/Ranking/g);
-    expect(history.pathname.location).toBe('/ranking');
+    // expect(history.location.pathname).toBe('/ranking');
     expect(rankingHeader).toBeInTheDocument();
     expect(rankingHeader.tagName).toBe('H1');
   });
 
   it('Page contains an ordered list', () => {
     const { container } = renderWithRedux(
-      <Ranking />,
+      <Ranking />, {
+        initialState: {
+          gameReducer: {
+            ...testState.gameReducer,
+            rankLadder: [{ name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' }],
+          },
+        },
+      },
     );
     expect(container.querySelector('ol')).toBeInTheDocument();
   });
 
   it('All elements are sorted by score if there are items in the list', () => {
     const ranking = [
-      { playerName: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
-      { playerName: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
-      { playerName: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+      { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+      { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+      { name: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
     ];
-
-    const { container } = renderWithRedux(
-      <Ranking />,
-    );
 
     localStorage.setItem('ranking', JSON.stringify(ranking));
 
+    const { container } = renderWithRedux(
+      <Ranking />, {
+        initialState: {
+          gameReducer: {
+            ...testState.gameReducer,
+            rankLadder: ranking,
+          },
+        },
+      },
+    );
     console.log(localStorage);
 
     const allScores = container.querySelectorAll('.rank-score');
+    console.log(allScores);
     [...allScores].reduce((prevRank, thisRank, index) => {
+      // console.log('prevRank: ', Number(prevRank), 'next rank: ', Number(thisRank.innerHTML));
       if (index === 0) return Number(thisRank.innerHTML);
       expect(Number(prevRank) >= Number(thisRank.innerHTML)).toBeTruthy();
       return Number(thisRank.innerHTML);
@@ -82,7 +115,14 @@ describe('Ranking page tests', () => {
     localStorage.clear();
 
     const { getByText } = renderWithRedux(
-      <Ranking />,
+      <Ranking />, {
+        initialState: {
+          gameReducer: {
+            ...testState.gameReducer,
+            rankLadder: [],
+          },
+        },
+      },
     );
 
     expect(getByText('Nenhum registro')).toBeInTheDocument();
