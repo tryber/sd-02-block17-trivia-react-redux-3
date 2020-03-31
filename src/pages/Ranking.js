@@ -5,25 +5,38 @@ import { setRankedLadder } from '../actions/RankingActions';
 
 class Ranking extends Component {
   componentDidMount() {
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
+    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking')) || null;
     const {
-      name = '',
-      imageUrl = '',
-      score = '',
+      name,
+      imageUrl,
+      score,
       toSetRankedLadder,
     } = this.props;
-    const newRankingItem = (
-      name !== '' && imageUrl !== '' && score !== '')
+
+    const newRankingItem = (name !== '' && imageUrl !== '')
       ? JSON.stringify({ name, score, imageUrl })
       : null;
-    const newLadder = rankingFromLocalStorage && newRankingItem !== null ? [
-      ...rankingFromLocalStorage.filter((rankItem) => rankItem !== newRankingItem),
-      JSON.parse(newRankingItem),
-    ] : [JSON.parse(newRankingItem)];
+
+    if (rankingFromLocalStorage === null && newRankingItem === null) return toSetRankedLadder(null);
+
+
+    const newLadder = () => {
+      if (rankingFromLocalStorage !== null && newRankingItem !== null) {
+        return [
+          ...rankingFromLocalStorage || rankingFromLocalStorage,
+          JSON.parse(newRankingItem)];
+      }
+      if (rankingFromLocalStorage === null) return [JSON.parse(newRankingItem)];
+      if (newRankingItem === null) return [...rankingFromLocalStorage || rankingFromLocalStorage];
+      return null;
+    };
+
+    console.log(newLadder());
+
     const sortDesc = (a, b) => b.score - a.score;
-    newLadder.sort(sortDesc);
-    localStorage.setItem('ranking', JSON.stringify(newLadder));
-    toSetRankedLadder(newLadder);
+    const sortedLadder = newLadder().sort(sortDesc);
+    localStorage.setItem('ranking', JSON.stringify(sortedLadder));
+    return toSetRankedLadder(sortedLadder);
   }
 
   render() {
@@ -32,7 +45,7 @@ class Ranking extends Component {
       <div>
         <h1>Ranking</h1>
         <ol>
-          { rankedLadder === [] ? rankedLadder.map(
+          { rankedLadder !== null ? rankedLadder.map(
             (rank, index) => (
               <li key={`${rank.name}_${rank.score}_${index + 1}`}>
                 <div>
@@ -40,7 +53,7 @@ class Ranking extends Component {
                 </div>
                 <div>
                   <div>
-                    {`${rank.name} pontuou`}
+                    {`${rank.name} pontuou `}
                     <span className="rank-score">
                       {`${rank.score}`}
                     </span>

@@ -5,7 +5,10 @@ import { createMemoryHistory } from 'history';
 import {
   render,
   cleanup,
-  getByText,
+  wait,
+  waitFor,
+  getAllByText,
+  waitForDomChange,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
@@ -34,11 +37,20 @@ const testState = {
 function renderWithRedux(
   ui,
   {
-    route = '/', history = createMemoryHistory({ initialEntries: [route] }), initialState, store = createStore(gameReducer, initialState),
+    route = '/',
+    history = createMemoryHistory({ initialEntries: [route] }),
+    initialState,
+    store = createStore(gameReducer, initialState),
   } = {},
 ) {
   return {
-    ...render(<Provider store={store}><Router history={history}>{ui}</Router></Provider>),
+    ...render(
+      <Provider store={store}>
+        <Router history={history}>
+          {ui}
+        </Router>
+      </Provider>,
+    ),
     store,
     history,
   };
@@ -54,8 +66,8 @@ describe('Ranking page tests', () => {
       </MemoryRouter>, {
         initialState: {
           gameReducer: {
-            ...testState.gameReducer,
-            rankLadder: [],
+            ...testState,
+            rankLadder: { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
           },
         },
       },
@@ -71,16 +83,17 @@ describe('Ranking page tests', () => {
       <Ranking />, {
         initialState: {
           gameReducer: {
-            ...testState.gameReducer,
-            rankLadder: [{ name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' }],
+            ...testState,
+            rankedLadder: [{ name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' }],
           },
         },
       },
     );
     expect(container.querySelector('ol')).toBeInTheDocument();
+    expect(container.querySelector('li')).toBeInTheDocument();
   });
 
-  it('All elements are sorted by score if there are items in the list', () => {
+  it('All elements from localStorage are sorted by score inside Redux state', () => {
     const ranking = [
       { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
       { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
@@ -89,29 +102,48 @@ describe('Ranking page tests', () => {
 
     localStorage.setItem('ranking', JSON.stringify(ranking));
 
-    const { container } = renderWithRedux(
+    const { store } = renderWithRedux(
       <Ranking />, {
         initialState: {
-          gameReducer: {
-            ...testState.gameReducer,
-            rankLadder: ranking,
-          },
+          ...testState,
         },
       },
     );
-    console.log(localStorage);
+    const { rankedLadder } = store.getState();
 
-    const allScores = container.querySelectorAll('.rank-score');
-    console.log(allScores);
-    [...allScores].reduce((prevRank, thisRank, index) => {
-      // console.log('prevRank: ', Number(prevRank), 'next rank: ', Number(thisRank.innerHTML));
-      if (index === 0) return Number(thisRank.innerHTML);
-      expect(Number(prevRank) >= Number(thisRank.innerHTML)).toBeTruthy();
-      return Number(thisRank.innerHTML);
+    [...rankedLadder].reduce((prevScore, { score }, index) => {
+      // console.log('prevScore: ', Number(prevScore), 'next rank: ', Number(thisRank.innerHTML));
+      if (index === 0) return Number(score);
+      expect(Number(prevScore) >= Number(score)).toBeTruthy();
+      return Number(score);
     }, 0);
   });
 
-  it('If there are no elements added, string "Nenhum registro" is returned', () => {
+  // it('page renders all items from state', async () => {
+  //   const ranking = [
+  //     { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+  //     { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+  //     { name: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
+  //   ];
+
+  //   localStorage.setItem('ranking', JSON.stringify(ranking));
+
+  //   const { container } = renderWithRedux(
+  //     <Ranking />, {
+  //       initialState: {
+  //         ...testState,
+  //         rankedLadder: [],
+  //       },
+  //     },
+  //   );
+
+  //   await wait(() => container.getElementsByClassName('rank-score'));
+  //   const allScores = container.getElementsByClassName('rank-score');
+
+  //   expect(allScores).toBeInTheDocument();
+  // });
+
+  it('If there are no elements added, string "Nenhum registro" is returned', async () => {
     localStorage.clear();
 
     const { getByText } = renderWithRedux(
@@ -119,12 +151,12 @@ describe('Ranking page tests', () => {
         initialState: {
           gameReducer: {
             ...testState.gameReducer,
-            rankLadder: [],
+            rankedLadder: [],
           },
         },
       },
     );
-
+    await wait(() => getByText('Nenhum registro'));
     expect(getByText('Nenhum registro')).toBeInTheDocument();
   });
 });
