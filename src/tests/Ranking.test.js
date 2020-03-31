@@ -11,29 +11,21 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import Ranking from '../pages/Ranking';
-import gameReducer from '../reducers/gameReducer';
+import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
 
-const initialState = {
-  gameReducer: {
-    name: '',
-    gravatarEmail: '',
-    score: 0,
-    assertions: 0,
-    wrongAnswerFlag: false,
-    answersClasses: [],
-    question: {},
-    imageUrl: '',
-    rank: {
-      name: '',
-      imageUrl: '',
-      score: 0,
-    },
-  },
-};
+function renderWithRouter(
+  ui,
+  { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
+) {
+  return {
+    ...render(<Router history={history}>{ui}</Router>),
+    history,
+  };
+}
 
 function renderWithRedux(
   ui,
-  { store = createStore(gameReducer, initialState) } = {},
+  { store = createStore(gameReducer, { gameReducer: { INITIAL_STATE } }) } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
@@ -45,7 +37,7 @@ afterEach(cleanup);
 
 describe('Ranking page tests', () => {
   it('Page is on localhost/ranking url', () => {
-    const { history } = renderWithRedux(
+    const { history, getByText } = renderWithRedux(
       <MemoryRouter initialEntries={['/ranking']}>
         <Ranking />
       </MemoryRouter>,
@@ -71,34 +63,28 @@ describe('Ranking page tests', () => {
     ];
 
     const { container } = renderWithRedux(
-      <LocalStorageMock ranking={ranking}>
-        <Ranking />
-      </LocalStorageMock>,
+      <Ranking />,
     );
-    console.log(localStorage);
 
     localStorage.setItem('ranking', JSON.stringify(ranking));
 
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
+    console.log(localStorage);
 
     const allScores = container.querySelectorAll('.rank-score');
     [...allScores].reduce((prevRank, thisRank, index) => {
-      // const actualScore = getByText(`${localStorageRankingsTest[index].score}`);
-      // console.log(actualScore);
-      // console.log('previos score: ', prevRank, 'this score: ', thisRank.innerHTML);
       if (index === 0) return Number(thisRank.innerHTML);
       expect(Number(prevRank) >= Number(thisRank.innerHTML)).toBeTruthy();
       return Number(thisRank.innerHTML);
     }, 0);
   });
+
   it('If there are no elements added, string "Nenhum registro" is returned', () => {
     localStorage.clear();
 
-    const { container } = renderWithRedux(
+    const { getByText } = renderWithRedux(
       <Ranking />,
     );
 
-    const allRanks = container.querySelectorAll('li');
-    expect(allRanks[0].innerHTML).toBe('Nenhum registro');
+    expect(getByText('Nenhum registro')).toBeInTheDocument();
   });
 });

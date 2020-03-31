@@ -32,7 +32,7 @@ class Ranking extends Component {
       <div>
         <h1>Ranking</h1>
         <ol>
-          { rankedLadder !== undefined ? rankedLadder.map(
+          { rankedLadder === [] ? rankedLadder.map(
             (rank, index) => (
               <li key={`${rank.name}_${rank.score}_${index + 1}`}>
                 <div>
