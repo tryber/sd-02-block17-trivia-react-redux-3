@@ -1,14 +1,20 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { setRankedLadder } from '../actions/RankingActions';
 
-function Ranking(props) {
-  const fetchRankingLadder = () => {
+class Ranking extends Component {
+  componentDidMount() {
     const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
-    const { name: playerName = '', imageUrl = '', score = '' } = props;
+    const {
+      name = '',
+      imageUrl = '',
+      score = '',
+      toSetRankedLadder,
+    } = this.props;
     const newRankingItem = (
-      playerName !== '' && imageUrl !== '' && score !== '')
-      ? JSON.stringify({ playerName, score, imageUrl })
+      name !== '' && imageUrl !== '' && score !== '')
+      ? JSON.stringify({ name, score, imageUrl })
       : null;
     const newLadder = rankingFromLocalStorage && newRankingItem !== null ? [
       ...rankingFromLocalStorage.filter((rankItem) => rankItem !== newRankingItem),
@@ -17,46 +23,65 @@ function Ranking(props) {
     const sortDesc = (a, b) => b.score - a.score;
     newLadder.sort(sortDesc);
     localStorage.setItem('ranking', JSON.stringify(newLadder));
-  };
+    toSetRankedLadder(newLadder);
+  }
 
-  fetchRankingLadder();
-
-  const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
-
-  return (
-    <div>
-      <h1>Ranking</h1>
-      <ol>
-        { rankingFromLocalStorage !== undefined ? rankingFromLocalStorage.map(
-          ({ playerName, score, imageUrl }, index) => (
-            <li key={`${playerName}_${score}_${index + 1}`}>
-              <div>
-                <img src={imageUrl} alt={`${playerName} grAvatar`} />
-              </div>
-              <div>
+  render() {
+    const { rankedLadder } = this.props;
+    return (
+      <div>
+        <h1>Ranking</h1>
+        <ol>
+          { rankedLadder !== undefined ? rankedLadder.map(
+            (rank, index) => (
+              <li key={`${rank.name}_${rank.score}_${index + 1}`}>
                 <div>
-                  {`${playerName} pontuou`}
-                  <span className="rank-score">
-                    {`${score}`}
-                  </span>
+                  <img src={rank.imageUrl} alt={`${rank.name} grAvatar`} />
                 </div>
-              </div>
-            </li>
-          ),
-        ) : <li>Nenhum registro</li> }
-      </ol>
-    </div>
-  );
+                <div>
+                  <div>
+                    {`${rank.name} pontuou`}
+                    <span className="rank-score">
+                      {`${rank.score}`}
+                    </span>
+                  </div>
+                </div>
+              </li>
+            ),
+          ) : <li>Nenhum registro</li> }
+        </ol>
+      </div>
+    );
+  }
 }
 
-const mapStateToProps = ({ gameReducer: { name, imageUrl, score } }) => ({
-  name, imageUrl, score,
+const mapDispatchToProps = (dispatch) => ({
+  toSetRankedLadder: (rankedLadder) => dispatch(setRankedLadder(rankedLadder)),
 });
 
-export default connect(mapStateToProps)(Ranking);
+const mapStateToProps = (
+  {
+    gameReducer: {
+      name, imageUrl, score, rankedLadder,
+    },
+  },
+) => ({
+  name, imageUrl, score, rankedLadder,
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Ranking);
 
 Ranking.propTypes = {
-  name: PropTypes.string.isRequired,
-  imageUrl: PropTypes.string.isRequired,
-  score: PropTypes.number.isRequired,
+  name: PropTypes.string,
+  imageUrl: PropTypes.string,
+  score: PropTypes.number,
+  toSetRankedLadder: PropTypes.func.isRequired,
+  rankedLadder: PropTypes.arrayOf(PropTypes.object),
+};
+
+Ranking.defaultProps = {
+  name: '',
+  imageUrl: '',
+  score: 0,
+  rankedLadder: [],
 };

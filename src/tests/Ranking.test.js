@@ -11,23 +11,29 @@ import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
 import { LocalStorageMock } from '@react-mock/localstorage';
 import Ranking from '../pages/Ranking';
-import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
+import gameReducer from '../reducers/gameReducer';
 
-
-// function renderWithRouter(
-//   ui,
-//   { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
-// ) {
-//   return {
-//     ...render(<Router history={history}>{ui}</Router>),
-//     history,
-//   };
-// }
-
+const initialState = {
+  gameReducer: {
+    name: '',
+    gravatarEmail: '',
+    score: 0,
+    assertions: 0,
+    wrongAnswerFlag: false,
+    answersClasses: [],
+    question: {},
+    imageUrl: '',
+    rank: {
+      name: '',
+      imageUrl: '',
+      score: 0,
+    },
+  },
+};
 
 function renderWithRedux(
   ui,
-  { store = createStore(gameReducer, { gameReducer: { INITIAL_STATE } }) } = {},
+  { store = createStore(gameReducer, initialState) } = {},
 ) {
   return {
     ...render(<Provider store={store}>{ui}</Provider>),
@@ -65,13 +71,15 @@ describe('Ranking page tests', () => {
     ];
 
     const { container } = renderWithRedux(
-      <LocalStorageMock items={ranking}>
+      <LocalStorageMock ranking={ranking}>
         <Ranking />
       </LocalStorageMock>,
     );
     console.log(localStorage);
 
-    // localStorage.setItem('ranking', JSON.stringify(localStorageRankingsTest));
+    localStorage.setItem('ranking', JSON.stringify(ranking));
+
+    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
 
     const allScores = container.querySelectorAll('.rank-score');
     [...allScores].reduce((prevRank, thisRank, index) => {
