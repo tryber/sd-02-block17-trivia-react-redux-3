@@ -14,15 +14,15 @@ import Ranking from '../pages/Ranking';
 import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
 
 
-function renderWithRouter(
-  ui,
-  { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
-) {
-  return {
-    ...render(<Router history={history}>{ui}</Router>),
-    history,
-  };
-}
+// function renderWithRouter(
+//   ui,
+//   { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
+// ) {
+//   return {
+//     ...render(<Router history={history}>{ui}</Router>),
+//     history,
+//   };
+// }
 
 
 function renderWithRedux(
@@ -58,23 +58,26 @@ describe('Ranking page tests', () => {
   });
 
   it('All elements are sorted by score if there are items in the list', () => {
-    const { container } = renderWithRedux(
-      <Ranking />,
-    );
-
-    const localStorageRankingsTest = [
+    const ranking = [
       { playerName: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
       { playerName: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
       { playerName: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
     ];
 
-    localStorage.setItem('ranking', JSON.stringify(localStorageRankingsTest));
+    const { container } = renderWithRedux(
+      <LocalStorageMock items={ranking}>
+        <Ranking />
+      </LocalStorageMock>,
+    );
+    console.log(localStorage);
+
+    // localStorage.setItem('ranking', JSON.stringify(localStorageRankingsTest));
 
     const allScores = container.querySelectorAll('.rank-score');
     [...allScores].reduce((prevRank, thisRank, index) => {
       // const actualScore = getByText(`${localStorageRankingsTest[index].score}`);
       // console.log(actualScore);
-      console.log('previos score: ', prevRank, 'this score: ', thisRank.innerHTML);
+      // console.log('previos score: ', prevRank, 'this score: ', thisRank.innerHTML);
       if (index === 0) return Number(thisRank.innerHTML);
       expect(Number(prevRank) >= Number(thisRank.innerHTML)).toBeTruthy();
       return Number(thisRank.innerHTML);
