@@ -6,9 +6,6 @@ import {
   render,
   cleanup,
   wait,
-  waitFor,
-  getAllByText,
-  waitForDomChange,
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { Provider } from 'react-redux';
@@ -60,7 +57,7 @@ afterEach(cleanup);
 
 describe('Ranking page tests', () => {
   it('Page is on localhost/ranking url', () => {
-    const { history, getByText } = renderWithRedux(
+    const { getByText } = renderWithRedux(
       <MemoryRouter initialEntries={['/ranking']}>
         <App />
       </MemoryRouter>, {

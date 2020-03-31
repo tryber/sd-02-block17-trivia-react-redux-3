@@ -14,7 +14,9 @@ class Ranking extends Component {
     } = this.props;
 
     if (((name === '' && imageUrl === '') && score === 0)) {
-      return rankingFromLocalStorage ? toSetRankedLadder(rankingFromLocalStorage) : toSetRankedLadder(null);
+      return rankingFromLocalStorage
+        ? toSetRankedLadder(rankingFromLocalStorage)
+        : toSetRankedLadder(null);
     }
 
     const newRankingItem = JSON.stringify({ name, score, imageUrl });
