@@ -4,8 +4,27 @@ import PropTypes from 'prop-types';
 import { setRankedLadder } from '../actions/RankingActions';
 
 class Ranking extends Component {
+  static fetchLadder(rankingFromLocalStorage, newRankingItem) {
+    if (rankingFromLocalStorage === null
+      || rankingFromLocalStorage === []) {
+      return [
+        JSON.parse(newRankingItem),
+      ];
+    }
+    if (rankingFromLocalStorage.length > 1) {
+      return [
+        ...rankingFromLocalStorage,
+        JSON.parse(newRankingItem),
+      ];
+    }
+    return [
+      rankingFromLocalStorage,
+      JSON.parse(newRankingItem),
+    ];
+  }
+
   componentDidMount() {
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
+    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking')).flat();
     const {
       name,
       imageUrl,
@@ -21,26 +40,12 @@ class Ranking extends Component {
 
     const newRankingItem = JSON.stringify({ name, score, imageUrl });
 
-    const fetchLadder = () => {
-      if (rankingFromLocalStorage === null
-        || rankingFromLocalStorage === []) return [JSON.parse(newRankingItem)];
-      if (rankingFromLocalStorage.length > 1) {
-        return [
-          ...rankingFromLocalStorage.filter((rank) => rank === null),
-          JSON.parse(newRankingItem)];
-      }
-      return [
-        rankingFromLocalStorage,
-        JSON.parse(newRankingItem)];
-    };
-
-    const newLadder = fetchLadder();
-
+    const newLadder = Ranking.fetchLadder(rankingFromLocalStorage, newRankingItem);
     console.log(newLadder);
     const sortDesc = (a, b) => b.score - a.score;
-    const sortedLadder = newLadder.sort(sortDesc);
-    localStorage.setItem('ranking', JSON.stringify(sortedLadder));
-    return toSetRankedLadder(sortedLadder);
+    const sortedLadder = [...newLadder].sort(sortDesc);
+    localStorage.setItem('ranking', JSON.stringify(sortedLadder.flat()));
+    return toSetRankedLadder(sortedLadder.flat());
   }
 
   render() {

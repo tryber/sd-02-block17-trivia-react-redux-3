@@ -148,7 +148,7 @@ describe('Ranking page tests', () => {
         initialState: {
           gameReducer: {
             ...testState.gameReducer,
-            rankedLadder: [],
+            rankedLadder: null,
           },
         },
       },
