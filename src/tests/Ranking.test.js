@@ -13,16 +13,6 @@ import Ranking from '../pages/Ranking';
 import App from '../App';
 import gameReducer from '../reducers/gameReducer';
 
-// function renderWithRouter(
-//   ui,
-//   { route = '/', history = createMemoryHistory({ initialEntries: [route] }) } = {},
-// ) {
-//   return {
-//     ...render(<Router history={history}>{ui}</Router>),
-//     history,
-//   };
-// }
-
 const testState = {
   gameReducer: {
     name: 'Mateus',
@@ -70,7 +60,6 @@ describe('Ranking page tests', () => {
       },
     );
     const rankingHeader = getByText(/Ranking/g);
-    // expect(history.location.pathname).toBe('/ranking');
     expect(rankingHeader).toBeInTheDocument();
     expect(rankingHeader.tagName).toBe('H1');
   });
@@ -108,37 +97,12 @@ describe('Ranking page tests', () => {
     );
     const { rankedLadder } = store.getState();
 
-    [...rankedLadder].reduce((prevScore, { score }, index) => {
-      // console.log('prevScore: ', Number(prevScore), 'next rank: ', Number(thisRank.innerHTML));
+    rankedLadder.reduce((prevScore, { score }, index) => {
       if (index === 0) return Number(score);
       expect(Number(prevScore) >= Number(score)).toBeTruthy();
       return Number(score);
     }, 0);
   });
-
-  // it('page renders all items from state', async () => {
-  //   const ranking = [
-  //     { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
-  //     { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
-  //     { name: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
-  //   ];
-
-  //   localStorage.setItem('ranking', JSON.stringify(ranking));
-
-  //   const { container } = renderWithRedux(
-  //     <Ranking />, {
-  //       initialState: {
-  //         ...testState,
-  //         rankedLadder: [],
-  //       },
-  //     },
-  //   );
-
-  //   await wait(() => container.getElementsByClassName('rank-score'));
-  //   const allScores = container.getElementsByClassName('rank-score');
-
-  //   expect(allScores).toBeInTheDocument();
-  // });
 
   it('If there are no elements added, string "Nenhum registro" is returned', async () => {
     localStorage.clear();

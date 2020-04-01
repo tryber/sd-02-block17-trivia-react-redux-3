@@ -29,7 +29,7 @@ describe('test actions', () => {
     const aux = changeDifficulty('aaa');
     expect(aux).toMatchObject({ change: 'aaa', type: 'CHANGE_DIFFICULTY' });
     store.dispatch(changeDifficulty('aaaaaaaa'));
-    expect(store.getState().difficultyreducer.difficultySelected).toBe('aaaaaaaa');
+    expect(store.getState().difficultyReducer.difficultySelected).toBe('aaaaaaaa');
   });
   it('ChangeScoreboard', () => {
     const aux = ChangeScoreboard();

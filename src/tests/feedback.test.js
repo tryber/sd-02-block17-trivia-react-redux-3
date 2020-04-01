@@ -20,9 +20,9 @@ const reducer = {
     types: ['multiple', 'boolean'],
     Tselected: '',
   },
-  difficultyreducer: {
+  difficultyReducer: {
     difficulty: ['easy', 'medium', 'hard'],
-    Dselected: '',
+    difficultySelected: '',
   },
 };
 

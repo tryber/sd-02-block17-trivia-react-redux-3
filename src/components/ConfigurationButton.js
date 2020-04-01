@@ -6,7 +6,7 @@ class ConfigurationButton extends Component {
   render() {
     return (
       <Link to="/configuration" data-testid="config-button" className="config-button">
-        ●
+        ● CONFIGURAÇÔES
       </Link>
     );
   }

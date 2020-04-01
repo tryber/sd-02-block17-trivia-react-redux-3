@@ -90,7 +90,7 @@ const reducers = {
   },
   timeReducer: { timer: 30, stopTimer: false },
   categoryReducer: { categorySelected: '' },
-  difficultyreducer: { difficultySelected: '' },
+  difficultyReducer: { difficultySelected: '' },
   typeReducer: { typeSelected: '' },
 };
 

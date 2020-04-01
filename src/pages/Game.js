@@ -41,7 +41,7 @@ class Game extends React.Component {
 
 const mapStateToProps = ({
   categoryReducer: { categorySelected },
-  difficultyreducer: { difficultySelected },
+  difficultyReducer: { difficultySelected },
   typeReducer: { typeSelected },
 }) => ({
   categorySelected, difficultySelected, typeSelected,

@@ -17,11 +17,11 @@ const reducer = {
   timeReducer: { timer: 2 },
   typeReducer: {
     types: ['multiple', 'boolean'],
-    Tselected: '',
+    typeSelected: '',
   },
-  difficultyreducer: {
+  difficultyReducer: {
     difficulty: ['easy', 'medium', 'hard'],
-    Dselected: '',
+    difficultySelected: '',
   },
 };
 

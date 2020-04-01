@@ -24,7 +24,7 @@ class Ranking extends Component {
   }
 
   componentDidMount() {
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking')).flat();
+    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking'));
     const {
       name,
       imageUrl,
@@ -41,11 +41,11 @@ class Ranking extends Component {
     const newRankingItem = JSON.stringify({ name, score, imageUrl });
 
     const newLadder = Ranking.fetchLadder(rankingFromLocalStorage, newRankingItem);
-    console.log(newLadder);
+    // console.log(newLadder);
     const sortDesc = (a, b) => b.score - a.score;
     const sortedLadder = [...newLadder].sort(sortDesc);
-    localStorage.setItem('ranking', JSON.stringify(sortedLadder.flat()));
-    return toSetRankedLadder(sortedLadder.flat());
+    localStorage.setItem('ranking', JSON.stringify(...sortedLadder));
+    return toSetRankedLadder(...sortedLadder);
   }
 
   render() {
