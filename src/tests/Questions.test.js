@@ -104,47 +104,6 @@ function renderWithRedux2(
   };
 }
 
-const question1 = {
-  name: 'name',
-  gravatarEmail: 'email',
-  timer: 6,
-  scoreboard: 0,
-  lastQuestionStatus: 'correct',
-  answersClasses: [],
-  question: {
-    category: 'Entertainment%3A%20Music',
-    type: 'multiple',
-    difficulty: 'easy',
-    question: 'Which%20of%20these%20is%20NOT%20a%20song%20on%20The%20Beatles%27%201968%20self%20titled%20album%2C%20also%20known%20as%20the%20White%20album%3F',
-    correct_answer: 'Being%20For%20The%20Benefit%20Of%20Mr.%20Kite%21',
-    incorrect_answers: [
-      'Why%20Don%27t%20We%20Do%20It%20in%20the%20Road%3F',
-      'Everybody%27s%20Got%20Something%20to%20Hide%20Except%20Me%20and%20My%20Monkey',
-      'The%20Continuing%20Story%20of%20Bungalow%20Bill',
-    ],
-  },
-};
-const question2 = {
-  name: 'name',
-  gravatarEmail: 'email',
-  timer: 6,
-  scoreboard: 0,
-  lastQuestionStatus: 'correct',
-  answersClasses: [],
-  question: {
-    category: 'Entertainment%3A%20Music',
-    type: 'multiple',
-    difficulty: 'hard',
-    question: 'Which%20of%20these%20is%20NOT%20a%20song%20on%20The%20Beatles%27%201968%20self%20titled%20album%2C%20also%20known%20as%20the%20White%20album%3F',
-    correct_answer: 'Being%20For%20The%20Benefit%20Of%20Mr.%20Kite%21',
-    incorrect_answers: [
-      'Why%20Don%27t%20We%20Do%20It%20in%20the%20Road%3F',
-      'Everybody%27s%20Got%20Something%20to%20Hide%20Except%20Me%20and%20My%20Monkey',
-      'The%20Continuing%20Story%20of%20Bungalow%20Bill',
-    ],
-  },
-};
-
 describe('test correct render elements', () => {
   it('render with question', () => {
     const history = createMemoryHistory();

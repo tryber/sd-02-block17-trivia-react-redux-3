@@ -68,7 +68,7 @@ describe('test actions', () => {
   it('RequestCategory', () => {
     const aux = RequestCategory([]);
     expect(aux).toMatchObject({ type: 'GET_CATEGORY', results: [] });
-    store.dispatch(RequestCategory([1, 2]))
+    store.dispatch(RequestCategory([1, 2]));
     expect(store.getState().categoryReducer).toMatchObject({
       category: [1, 2],
       categorySelected: undefined,
