@@ -7,7 +7,7 @@ import { setRankedLadder } from '../actions/RankingActions';
 
 class Ranking extends Component {
   static fetchLadder(rankingFromLocalStorage, newRankingItem) {
-    console.log('actual ranking: ', rankingFromLocalStorage, 'new rank item: ', newRankingItem)
+    // console.log('actual ranking: ', rankingFromLocalStorage, 'new rank item: ', newRankingItem);
     if (rankingFromLocalStorage === null) {
       return [
         newRankingItem,
@@ -27,7 +27,7 @@ class Ranking extends Component {
     const rankingFromLocalStorage = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : null;
 
     const stateFromLocalStorage = localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : null;
-    console.log(rankingFromLocalStorage, stateFromLocalStorage);
+    // console.log(rankingFromLocalStorage, stateFromLocalStorage);
 
     if (stateFromLocalStorage === null) {
       return rankingFromLocalStorage !== null
@@ -42,7 +42,7 @@ class Ranking extends Component {
     const newLadder = Ranking.fetchLadder(rankingFromLocalStorage, newRankingItem);
     const sortDesc = (a, b) => b.score - a.score;
     const sortedLadder = [...newLadder].sort(sortDesc);
-    console.log('novo rank: ', sortedLadder);
+    // console.log('novo rank: ', sortedLadder);
 
     localStorage.setItem('ranking', JSON.stringify(sortedLadder));
     localStorage.removeItem('state');
@@ -52,7 +52,7 @@ class Ranking extends Component {
   render() {
     const { rankedLadder } = this.props;
 
-    console.log('state ranked ladder: ', rankedLadder, !!rankedLadder);
+    // console.log('state ranked ladder: ', rankedLadder, !!rankedLadder);
 
     if (rankedLadder.length === 0) return <li>Nenhum registro</li>;
     return (
