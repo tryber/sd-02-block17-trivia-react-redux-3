@@ -1,60 +1,65 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import MD5 from 'crypto-js/md5';
 import { setRankedLadder } from '../actions/RankingActions';
+
 
 class Ranking extends Component {
   static fetchLadder(rankingFromLocalStorage, newRankingItem) {
-    if (rankingFromLocalStorage === null
-      || rankingFromLocalStorage === []) {
+    console.log('actual ranking: ', rankingFromLocalStorage, 'new rank item: ', newRankingItem)
+    if (rankingFromLocalStorage === null) {
       return [
-        JSON.parse(newRankingItem),
-      ];
-    }
-    if (rankingFromLocalStorage.length > 1) {
-      return [
-        ...rankingFromLocalStorage,
-        JSON.parse(newRankingItem),
+        newRankingItem,
       ];
     }
     return [
-      rankingFromLocalStorage,
-      JSON.parse(newRankingItem),
+      ...rankingFromLocalStorage,
+      newRankingItem,
     ];
   }
 
   componentDidMount() {
-    const rankingFromLocalStorage = localStorage.getItem('ranking') ? JSON.parse(localStorage.getItem('ranking')).flat() : [];
     const {
-      name,
-      imageUrl,
-      score,
       toSetRankedLadder,
     } = this.props;
 
-    if (((name === '' && imageUrl === '') && score === 0)) {
-      return rankingFromLocalStorage
+    const rankingFromLocalStorage = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : null;
+
+    const stateFromLocalStorage = localStorage.getItem('state') !== null ? JSON.parse(localStorage.getItem('state')) : null;
+    console.log(rankingFromLocalStorage, stateFromLocalStorage);
+
+    if (stateFromLocalStorage === null) {
+      return rankingFromLocalStorage !== null
         ? toSetRankedLadder(rankingFromLocalStorage)
-        : toSetRankedLadder(null);
+        : null;
     }
 
-    const newRankingItem = JSON.stringify({ name, score, imageUrl });
+    const { player: { name, score, gravatarEmail } } = stateFromLocalStorage;
+    const imageUrl = `https://www.gravatar.com/avatar/${MD5(gravatarEmail)}`;
+    const newRankingItem = { name, score, imageUrl };
 
     const newLadder = Ranking.fetchLadder(rankingFromLocalStorage, newRankingItem);
-    // console.log(newLadder);
     const sortDesc = (a, b) => b.score - a.score;
     const sortedLadder = [...newLadder].sort(sortDesc);
-    localStorage.setItem('ranking', JSON.stringify(...sortedLadder));
-    return toSetRankedLadder(...sortedLadder);
+    console.log('novo rank: ', sortedLadder);
+
+    localStorage.setItem('ranking', JSON.stringify(sortedLadder));
+    localStorage.removeItem('state');
+    return toSetRankedLadder(sortedLadder);
   }
 
   render() {
     const { rankedLadder } = this.props;
+
+    console.log('state ranked ladder: ', rankedLadder, !!rankedLadder);
+
+    if (rankedLadder.length === 0) return <li>Nenhum registro</li>;
     return (
       <div>
         <h1>Ranking</h1>
         <ol>
-          { rankedLadder !== null ? rankedLadder.map(
+          { rankedLadder.map(
             (rank, index) => (
               <li key={`${rank.name}_${rank.score}_${index + 1}`}>
                 <div>
@@ -70,7 +75,7 @@ class Ranking extends Component {
                 </div>
               </li>
             ),
-          ) : <li>Nenhum registro</li> }
+          ) }
         </ol>
       </div>
     );
@@ -84,26 +89,20 @@ const mapDispatchToProps = (dispatch) => ({
 const mapStateToProps = (
   {
     gameReducer: {
-      name, imageUrl, score, rankedLadder,
+      rankedLadder,
     },
   },
 ) => ({
-  name, imageUrl, score, rankedLadder,
+  rankedLadder,
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Ranking);
 
 Ranking.propTypes = {
-  name: PropTypes.string,
-  imageUrl: PropTypes.string,
-  score: PropTypes.number,
   toSetRankedLadder: PropTypes.func.isRequired,
   rankedLadder: PropTypes.arrayOf(PropTypes.object),
 };
 
 Ranking.defaultProps = {
-  name: '',
-  imageUrl: '',
-  score: 0,
   rankedLadder: [],
 };
