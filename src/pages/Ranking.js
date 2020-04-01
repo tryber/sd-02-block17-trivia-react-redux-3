@@ -24,7 +24,7 @@ class Ranking extends Component {
   }
 
   componentDidMount() {
-    const rankingFromLocalStorage = JSON.parse(localStorage.getItem('ranking')).flat();
+    const rankingFromLocalStorage = localStorage.getItem('ranking') ? JSON.parse(localStorage.getItem('ranking')).flat() : [];
     const {
       name,
       imageUrl,
