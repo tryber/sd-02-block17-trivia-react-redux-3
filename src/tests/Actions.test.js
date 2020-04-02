@@ -29,7 +29,7 @@ describe('test actions', () => {
     const aux = changeDifficulty('aaa');
     expect(aux).toMatchObject({ change: 'aaa', type: 'CHANGE_DIFFICULTY' });
     store.dispatch(changeDifficulty('aaaaaaaa'));
-    expect(store.getState().difficultyreducer.difficultySelected).toBe('aaaaaaaa');
+    expect(store.getState().difficultyReducer.difficultySelected).toBe('aaaaaaaa');
   });
   it('ChangeScoreboard', () => {
     const aux = ChangeScoreboard();
@@ -68,7 +68,7 @@ describe('test actions', () => {
   it('RequestCategory', () => {
     const aux = RequestCategory([]);
     expect(aux).toMatchObject({ type: 'GET_CATEGORY', results: [] });
-    store.dispatch(RequestCategory([1, 2]))
+    store.dispatch(RequestCategory([1, 2]));
     expect(store.getState().categoryReducer).toMatchObject({
       category: [1, 2],
       categorySelected: undefined,

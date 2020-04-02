@@ -17,14 +17,14 @@ function renderWithRedux(
       rootReducer(),
       {
         gameReducer: { name: '', gravatarEmail: '' },
-        difficultyreducer: {
+        difficultyReducer: {
           difficulty: ['easy', 'medium', 'hard'],
           difficultySelected: '',
         },
         categoryReducer: { category: [], categorySelected: {} },
         typeReducer: {
           types: ['multiple', 'boolean'],
-          typesSelected: '',
+          typeSelected: '',
         },
         getQuestions: { error: '' },
       },

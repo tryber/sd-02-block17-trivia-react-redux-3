@@ -3,7 +3,7 @@ import gameReducer from './gameReducer';
 import getQuestions from './getQuestions';
 import timeReducer from './timeReducer';
 import categoryReducer from './categoryReducer';
-import difficultyreducer from './difficultyreducer';
+import difficultyReducer from './difficultyReducer';
 import typeReducer from './typeReducer';
 
 const rootReducer = () => combineReducers({
@@ -11,7 +11,7 @@ const rootReducer = () => combineReducers({
   getQuestions,
   timeReducer,
   categoryReducer,
-  difficultyreducer,
+  difficultyReducer,
   typeReducer,
 });
 

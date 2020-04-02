@@ -59,4 +59,5 @@ const mapDispatchToProps = (dispatch) => ({
   resetFilter: () => dispatch(resetAllFilters()),
 });
 
+
 export default connect(null, mapDispatchToProps)(Feedback);

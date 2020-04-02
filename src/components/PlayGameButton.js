@@ -8,10 +8,10 @@ class PlayGameButton extends React.Component {
   constructor(props) {
     super(props);
     this.state = { redirect: false };
-    this.onPlayClick = this.onPlayClck.bind(this);
+    this.onPlayClick = this.onPlayClick.bind(this);
   }
 
-  onPlayClck(name, gravatarEmail) {
+  onPlayClick(name, gravatarEmail) {
     localStorage.setItem('state', JSON.stringify({ player: { name, gravatarEmail } }));
     tokenRequest()
       .then(async (param) => {

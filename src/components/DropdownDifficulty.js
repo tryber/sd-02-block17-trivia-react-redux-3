@@ -24,7 +24,7 @@ const DropdownDifficulty = ({ difficulty, difficultySelected, saveChange }) => (
   </div>
 );
 
-const mapStateToProps = ({ difficultyreducer: { difficulty, difficultySelected } }) => (
+const mapStateToProps = ({ difficultyReducer: { difficulty, difficultySelected } }) => (
   { difficulty, difficultySelected }
 );
 
