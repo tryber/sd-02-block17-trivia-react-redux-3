@@ -9,9 +9,7 @@ export const compara = (state, score) => {
   } return score;
 };
 
-const Header = ({ score }) => {
-  const localStorageState = localStorage.getItem('state') !== null && JSON.parse(localStorage.getItem('state'));
-  const { player: { name: playerName, gravatarEmail } } = localStorageState;
+const Header = ({ score, player: { name, gravatarEmail }, player }) => {
   const trimmedAndLowercasedMail = gravatarEmail.trim().toLocaleLowerCase();
   return (
     <div>
@@ -20,17 +18,17 @@ const Header = ({ score }) => {
         alt="Gravatar profile"
         data-testid="header-profile-picture"
       />
-      <h1 data-testid="header-player-name">{`Jogador: ${playerName}`}</h1>
+      <h1 data-testid="header-player-name">{`Jogador: ${name}`}</h1>
       <h2>
         Pontos:
-        <span data-testid="header-score">{compara(localStorageState, score)}</span>
+        <span data-testid="header-score">{compara({ player }, score)}</span>
       </h2>
     </div>
   );
 };
 
-const mapStateToProps = ({ gameReducer: { score } }) => (
-  { score }
+const mapStateToProps = ({ gameReducer: { score, name, gravatarEmail } }) => (
+  { score, player: { name, gravatarEmail } }
 );
 
 
@@ -38,9 +36,16 @@ export default connect(mapStateToProps)(Header);
 
 Header.propTypes = {
   score: PropTypes.number,
+  player: PropTypes.shape({
+    name: PropTypes.string,
+    gravatarEmail: PropTypes.string,
+  }),
 };
 
 Header.defaultProps = {
   score: 0,
-
+  player: {
+    name: '',
+    gravatarEmail: '',
+  },
 };
