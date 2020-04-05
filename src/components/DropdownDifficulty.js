@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import ChangeDifficulty from '../actions/ChangeDifficulty';
+import changeDifficulty from '../actions/ChangeDifficulty';
 
 const DropdownDifficulty = ({ difficulty, difficultySelected, saveChange }) => (
   <div>
@@ -29,7 +29,7 @@ const mapStateToProps = ({ difficultyReducer: { difficulty, difficultySelected }
 );
 
 const mapDispatchToProps = (dispatch) => ({
-  saveChange: (change) => dispatch(ChangeDifficulty(change)),
+  saveChange: (change) => dispatch(changeDifficulty(change)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DropdownDifficulty);

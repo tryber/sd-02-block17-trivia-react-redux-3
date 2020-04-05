@@ -47,6 +47,7 @@ afterEach(cleanup);
 
 describe('Ranking page tests', () => {
   it('Page is on localhost/ranking url', () => {
+    localStorage.setItem('ranking', JSON.stringify([{ name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 0, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' }]));
     const { getByText } = renderWithRedux(
       <MemoryRouter initialEntries={['/ranking']}>
         <App />
@@ -85,23 +86,22 @@ describe('Ranking page tests', () => {
       { name: 'MATEUS TALLES LEMES MARTINS DE CARVALHO', score: 60, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
       { name: 'Mateus', score: 100, imageUrl: 'https://www.gravatar.com/avatar/2d3bf5b67282f5f466e503d7022abcf3' },
     ];
+    const sortedLadder = [...ranking].sort((a, b) => b.score - a.score);
+    localStorage.setItem('ranking', JSON.stringify(sortedLadder));
 
-    localStorage.setItem('ranking', JSON.stringify(ranking));
-
-    const { store } = renderWithRedux(
+    const { getByTestId } = renderWithRedux(
       <Ranking />, {
         initialState: {
           ...testState,
         },
       },
     );
-    const { rankedLadder } = store.getState();
-
-    rankedLadder.reduce((prevScore, { score }, index) => {
-      if (index === 0) return Number(score);
-      expect(Number(prevScore) >= Number(score)).toBeTruthy();
-      return Number(score);
-    }, 0);
+    ranking.forEach((ele, index) => {
+      if (ranking[index + 1] !== undefined) {
+        expect(getByTestId(`score-${index}`)).toBeInTheDocument();
+        expect(Number(getByTestId(`score-${index}`).innerHTML) > Number(getByTestId(`score-${index + 1}`).innerHTML)).toBeTruthy();
+      }
+    });
   });
 
   it('If there are no elements added, string "Nenhum registro" is returned', async () => {

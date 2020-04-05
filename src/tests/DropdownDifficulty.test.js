@@ -2,10 +2,10 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import DropdownDifficulty from '../components/DropdownDifficulty';
-import difficultyReducer from '../reducers/difficultyReducer';
+import rootReducer from '../reducers/rootReducer';
 
 afterEach(cleanup);
 
@@ -19,7 +19,7 @@ const testState = {
 function renderWithRedux(
   ui,
   {
-    initialState, store = createStore(difficultyReducer, initialState),
+    initialState, store = createStore(rootReducer(), initialState),
   } = {},
 ) {
   return {
@@ -62,5 +62,23 @@ describe('test dropdown', () => {
     );
     expect(getByTestId('question-difficulty-dropdown')).toBeInTheDocument();
     expect(getByTestId('question-difficulty-dropdown').value).toBe('medium');
+  });
+
+  it('test value change', () => {
+    const aux = {
+      difficultyReducer: {
+        difficulty: ['easy', 'medium', 'hard'],
+        difficultySelected: 'medium',
+      },
+    };
+    const { queryByTestId } = renderWithRedux(
+      <MemoryRouter>
+        <DropdownDifficulty />
+      </MemoryRouter>,
+    );
+    const select = queryByTestId('question-difficulty-dropdown');
+    expect(select.tagName).toBe('SELECT');
+    fireEvent.change(select, { target: { value: 'hard' } });
+    expect(select.value).toBe('hard');
   });
 });
