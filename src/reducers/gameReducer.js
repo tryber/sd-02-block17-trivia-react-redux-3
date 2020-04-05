@@ -18,7 +18,7 @@ const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
 export default function gameReducer(state = INITIAL_STATE, {
-  type, email, name, answersClasses, points, error, question, rankedLadder,
+  type, email, name, answersClasses, points, error, question,
 }) {
   switch (type) {
     case SENDEMAIL:
