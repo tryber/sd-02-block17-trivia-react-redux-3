@@ -53,3 +53,11 @@
     transform: translate3d(4px, 0, 0);
   }
 }
+
+button {
+  margin-bottom: 50px;
+}
+
+a {
+  color: red;
+}

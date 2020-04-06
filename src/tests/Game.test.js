@@ -8,7 +8,7 @@ import Header from '../components/Header';
 import gameReducer, { INITIAL_STATE } from '../reducers/gameReducer';
 
 const a = {
-  gameReducer: INITIAL_STATE,
+  gameReducer: { ...INITIAL_STATE, name: 'Josezinho' },
 };
 
 function renderWithRedux(

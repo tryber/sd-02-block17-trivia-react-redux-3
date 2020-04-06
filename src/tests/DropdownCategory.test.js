@@ -2,19 +2,19 @@ import React from 'react';
 import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
-import { render, cleanup } from '@testing-library/react';
+import { render, cleanup, fireEvent, waitForDomChange } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import DropdownCategory from '../components/DropdownCategory';
-import categoryReducer from '../reducers/categoryReducer';
+import rootReducer from '../reducers/rootReducer';
 
 afterEach(cleanup);
 
 function renderWithRedux(
   ui,
   {
-    store = createStore(categoryReducer, {
+    store = createStore(rootReducer(), {
       categoryReducer: {
-        category: [],
+        category: [{ id: 9, name: 'General' }],
         categorySelected: { id: '', name: '' },
       },
     }),
@@ -28,7 +28,7 @@ function renderWithRedux(
 function renderWithRedux2(
   ui,
   {
-    store = createStore(categoryReducer, {
+    store = createStore(rootReducer(), {
       categoryReducer: {
         category: [{ id: 9, name: 'blabla' }],
         categorySelected: { id: 9, name: 'aaaa' },
@@ -59,5 +59,28 @@ describe('test dropdown', () => {
     );
     expect(getByTestId('question-category-dropdown')).toBeInTheDocument();
     expect(getByTestId('question-category-dropdown').value).toBe('9');
+  });
+  it('test value change', () => {
+    const { queryByTestId } = renderWithRedux2(
+      <MemoryRouter>
+        <DropdownCategory />
+      </MemoryRouter>,
+    );
+
+    const select = queryByTestId('question-category-dropdown');
+    expect(select.tagName).toBe('SELECT');
+    fireEvent.change(select, { target: { value: '9' } });
+    expect(select.value).toBe('9');
+  });
+  it('mock test', async () => {
+    const { getByText, store } = renderWithRedux(
+      <MemoryRouter>
+        <DropdownCategory />
+      </MemoryRouter>,
+    );
+
+    await waitForDomChange();
+    expect(getByText(/General/)).toBeInTheDocument();
+
   });
 });

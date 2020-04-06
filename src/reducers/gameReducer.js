@@ -1,6 +1,5 @@
 import { FORMAT_ANSWERS } from '../actions/GameActions';
 import { RESET_POINTS } from '../actions/resetPoints';
-import { SET_RANKED_LADDER } from '../actions/RankingActions';
 
 export const INITIAL_STATE = {
   name: '',
@@ -10,7 +9,6 @@ export const INITIAL_STATE = {
   wrongAnswerFlag: false,
   answersClasses: [],
   question: {},
-  rankedLadder: [],
 };
 const QUESTION = 'QUESTION';
 const SENDEMAIL = 'SEND_EMAIL';
@@ -20,7 +18,7 @@ const SET_POINTS = 'SET_POINTS';
 const ERROR = 'ERROR';
 
 export default function gameReducer(state = INITIAL_STATE, {
-  type, email, name, answersClasses, points, error, question, rankedLadder,
+  type, email, name, answersClasses, points, error, question,
 }) {
   switch (type) {
     case SENDEMAIL:
@@ -41,8 +39,6 @@ export default function gameReducer(state = INITIAL_STATE, {
       return INITIAL_STATE;
     case QUESTION:
       return { ...state, question };
-    case SET_RANKED_LADDER:
-      return { ...state, rankedLadder: [...state.rankedLadder, ...rankedLadder] };
     default:
       return state;
   }

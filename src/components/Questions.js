@@ -2,19 +2,39 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import MD5 from 'crypto-js/md5';
 import { wrongAnswer } from '../actions/ChangeScoreboard';
 import { resetTimer } from '../actions/TimerActions';
 import Answers from './Answers';
 import Timer from './Timer';
 import answers from '../actions/answersAction';
 
+
+function fetchLadder(rankingFromLocalStorage, newRankingItem) {
+  if (rankingFromLocalStorage === null) {
+    return [
+      newRankingItem,
+    ];
+  }
+  return [
+    ...rankingFromLocalStorage,
+    newRankingItem,
+  ];
+}
+
 function saveScore(name, assertions, score, gravatarEmail) {
+  const rankingFromLocalStorage = localStorage.getItem('ranking') !== null ? JSON.parse(localStorage.getItem('ranking')) : null;
   const obj = {
     player: {
       name, assertions, score, gravatarEmail,
     },
   };
   localStorage.setItem('state', JSON.stringify(obj));
+  const imageUrl = `https://www.gravatar.com/avatar/${MD5(gravatarEmail)}`;
+  const newRankingItem = { name, score, imageUrl };
+  const newRanking = fetchLadder(rankingFromLocalStorage, newRankingItem);
+  const sortedLadder = [...newRanking].sort((a, b) => b.score - a.score);
+  localStorage.setItem('ranking', JSON.stringify(sortedLadder));
 }
 
 class Questions extends Component {

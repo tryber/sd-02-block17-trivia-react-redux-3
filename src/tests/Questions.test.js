@@ -23,10 +23,11 @@ const initialState = {
   gameReducer: {
     name: 'name',
     gravatarEmail: 'email',
-    timer: 6,
     scoreboard: 0,
     lastQuestionStatus: 'correct',
+    answersClasses: [],
   },
+  timeReducer: { timer: 0 },
 };
 
 function renderWithRedux(
@@ -40,14 +41,14 @@ function renderWithRedux(
 }
 afterEach(cleanup);
 
-describe.skip('Testing for Questions page', () => {
+describe('Testing for Questions page', () => {
   it('Time should show and when time gets to 0, wrong message should appear', async () => {
     const { store, getByText } = renderWithRedux(
       <MemoryRouter>
         <Questions />
       </MemoryRouter>,
     );
-    await wait(() => expect(store.getState().gameReducer.timer).toBe(2));
+    await wait(() => expect(store.getState().timeReducer.timer).toBe(0));
     expect(getByText('RESPOSTA ERRADA')).toBeInTheDocument();
   });
 });
